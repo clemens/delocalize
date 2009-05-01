@@ -12,17 +12,17 @@ ActionView::Helpers::InstanceTag.class_eval do
       if column.number? || column.date? || column.time?
         options.symbolize_keys!
         value = object.send(method_name)
-      end
 
-      if column.number?
-        number_options = {
-          :precision => options.delete(:precision),
-          :delimiter => options.delete(:delimiter),
-          :separator => options.delete(:separator)
-        }
-        options[:value] = number_with_precision(value, number_options)
-      elsif column.date? || column.time?
-        options[:value] = I18n.l(value, :format => options.delete(:format))
+        if column.number?
+          number_options = {
+            :precision => options.delete(:precision),
+            :delimiter => options.delete(:delimiter),
+            :separator => options.delete(:separator)
+          }
+          options[:value] = number_with_precision(value, number_options)
+        elsif column.date? || column.time?
+          options[:value] = I18n.l(value, :format => options.delete(:format))
+        end
       end
     end
 
