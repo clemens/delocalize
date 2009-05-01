@@ -7,6 +7,15 @@ Use at your own risk! ;-)
 
 More details to come ...
 
+TODO
+====
+
+* Improve test coverage
+* Separate Ruby/Rails stuff to make it usable outside Rails
+* Verify correct behavior with time zones
+* Implement AM/PM support
+* Cleanup, cleanup, cleanup ...
+
 Copyright (c) 2009 Clemens Kofler <clemens@railway.at>
 www.railway.at
 Released under the MIT license
