@@ -6,14 +6,23 @@ ActionView::Helpers::InstanceTag.class_eval do
 
   alias original_to_input_field_tag to_input_field_tag
   def to_input_field_tag(field_type, options = {})
-    value = object.send(method_name)
-
     # numbers and dates/times should be localized
     if column = object.column_for_attribute(method_name)
+      # a little verbose
+      if column.number? || column.date? || column.time?
+        options.symbolize_keys!
+        value = object.send(method_name)
+      end
+
       if column.number?
-        options["value"] = number_with_delimiter(value)
-      elsif column.date_or_time?
-        options["value"] = I18n.l(value, :format => :long)
+        number_options = {
+          :precision => options.delete(:precision),
+          :delimiter => options.delete(:delimiter),
+          :separator => options.delete(:separator)
+        }
+        options[:value] = number_with_precision(value, number_options)
+      elsif column.date? || column.time?
+        options[:value] = I18n.l(value, :format => options.delete(:format))
       end
     end
 

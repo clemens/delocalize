@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class DelocalizeTest < ActiveRecord::TestCase
+class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   def setup
     Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
     @product = Product.new
@@ -58,5 +58,58 @@ class DelocalizeTest < ActiveRecord::TestCase
     time = Time.local(now.year, now.month, now.day, 9, 0, 0)
     @product.cant_think_of_a_sensible_time_field = '09:00'
     assert_equal time, @product.cant_think_of_a_sensible_time_field
+  end
+end
+
+class DelocalizeActionViewTest < ActionView::TestCase
+  include ActionView::Helpers::FormHelper
+
+  def setup
+    Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
+    @product = Product.new
+  end
+
+  test "shows text field using formatted number" do
+    @product.price = 1299.9
+    assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1.299,90" />',
+      text_field(:product, :price)
+  end
+
+  test "shows text field using formatted number with options" do
+    @product.price = 1299.995
+    assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1,299.995" />',
+      text_field(:product, :price, :precision => 3, :delimiter => ',', :separator => '.')
+  end
+
+  test "shows text field using formatted date" do
+    @product.released_on = Date.civil(2009, 10, 19)
+    assert_dom_equal '<input id="product_released_on" name="product[released_on]" size="30" type="text" value="19.10.2009" />',
+      text_field(:product, :released_on)
+  end
+
+  test "shows text field using formatted date and time" do
+    @product.published_at = Time.local(2009, 3, 1, 12, 0, 0)
+    # careful - leading whitespace with %e
+    assert_dom_equal '<input id="product_published_at" name="product[published_at]" size="30" type="text" value="Sonntag,  1. März 2009, 12:00 Uhr" />',
+      text_field(:product, :published_at)
+  end
+
+  test "shows text field using formatted date with format" do
+    @product.released_on = Date.civil(2009, 10, 19)
+    assert_dom_equal '<input id="product_released_on" name="product[released_on]" size="30" type="text" value="19. Oktober 2009" />',
+      text_field(:product, :released_on, :format => :long)
+  end
+
+  test "shows text field using formatted date and time with format" do
+    @product.published_at = Time.local(2009, 3, 1, 12, 0, 0)
+    # careful - leading whitespace with %e
+    assert_dom_equal '<input id="product_published_at" name="product[published_at]" size="30" type="text" value=" 1. März, 12:00 Uhr" />',
+      text_field(:product, :published_at, :format => :short)
+  end
+
+  test "shows text field using formatted time with format" do
+    @product.cant_think_of_a_sensible_time_field = Time.local(2009, 3, 1, 9, 0, 0)
+    assert_dom_equal '<input id="product_cant_think_of_a_sensible_time_field" name="product[cant_think_of_a_sensible_time_field]" size="30" type="text" value="09:00 Uhr" />',
+      text_field(:product, :cant_think_of_a_sensible_time_field, :format => :time)
   end
 end

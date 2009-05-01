@@ -5,6 +5,8 @@ require 'test_help'
 require 'rubygems'
 require 'active_record'
 require 'active_record/test_case'
+require 'action_view'
+require 'action_view/test_case'
 
 I18n.backend.store_translations :de, {
   :date => {
@@ -32,7 +34,9 @@ I18n.backend.store_translations :de, {
       :medium => "%e. %B %Y, %H:%M Uhr",
       :long => "%A, %e. %B %Y, %H:%M Uhr",
       :time => "%H:%M Uhr"
-    }
+    },
+    :am => 'vormittags',
+    :pm => 'nachmittags'
   },
   :number => {
     :format => {
