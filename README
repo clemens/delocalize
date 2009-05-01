@@ -53,6 +53,22 @@ For dates and times, you have to define input formats which are taken from the a
 
 Careful with formats containing only numbers: It's very hard to produce reliable matches if you provide multiple strictly numeric formats!
 
+delocalize then overrides to_input_field_tag in ActionView's InstanceTag so you can use localized text fields:
+
+  <% form_for @product do |f| %>
+    <%= f.text_field :name %>
+    <%= f.text_field :released_on %>
+    <%= f.text_field :price %>
+  <% end %>
+  
+In this example, a user can enter the release date and the price just like he's used to in his language, for example:
+
+  Name: "Couch"
+  Released on: "12. Oktober 2009"
+  Price: "2.999,90"
+
+When saved, ActiveRecord automatically converts these to a regular Ruby date and number. Edit forms then also show localized dates/numbers.
+
 Note
 ====
 
@@ -64,6 +80,8 @@ TODO
 * Improve test coverage
 * Separate Ruby/Rails stuff to make it usable outside Rails
 * Verify correct behavior with time zones
+* Decide on other ActionView hacks (e.g. text_field_tag)
+* Provide option to modify date format in text fields (e.g. by passing :format => :long)
 * Implement AM/PM support
 * Cleanup, cleanup, cleanup ...
 
