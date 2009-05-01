@@ -1,11 +1,62 @@
 Delocalize
 ==========
 
-Highly experimental date/time and number parsing.
+Highly experimental date/time and number parsing. Use at your own risk! ;-)
 
-Use at your own risk! ;-)
+What does it do? And how do I use it?
+=====================================
 
-More details to come ... In the mean time, take a look at the test helper to find out how you can define input formats for dates. Number formats should be there anyway if you have a localized app.
+Delocalize, just as the name suggest, does pretty much the opposite of localize.
+
+In the grey past, ff you want your users to be able to input localized data, such as dates and numbers, you had to manually override attribute accessors:
+
+  def price=(price)
+    write_attribute(:price, price.gsub(',', '.'))
+  end
+
+delocalize does this under the covers - all you need is your regular translation data (as YAML or Ruby file) where you need Rails' standard translations:
+
+  de:
+    number:
+      format:
+        separator: ','
+        delimiter: '.'
+    date:
+      input:
+        formats: [:default, :long, :short] # <- this and ...
+
+      formats:
+        default: "%d.%m.%Y"
+        short: "%e. %b"
+        long: "%e. %B %Y"
+        only_day: "%e"
+
+      day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+      abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+      month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+      abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+      order: [ :day, :month, :year ]
+
+    time:
+      input:
+        formats: [:long, :medium, :short, :default, :time] # <- ... this are the only non-standard keys
+      formats:
+        default: "%A, %e. %B %Y, %H:%M Uhr"
+        short: "%e. %B, %H:%M Uhr"
+        long: "%A, %e. %B %Y, %H:%M Uhr"
+        time: "%H:%M"
+
+      am: "vormittags"
+      pm: "nachmittags"
+
+For dates and times, you have to define input formats which are taken from the actual formats. The important thing here is to define input formats sorted by descending complexity - in other words: The format which contains the most (preferably non-numeric) information should be first in the list because it can produce the most reliable match. Exception: If you think there most complex format is not the one that most users will input, you can put the most-used in front so you save unnecessary iterations.
+
+Careful with formats containing only numbers: It's very hard to produce reliable matches if you provide multiple strictly numeric formats!
+
+Note
+====
+
+delocalize is most definitely not enterprise-ready! ;-)
 
 TODO
 ====
