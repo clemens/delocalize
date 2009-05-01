@@ -5,7 +5,7 @@ Highly experimental date/time and number parsing.
 
 Use at your own risk! ;-)
 
-More details to come ...
+More details to come ... In the mean time, take a look at the test helper to find out how you can define input formats for dates. Number formats should be there anyway if you have a localized app.
 
 TODO
 ====
