@@ -67,7 +67,20 @@ In this example, a user can enter the release date and the price just like he's 
   Released on: "12. Oktober 2009"
   Price: "2.999,90"
 
-When saved, ActiveRecord automatically converts these to a regular Ruby date and number. Edit forms then also show localized dates/numbers.
+When saved, ActiveRecord automatically converts these to a regular Ruby date and number.
+
+Edit forms then also show localized dates/numbers. By default, dates and times are localized using the format named :default in your locale file. So with the above locale file, dates would use "%d.%m.%Y" and times would use "%A, %e. %B %Y, %H:%M Uhr". Numbers are also formatted using your locale's thousands delimiter and decimal separator.
+
+You can also customize the output using some options:
+
+  The price should always show two decimal digits and we don't need the delimiter:
+    <%= f.text_field :price, :precision => 2, :delimiter => '' %>
+  
+  The released_on date should be shown in the :full format:
+    <%= f.text_field :released_on, :format => :full %>
+  
+  Since I18n.localize supportes localizing strftime strings, we can also do this:
+    <%= f.text_field :released_on, :format => "%B %Y" %>
 
 Note
 ====
