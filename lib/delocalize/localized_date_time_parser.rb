@@ -10,17 +10,12 @@ module Delocalize
 
         translate_month_and_day_names(datetime)
         input_formats(type).each do |original_format|
-          format = apply_regex(original_format)
+          next unless datetime =~ /^#{apply_regex(original_format)}$/
 
-          if match = datetime.match(/^#{format}$/)
-            datetime = DateTime.strptime(datetime, original_format)
-
-            return(if Date == type
-              datetime.to_date
-            else
-              Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
-            end)
-          end
+          datetime = DateTime.strptime(datetime, original_format)
+          return Date == type ?
+            datetime.to_date :
+            Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
         end
         default_parse(datetime, type)
       end
@@ -32,21 +27,15 @@ module Delocalize
           # parse set default year, month and day if not found
           parsed = Date._parse(datetime).reverse_merge(:year => today.year, :mon => today.mon, :mday => today.mday)
           datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
-
-          if Date == type
-            datetime.to_date
-          else
-            datetime
-          end
+          Date == type ? datetime.to_date : datetime
         rescue
           datetime
         end
       end
 
       def translate_month_and_day_names(datetime)
-        translated = (month_names + abbr_month_names + day_names + abbr_day_names).compact
+        translated = I18n.t([:month_names, :abbr_month_names, :day_names, :abbr_day_names], :scope => :date).flatten.compact
         original = (Date::MONTHNAMES + Date::ABBR_MONTHNAMES + Date::DAYNAMES + Date::ABBR_DAYNAMES).compact
-
         translated.each_with_index { |name, i| datetime.gsub!(name, original[i]) }
       end
 
@@ -54,22 +43,6 @@ module Delocalize
         # Date uses date formats, all others use time formats
         type = type == Date ? :date : :time
         (@input_formats ||= {})[type] ||= I18n.t(:"#{type}.formats").slice(*I18n.t(:"#{type}.input.formats")).values
-      end
-
-      def month_names
-        @month_names ||= I18n.t(:'date.month_names')
-      end
-
-      def abbr_month_names
-        @abbr_month_names ||= I18n.t(:'date.abbr_month_names')
-      end
-
-      def day_names
-        @day_names ||= I18n.t(:'date.day_names')
-      end
-
-      def abbr_day_names
-        @abbr_day_names ||= I18n.t(:'date.abbr_day_names')
       end
 
       def apply_regex(format)
