@@ -17,13 +17,8 @@ module Delocalize
 
             return(if Date == type
               datetime.to_date
-            elsif Time == type
-              Time.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
-            elsif ActiveSupport::TimeZone == type
-              Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec).in_time_zone
-            # Rails doesn't really use DateTime ...
-            # else
-            #   datetime
+            else
+              Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
             end)
           end
         end
@@ -36,17 +31,12 @@ module Delocalize
           today = Date.current
           # parse set default year, month and day if not found
           parsed = Date._parse(datetime).reverse_merge(:year => today.year, :mon => today.mon, :mday => today.mday)
+          datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
 
           if Date == type
-            Date.civil(*parsed.values_at(:year, :mon, :mday).compact)
-          elsif Time == type
-            Time.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec).compact)
-          # Rails doesn't really use DateTime ...
-          # elsif DateTime == type
-          #   DateTime.new(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec).compact)
-          elsif ActiveSupport::TimeZone == type
-            # might need to call in_time_zone here?
-            Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec).compact).in_time_zone
+            datetime.to_date
+          else
+            datetime
           end
         rescue
           datetime
@@ -83,6 +73,7 @@ module Delocalize
       end
 
       def apply_regex(format)
+        # maybe add other options as well
         format.gsub('%B', "(#{Date::MONTHNAMES.compact.join('|')})"). # long month name
           gsub('%b', "(#{Date::ABBR_MONTHNAMES.compact.join('|')})"). # short month name
           gsub('%m', "(\\d{2})").                                     # numeric month
