@@ -14,12 +14,11 @@ ActionView::Helpers::InstanceTag.class_eval do
         value = object.send(method_name)
 
         if column.number?
-          number_options = {
-            :precision => options.delete(:precision),
-            :delimiter => options.delete(:delimiter),
-            :separator => options.delete(:separator)
-          }
-          options[:value] = number_with_precision(value, number_options)
+          number_options = I18n.t(:'number.format')
+          separator = options.delete(:separator) || number_options[:separator]
+          delimiter = options.delete(:delimiter) || number_options[:delimiter]
+          precision = options.delete(:precision) || number_options[:precision]
+          options[:value] = number_with_precision(value, :separator => separator, :delimiter => delimiter, :precision => precision)
         elsif column.date? || column.time?
           options[:value] = I18n.l(value, :format => options.delete(:format))
         end
