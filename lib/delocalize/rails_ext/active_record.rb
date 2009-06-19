@@ -41,7 +41,7 @@ ActiveRecord::Base.class_eval do
   def convert_number_column_value_with_localization(value)
     value = convert_number_column_value_without_localization(value)
     if value.is_a?(String)
-      value = value.gsub(/[^0-9#{I18n.t(:'number.format.separator')}]/, '').gsub(I18n.t(:'number.format.separator'), '.')
+      value = value.gsub(/[^0-9\-#{I18n.t(:'number.format.separator')}]/, '').gsub(I18n.t(:'number.format.separator'), '.')
     end
     value
   end

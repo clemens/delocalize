@@ -9,6 +9,9 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   test "delocalizes localized number" do
     @product.price = '1.299,99'
     assert_equal 1299.99, @product.price
+
+    @product.price = '-1.299,99'
+    assert_equal -1299.99, @product.price
   end
 
   test "delocalizes localized date" do
