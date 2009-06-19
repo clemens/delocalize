@@ -24,8 +24,10 @@ module Delocalize
       def default_parse(datetime, type)
         begin
           today = Date.current
-          # parse set default year, month and day if not found
-          parsed = Date._parse(datetime).reverse_merge(:year => today.year, :mon => today.mon, :mday => today.mday)
+          parsed = Date._parse(datetime)
+          return if parsed.empty? #the datetime value is invalid
+          # set default year, month and day if not found
+          parsed.reverse_merge!(:year => today.year, :mon => today.mon, :mday => today.mday)
           datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
           Date == type ? datetime.to_date : datetime
         rescue

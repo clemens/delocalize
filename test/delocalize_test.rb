@@ -59,6 +59,15 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     @product.cant_think_of_a_sensible_time_field = '09:00'
     assert_equal time, @product.cant_think_of_a_sensible_time_field
   end
+
+  test "should return nil if the input is empty or invalid" do
+    @product.released_on = ""
+    assert_nil @product.released_on
+
+    @product.released_on = "aa"
+    assert_nil @product.released_on
+  end
+
 end
 
 class DelocalizeActionViewTest < ActionView::TestCase
