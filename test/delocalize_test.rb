@@ -124,4 +124,10 @@ class DelocalizeActionViewTest < ActionView::TestCase
     assert_dom_equal '<input id="product_cant_think_of_a_sensible_time_field" name="product[cant_think_of_a_sensible_time_field]" size="30" type="text" value="09:00 Uhr" />',
       text_field(:product, :cant_think_of_a_sensible_time_field, :format => :time)
   end
+
+  test "doesn't raise an exception when object is nil" do
+    assert_nothing_raised {
+      text_field(:not_here, :a_text_field)
+    }
+  end
 end

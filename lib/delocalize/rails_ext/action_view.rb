@@ -7,7 +7,7 @@ ActionView::Helpers::InstanceTag.class_eval do
   alias original_to_input_field_tag to_input_field_tag
   def to_input_field_tag(field_type, options = {})
     # numbers and dates/times should be localized
-    if column = object.column_for_attribute(method_name)
+    if object && column = object.column_for_attribute(method_name)
       # a little verbose
       if column.number? || column.date? || column.time?
         options.symbolize_keys!
