@@ -29,7 +29,7 @@ ActiveRecord::Base.class_eval do
     method_body = <<-EOV
       def #{attr_name}=(time)
         unless time.acts_like?(:time)
-          time = time.is_a?(String) ? Time.zone.parse_localized(time) : time.to_time
+          time = time.is_a?(String) ? Time.zone.parse_localized(time) : time.to_time rescue time
         end
         time = time.in_time_zone rescue nil if time
         write_attribute(:#{attr_name}, time)

@@ -71,6 +71,14 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_nil @product.released_on
   end
 
+  test "doesn't raise when attribute is nil" do
+    assert_nothing_raised {
+      @product.price = nil
+      @product.released_on = nil
+      @product.published_at = nil
+      @product.cant_think_of_a_sensible_time_field = nil
+    }
+  end
 end
 
 class DelocalizeActionViewTest < ActionView::TestCase
