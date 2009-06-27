@@ -79,6 +79,36 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
       @product.cant_think_of_a_sensible_time_field = nil
     }
   end
+
+  test "uses default formats if enable_delocalization is false" do
+    I18n.enable_delocalization = false
+
+    @product.price = '1299.99'
+    assert_equal 1299.99, @product.price
+
+    @product.price = '-1299.99'
+    assert_equal -1299.99, @product.price
+  end
+
+  test "uses default formats if called with with_delocalization_disabled" do
+    I18n.with_delocalization_disabled do
+      @product.price = '1299.99'
+      assert_equal 1299.99, @product.price
+
+      @product.price = '-1299.99'
+      assert_equal -1299.99, @product.price
+    end
+  end
+
+  test "uses localized parsing if called with with_delocalization_enabled" do
+    I18n.with_delocalization_enabled do
+      @product.price = '1.299,99'
+      assert_equal 1299.99, @product.price
+
+      @product.price = '-1.299,99'
+      assert_equal -1299.99, @product.price
+    end
+  end
 end
 
 class DelocalizeActionViewTest < ActionView::TestCase
