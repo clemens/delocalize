@@ -24,7 +24,7 @@ ActionView::Helpers::InstanceTag.class_eval do
 
           options[:value] = number_with_precision(value, opts)
         elsif column.date? || column.time?
-          options[:value] = I18n.l(value, :format => options.delete(:format))
+          options[:value] = value ? I18n.l(value, :format => options.delete(:format)) : nil
         end
       end
     end

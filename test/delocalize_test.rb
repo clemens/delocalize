@@ -179,6 +179,15 @@ class DelocalizeActionViewTest < ActionView::TestCase
     }
   end
 
+  test "doesn't raise for nil Date/Time" do
+    @product.published_at, @product.released_on, @product.cant_think_of_a_sensible_time_field = nil
+    assert_nothing_raised {
+      text_field(:product, :published_at)
+      text_field(:product, :released_on)
+      text_field(:product, :cant_think_of_a_sensible_time_field)
+    }
+  end
+
   test "doesn't override given :value" do
     @product.price = 1299.9
     assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1.499,90" />',
