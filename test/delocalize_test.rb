@@ -131,6 +131,16 @@ class DelocalizeActionViewTest < ActionView::TestCase
       text_field(:product, :price, :precision => 3, :delimiter => ',', :separator => '.')
   end
 
+  test "shows text field using formatted number without precision if column is an integer" do
+    @product.times_sold = 20
+    assert_dom_equal '<input id="product_times_sold" name="product[times_sold]" size="30" type="text" value="20" />',
+      text_field(:product, :times_sold)
+
+    @product.times_sold = 2000
+    assert_dom_equal '<input id="product_times_sold" name="product[times_sold]" size="30" type="text" value="2.000" />',
+      text_field(:product, :times_sold)
+  end
+
   test "shows text field using formatted date" do
     @product.released_on = Date.civil(2009, 10, 19)
     assert_dom_equal '<input id="product_released_on" name="product[released_on]" size="30" type="text" value="19.10.2009" />',

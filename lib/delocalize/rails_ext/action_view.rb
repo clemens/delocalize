@@ -18,7 +18,11 @@ ActionView::Helpers::InstanceTag.class_eval do
           separator = options.delete(:separator) || number_options[:separator]
           delimiter = options.delete(:delimiter) || number_options[:delimiter]
           precision = options.delete(:precision) || number_options[:precision]
-          options[:value] = number_with_precision(value, :separator => separator, :delimiter => delimiter, :precision => precision)
+          opts = { :separator => separator, :delimiter => delimiter, :precision => precision }
+          # integers don't need a precision
+          opts.merge!(:precision => 0) if column.type == :integer
+
+          options[:value] = number_with_precision(value, opts)
         elsif column.date? || column.time?
           options[:value] = I18n.l(value, :format => options.delete(:format))
         end
