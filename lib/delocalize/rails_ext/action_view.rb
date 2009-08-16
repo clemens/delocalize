@@ -8,7 +8,7 @@ ActionView::Helpers::InstanceTag.class_eval do
   def to_input_field_tag(field_type, options = {})
     options.symbolize_keys!
     # numbers and dates/times should be localized unless value is already defined
-    if object && options[:value].blank? && column = object.column_for_attribute(method_name)
+    if object && options[:value].blank? && object.respond_to?(:column_for_attribute) && column = object.column_for_attribute(method_name)
       # a little verbose
       if column.number? || column.date? || column.time?
         value = object.send(method_name)

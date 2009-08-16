@@ -49,6 +49,12 @@ I18n.backend.store_translations :de, {
 
 I18n.locale = :de
 
+class NonArProduct
+  attr_accessor :name, :price, :times_sold,
+    :cant_think_of_a_sensible_time_field,
+    :released_on, :published_at
+end
+
 class Product < ActiveRecord::Base
 end
 

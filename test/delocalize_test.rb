@@ -193,4 +193,16 @@ class DelocalizeActionViewTest < ActionView::TestCase
     assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1.499,90" />',
       text_field(:product, :price, :value => "1.499,90")
   end
+
+  test "doesn't raise an exception when object isn't an ActiveReccord" do
+    @product = NonArProduct.new
+    assert_nothing_raised {
+      text_field(:product, :name)
+      text_field(:product, :times_sold)
+      text_field(:product, :published_at)
+      text_field(:product, :released_on)
+      text_field(:product, :cant_think_of_a_sensible_time_field)
+      text_field(:product, :price, :value => "1.499,90")
+    }
+  end
 end
