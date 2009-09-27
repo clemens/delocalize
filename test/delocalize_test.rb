@@ -109,6 +109,13 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
       assert_equal -1299.99, @product.price
     end
   end
+
+  test "dirty attributes must detect changes in decimal columns" do
+    @product.price = 10
+    @product.save
+    @product.price = "10,34"
+    assert @product.price_changed?
+  end
 end
 
 class DelocalizeActionViewTest < ActionView::TestCase
