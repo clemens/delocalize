@@ -1,7 +1,21 @@
-Delocalize
+delocalize
 ==========
 
 Highly experimental date/time and number parsing. Use at your own risk! ;-)
+
+Installation
+============
+
+You can use delocalize either as a gem (preferred) or as a Rails plugin.
+
+To use the gem version, put the following gem requirement in your environment.rb:
+
+  config.gem "delocalize", :source => 'http://gemcutter.org'
+
+To install it as a plugin, fire up your terminal, go to your Rails app and type:
+
+  $ ruby script/plugin install git://github.com/clemens/delocalize.git
+
 
 What does it do? And how do I use it?
 =====================================
