@@ -67,5 +67,6 @@ ActiveRecord::Base.connection.create_table :products do |t|
   t.datetime :published_at
   t.time :cant_think_of_a_sensible_time_field
   t.decimal :price
+  t.float :weight
   t.integer :times_sold
 end

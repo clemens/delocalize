@@ -120,6 +120,13 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     @product.price = "10,34"
     assert @product.price_changed?
   end
+
+  test "dirty attributes must detect changes in float columns" do
+    @product.weight = 10
+    @product.save
+    @product.weight = "10,34"
+    assert @product.weight_changed?
+  end
 end
 
 class DelocalizeActionViewTest < ActionView::TestCase
