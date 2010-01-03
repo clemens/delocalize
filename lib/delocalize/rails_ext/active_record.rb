@@ -7,14 +7,6 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
   def time?
     klass == Time
   end
-
-  def decimal?
-    klass == BigDecimal
-  end
-
-  def float?
-    klass == Float
-  end
 end
 
 ActiveRecord::Base.class_eval do
@@ -24,12 +16,8 @@ ActiveRecord::Base.class_eval do
         value = Date.parse_localized(value)
       elsif column.time?
         value = Time.parse_localized(value)
-      elsif column.decimal?
-        value = convert_number_column_value_with_localization(value)
-        value = BigDecimal(value) if value.is_a?(String)
-      elsif column.float?
-        value = convert_number_column_value_with_localization(value)
-        value = value.to_f if value
+      elsif column.number?
+        value = column.type_cast(convert_number_column_value_with_localization(value))
       end
     end
     write_attribute_without_localization(attr_name, value)

@@ -58,7 +58,7 @@ end
 class Product < ActiveRecord::Base
 end
 
-config = YAML::load(IO.read(File.dirname(__FILE__) + '/database.yml'))
+config = YAML.load_file(File.dirname(__FILE__) + '/database.yml')
 ActiveRecord::Base.establish_connection(config['test'])
 
 ActiveRecord::Base.connection.create_table :products do |t|
