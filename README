@@ -1,7 +1,7 @@
 delocalize
 ==========
 
-Highly experimental date/time and number parsing. Use at your own risk! ;-)
+delocalize provides localized date/time and number parsing functionality for Rails.
 
 Installation
 ============
