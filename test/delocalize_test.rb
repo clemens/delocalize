@@ -14,16 +14,20 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal -1299.99, @product.price
   end
 
-  test "delocalizes localized date" do
+  test "delocalizes localized date with year" do
     date = Date.civil(2009, 10, 19)
 
     @product.released_on = '19. Oktober 2009'
     assert_equal date, @product.released_on
 
-    @product.released_on = '19. Okt'
-    assert_equal date, @product.released_on
-
     @product.released_on = '19.10.2009'
+    assert_equal date, @product.released_on
+  end
+
+  test "delocalizes localized date without year" do
+    date = Date.civil(Date.today.year, 10, 19)
+
+    @product.released_on = '19. Okt'
     assert_equal date, @product.released_on
   end
 
