@@ -3,6 +3,8 @@
 module Delocalize
   class LocalizedNumericParser
     class << self
+      # Parse numbers removing unneeded characters and replacing separator
+      # through I18n. The return will be a valid ruby Numeric value (as string).
       def parse(value)
         if value.is_a?(String)
           value     = value.dup
