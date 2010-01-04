@@ -40,9 +40,7 @@ ActiveRecord::Base.class_eval do
 
   def convert_number_column_value_with_localization(value)
     value = convert_number_column_value_without_localization(value)
-    if I18n.delocalization_enabled? && value.is_a?(String)
-      value = value.gsub(/[^0-9\-#{I18n.t(:'number.format.separator')}]/, '').gsub(I18n.t(:'number.format.separator'), '.')
-    end
+    value = Numeric.parse_localized(value) if I18n.delocalization_enabled?
     value
   end
   alias_method_chain :convert_number_column_value, :localization
