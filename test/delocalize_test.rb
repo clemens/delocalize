@@ -31,7 +31,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal date, @product.released_on
   end
 
-  test "delocalizes localized datetime" do
+  test "delocalizes localized datetime with year" do
     time = Time.local(2009, 3, 1, 12, 0, 0)
 
     @product.published_at = 'Sonntag, 1. März 2009, 12:00 Uhr'
@@ -39,6 +39,10 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
 
     @product.published_at = '1. März 2009, 12:00 Uhr'
     assert_equal time, @product.published_at
+  end
+
+  test "delocalizes localized datetime without year" do
+    time = Time.local(Date.today.year, 3, 1, 12, 0, 0)
 
     @product.published_at = '1. März, 12:00 Uhr'
     assert_equal time, @product.published_at
