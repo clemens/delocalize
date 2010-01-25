@@ -8,7 +8,8 @@ module Delocalize
       def parse(value)
         if value.is_a?(String)
           separator = I18n.t(:'number.format.separator')
-          value = value.gsub(/[^0-9\-#{separator}]/, '').gsub(separator, '.')
+          delimiter = I18n.t(:'number.format.delimiter')
+          value = value.gsub(delimiter, '').gsub(separator, '.')
         end
         value
       end

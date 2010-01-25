@@ -131,6 +131,12 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     @product.weight = "10,34"
     assert @product.weight_changed?
   end
+
+  test "should remember the value before type cast" do
+    @product.price = "asd"
+    assert_equal @product.price, 0
+    assert_equal @product.price_before_type_cast, "asd"
+  end
 end
 
 class DelocalizeActionViewTest < ActionView::TestCase

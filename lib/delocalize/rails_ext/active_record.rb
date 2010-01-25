@@ -16,8 +16,6 @@ ActiveRecord::Base.class_eval do
         value = Date.parse_localized(value)
       elsif column.time?
         value = Time.parse_localized(value)
-      elsif column.number?
-        value = column.type_cast(convert_number_column_value_with_localization(value))
       end
     end
     write_attribute_without_localization(attr_name, value)
@@ -36,6 +34,24 @@ ActiveRecord::Base.class_eval do
       end
     EOV
     evaluate_attribute_method attr_name, method_body, "#{attr_name}="
+  end
+
+  # overriding to convert numbers with localization
+  # this method belongs to Dirty module
+  def field_changed?(attr, old, value)
+    if column = column_for_attribute(attr)
+      if column.number? && column.null && (old.nil? || old == 0) && value.blank?
+        # For nullable numeric columns, NULL gets stored in database for blank (i.e. '') values.
+        # Hence we don't record it as a change if the value changes from nil to ''.
+        # If an old value of 0 is set to '' we want this to get changed to nil as otherwise it'll
+        # be typecast back to 0 (''.to_i => 0)
+        value = nil
+      else
+        value = column.type_cast(convert_number_column_value_with_localization(value))
+      end
+    end
+
+    old != value
   end
 
   def convert_number_column_value_with_localization(value)
