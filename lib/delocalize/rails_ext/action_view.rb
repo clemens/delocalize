@@ -22,7 +22,10 @@ ActionView::Helpers::InstanceTag.class_eval do
           # integers don't need a precision
           opts.merge!(:precision => 0) if column.type == :integer
 
-          options[:value] = number_with_precision(value, opts)
+          # formats the number only if it has errors
+          if object.respond_to?(:errors) && !object.errors.invalid?(method_name)
+            options[:value] = number_with_precision(value, opts)
+          end
         elsif column.date? || column.time?
           options[:value] = value ? I18n.l(value, :format => options.delete(:format)) : nil
         end
