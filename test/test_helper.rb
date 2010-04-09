@@ -61,6 +61,11 @@ end
 class Product < ActiveRecord::Base
 end
 
+class ProductWithValidation < Product
+  validates_numericality_of :price
+  validates_presence_of :price
+end
+
 config = YAML.load_file(File.dirname(__FILE__) + '/database.yml')
 ActiveRecord::Base.establish_connection(config['test'])
 
