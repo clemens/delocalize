@@ -77,8 +77,8 @@ delocalize then overrides `to_input_field_tag` in ActionView's `InstanceTag` so 
   
 In this example, a user can enter the release date and the price just like he's used to in his language, for example:
 
->  Name: "Couch"
->  Released on: "12. Oktober 2009"
+>  Name: "Couch"  
+>  Released on: "12. Oktober 2009"  
 >  Price: "2.999,90"
 
 When saved, ActiveRecord automatically converts these to a regular Ruby date and number.
@@ -90,15 +90,15 @@ You can also customize the output using some options:
   The price should always show two decimal digits and we don't need the delimiter:
       <%= f.text_field :price, :precision => 2, :delimiter => '' %>
   
-  The released_on date should be shown in the :full format:
+  The `released_on` date should be shown in the `:full` format:
       <%= f.text_field :released_on, :format => :full %>
   
-  Since I18n.localize supportes localizing strftime strings, we can also do this:
+  Since `I18n.localize` supports localizing `strftime` strings, we can also do this:
       <%= f.text_field :released_on, :format => "%B %Y" %>
 
 ### Note
 
-delocalize is most definitely not enterprise-ready! ;-)
+delocalize is most definitely not enterprise-ready! ;-)  
 Or as Yaroslav says: Contains small pieces. Not good for children of age 3 and less. Not enterprise-ready.
 
 ### TODO
@@ -106,7 +106,7 @@ Or as Yaroslav says: Contains small pieces. Not good for children of age 3 and l
 * Improve test coverage
 * Separate Ruby/Rails stuff to make it usable outside Rails
 * Verify correct behavior with time zones
-* Decide on other ActionView hacks (e.g. text_field_tag)
+* Decide on other ActionView hacks (e.g. `text_field_tag`)
 * Implement AM/PM support
 * Cleanup, cleanup, cleanup ...
 
