@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require File.dirname(__FILE__) + '/test_helper'
 
 class DelocalizeActiveRecordTest < ActiveRecord::TestCase
@@ -66,7 +68,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal time, @product.published_at
 
     now = Time.current
-    time = Time.local(now.year, now.month, now.day, 9, 0, 0)
+    time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
     @product.cant_think_of_a_sensible_time_field = '09:00'
     assert_equal time, @product.cant_think_of_a_sensible_time_field
   end
