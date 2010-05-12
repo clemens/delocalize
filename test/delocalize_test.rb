@@ -201,6 +201,12 @@ class DelocalizeActionViewTest < ActionView::TestCase
       text_field(:product, :cant_think_of_a_sensible_time_field, :format => :time)
   end
 
+  test "integer hidden fields shouldn't be formatted" do
+    @product.times_sold = 1000
+    assert_dom_equal '<input id="product_times_sold" name="product[times_sold]" type="hidden" value="1000" />',
+      hidden_field(:product, :times_sold)
+  end
+
   test "doesn't raise an exception when object is nil" do
     assert_nothing_raised {
       text_field(:not_here, :a_text_field)
