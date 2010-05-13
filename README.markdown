@@ -96,30 +96,24 @@ You can also customize the output using some options:
   Since `I18n.localize` supports localizing `strftime` strings, we can also do this:
       <%= f.text_field :released_on, :format => "%B %Y" %>
 
-### Note
-
-delocalize is most definitely not enterprise-ready! ;-)  
-Or as Yaroslav says: Contains small pieces. Not good for children of age 3 and less. Not enterprise-ready.
-
 ### Contributors
 
 People who have contributed to delocalize (in no particular order):
 
-* "Fernando Luizao":http://github.com/fernandoluizao
-* "Stephan":http://github.com/stepahn
+* [Fernando Luizao](http://github.com/fernandoluizao)
+* [Stephan](http://github.com/stepahn)
 * Lailson Bandeira
-* "Carlos Antonio da Silva":http://github.com/carlosantoniodasilva
-* "Michele Franzin":http://github.com/michelefranzin
+* [Carlos Antonio da Silva](http://github.com/carlosantoniodasilva)
+* [Michele Franzin](http://github.com/michelefranzin)
 
 ### TODO
 
 * Improve test coverage
 * Separate Ruby/Rails stuff to make it usable outside Rails
-* Verify correct behavior with time zones
 * Decide on other ActionView hacks (e.g. `text_field_tag`)
 * Implement AM/PM support
 * Cleanup, cleanup, cleanup ...
 
-Copyright (c) 2009-2010 Clemens Kofler &lt;clemens@railway.at&gt;
-http://www.railway.at/
+Copyright (c) 2009-2010 Clemens Kofler <clemens@railway.at>
+<http://www.railway.at/>
 Released under the MIT license
