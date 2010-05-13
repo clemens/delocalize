@@ -101,6 +101,16 @@ You can also customize the output using some options:
 delocalize is most definitely not enterprise-ready! ;-)  
 Or as Yaroslav says: Contains small pieces. Not good for children of age 3 and less. Not enterprise-ready.
 
+### Contributors
+
+People who have contributed to delocalize (in no particular order):
+
+* "Fernando Luizao":http://github.com/fernandoluizao
+* "Stephan":http://github.com/stepahn
+* Lailson Bandeira
+* "Carlos Antonio da Silva":http://github.com/carlosantoniodasilva
+* "Michele Franzin":http://github.com/michelefranzin
+
 ### TODO
 
 * Improve test coverage
