@@ -102,7 +102,7 @@ People who have contributed to delocalize (in no particular order):
 
 * [Fernando Luizao](http://github.com/fernandoluizao)
 * [Stephan](http://github.com/stepahn)
-* Lailson Bandeira
+* [Lailson Bandeira](http://github.com/lailsonbm)
 * [Carlos Antonio da Silva](http://github.com/carlosantoniodasilva)
 * [Michele Franzin](http://github.com/michelefranzin)
 
