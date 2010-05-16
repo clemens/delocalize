@@ -4,9 +4,21 @@ delocalize
 delocalize provides localized date/time and number parsing functionality for Rails.
 
 Installation
----------------
+------------
 
 You can use delocalize either as a gem (preferred) or as a Rails plugin.
+
+### Rails 3
+
+To use the gem version, put the following gem requirement in your `Gemfile`:
+
+    gem "delocalize", :source => 'http://gemcutter.org'
+
+To install it as a plugin, fire up your terminal, go to your Rails app and type:
+
+    $ ruby rails plugin install git://github.com/lailsonbm/delocalize.git
+
+### Rails 2
 
 To use the gem version, put the following gem requirement in your `environment.rb`:
 
@@ -18,7 +30,7 @@ To install it as a plugin, fire up your terminal, go to your Rails app and type:
 
 
 What does it do? And how do I use it?
----------------------------------------------------
+--------------------------------------
 
 Delocalize, just as the name suggest, does pretty much the opposite of localize.
 
@@ -95,6 +107,11 @@ You can also customize the output using some options:
   
   Since `I18n.localize` supports localizing `strftime` strings, we can also do this:
       <%= f.text_field :released_on, :format => "%B %Y" %>
+
+### Compatibility
+
+* Tested with Rails 2.3.5 in Ruby 1.8.7, Ruby 1.9.1 and Ruby 1.9.2 (head)
+* Tested with Rails 3 Beta 3 in Ruby 1.9.2 (head)
 
 ### Contributors
 
