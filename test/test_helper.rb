@@ -1,8 +1,7 @@
 # encoding: utf-8
 
 ENV["RAILS_ENV"] = "test"
-#require File.expand_path(File.dirname(__FILE__) + "/../../../../config/environment")
-require File.expand_path(File.dirname(__FILE__) + "/rails_app/config/environment")
+require File.expand_path(File.join(File.dirname(__FILE__), 'rails_app/config/environment'))
 require 'test_help'
 
 require 'rubygems'
