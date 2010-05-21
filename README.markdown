@@ -16,7 +16,7 @@ To use the gem version, put the following gem requirement in your `Gemfile`:
 
 To install it as a plugin, fire up your terminal, go to your Rails app and type:
 
-    $ ruby rails plugin install git://github.com/lailsonbm/delocalize.git
+    $ ruby rails plugin install git://github.com/clemens/delocalize.git
 
 ### Rails 2
 
