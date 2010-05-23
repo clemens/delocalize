@@ -38,8 +38,15 @@ ActiveRecord::Base.class_eval do
     evaluate_attribute_method attr_name, method_body, "#{attr_name}="
   end
 
-  # overriding to convert numbers with localization
-  # this method belongs to Dirty module
+  def convert_number_column_value_with_localization(value)
+    value = convert_number_column_value_without_localization(value)
+    value = Numeric.parse_localized(value) if I18n.delocalization_enabled?
+    value
+  end
+  alias_method_chain :convert_number_column_value, :localization
+end
+
+ActiveRecord::Dirty.module_eval do
   def field_changed?(attr, old, value)
     if column = column_for_attribute(attr)
       if column.number? && column.null && (old.nil? || old == 0) && value.blank?
@@ -55,11 +62,4 @@ ActiveRecord::Base.class_eval do
 
     old != value
   end
-
-  def convert_number_column_value_with_localization(value)
-    value = convert_number_column_value_without_localization(value)
-    value = Numeric.parse_localized(value) if I18n.delocalization_enabled?
-    value
-  end
-  alias_method_chain :convert_number_column_value, :localization
 end
