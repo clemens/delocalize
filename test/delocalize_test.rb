@@ -230,7 +230,7 @@ class DelocalizeActionViewTest < ActionView::TestCase
       text_field(:product, :price, :value => "1.499,90")
   end
 
-  test "don't convert type if field has errors" do
+  test "doesn't convert the value if field has errors" do
     @product = ProductWithValidation.new(:price => 'this is not a number')
     @product.valid?
     assert_dom_equal '<div class="fieldWithErrors"><input id="product_price" name="product[price]" size="30" type="text" value="this is not a number" /></div>',
