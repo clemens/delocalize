@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{delocalize}
-  s.version = "0.1.6"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Clemens Kofler"]
-  s.date = %q{2010-05-13}
+  s.date = %q{2010-05-30}
   s.description = %q{Delocalize is a tool for parsing localized dates/times and numbers.}
   s.email = %q{clemens@railway.at}
   s.extra_rdoc_files = [
