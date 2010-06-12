@@ -248,4 +248,9 @@ class DelocalizeActionViewTest < ActionView::TestCase
       text_field(:product, :price, :value => "1.499,90")
     }
   end
+
+  test "formats field with default value correctly" do
+    assert_dom_equal '<input id="product_some_value_with_default" name="product[some_value_with_default]" size="30" type="text" value="0,00" />',
+      text_field(:product, :some_value_with_default)
+  end
 end

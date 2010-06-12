@@ -76,4 +76,5 @@ ActiveRecord::Base.connection.create_table :products do |t|
   t.decimal :price
   t.float :weight
   t.integer :times_sold
+  t.decimal :some_value_with_default, :default => 0, :precision => 20, :scale => 2
 end
