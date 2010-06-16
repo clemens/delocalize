@@ -12,15 +12,16 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
 end
 
 ActiveRecord::Base.class_eval do
-  def write_attribute_with_localization(attr_name, value)
+  def write_attribute_with_localization(attr_name, original_value)
+    new_value = original_value
     if column = column_for_attribute(attr_name.to_s)
       if column.date?
-        value = Date.parse_localized(value)
+        new_value = Date.parse_localized(original_value) rescue original_value
       elsif column.time?
-        value = Time.parse_localized(value)
+        new_value = Time.parse_localized(original_value) rescue original_value
       end
     end
-    write_attribute_without_localization(attr_name, value)
+    write_attribute_without_localization(attr_name, new_value)
   end
   alias_method_chain :write_attribute, :localization
 

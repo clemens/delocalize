@@ -57,6 +57,13 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal time, @product.cant_think_of_a_sensible_time_field
   end
 
+  test "invalid dates should be delocalized to nil" do
+    date = '32. Oktober 2009'
+    @product.released_on = date
+    assert_equal nil, @product.released_on
+    assert_equal date, @product.released_on_before_type_cast
+  end
+
   test "uses default parse if format isn't found" do
     date = Date.civil(2009, 10, 19)
 
