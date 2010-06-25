@@ -47,7 +47,10 @@ ActiveRecord::Base.class_eval do
   alias_method_chain :convert_number_column_value, :localization
 end
 
-ActiveRecord::Dirty.module_eval do
+# The dirty module has been moved to ActiveModel in Rails 3
+dirty_module = defined?(ActiveRecord::Dirty) ? ActiveRecord::Dirty : ActiveModel::Dirty
+
+dirty_module.module_eval do
   def field_changed?(attr, old, value)
     if column = column_for_attribute(attr)
       if column.number? && column.null && (old.nil? || old == 0) && value.blank?
