@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{delocalize}
-  s.version = "0.2.0"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Clemens Kofler"]
-  s.date = %q{2010-05-30}
+  s.date = %q{2010-06-25}
   s.description = %q{Delocalize is a tool for parsing localized dates/times and numbers.}
   s.email = %q{clemens@railway.at}
   s.extra_rdoc_files = [
@@ -44,14 +44,14 @@ Gem::Specification.new do |s|
   s.summary = %q{Localized date/time and number parsing}
   s.test_files = [
     "test/delocalize_test.rb",
-     "test/rails_app/app/controllers/application_controller.rb",
-     "test/rails_app/config/boot.rb",
-     "test/rails_app/config/environment.rb",
+     "test/test_helper.rb",
      "test/rails_app/config/environments/test.rb",
+     "test/rails_app/config/environment.rb",
      "test/rails_app/config/initializers/new_rails_defaults.rb",
      "test/rails_app/config/initializers/session_store.rb",
      "test/rails_app/config/routes.rb",
-     "test/test_helper.rb"
+     "test/rails_app/config/boot.rb",
+     "test/rails_app/app/controllers/application_controller.rb"
   ]
 
   if s.respond_to? :specification_version then
