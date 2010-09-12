@@ -57,7 +57,7 @@ module Delocalize
           gsub('%a', "(#{Date::ABBR_DAYNAMES.join('|')})").           # short day name
           gsub('%Y', "(\\d{4})").                                     # long year
           gsub('%y', "(\\d{2})").                                     # short year
-          gsub('%e', "(\\w?\\d{1,2})").                               # short day
+          gsub('%e', "(\\s?\\d{1,2})").                               # short day
           gsub('%d', "(\\d{2})").                                     # full day
           gsub('%H', "(\\d{2})").                                     # hour (24)
           gsub('%M', "(\\d{2})").                                     # minute
