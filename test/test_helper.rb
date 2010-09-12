@@ -1,14 +1,15 @@
 # encoding: utf-8
 
 ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.join(File.dirname(__FILE__), 'rails_app/config/environment'))
-require 'test_help'
+rails_version = ENV["RAILS_VERSION"] || 2
 
-require 'rubygems'
-require 'active_record'
-require 'active_record/test_case'
-require 'action_view'
-require 'action_view/test_case'
+if rails_version.to_i == 2
+  require File.expand_path(File.join(File.dirname(__FILE__), "rails2_app/config/environment"))
+  require 'test_help'
+else
+  require File.expand_path(File.join(File.dirname(__FILE__), "rails3_app/config/environment"))
+  require 'rails/test_help'
+end
 
 I18n.backend.store_translations :de, {
   :date => {

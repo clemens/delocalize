@@ -238,9 +238,11 @@ class DelocalizeActionViewTest < ActionView::TestCase
   end
 
   test "doesn't convert the value if field has errors" do
+    error_class = Rails.version =~ /^3/ ? 'field_with_errors' : 'fieldWithErrors'
+
     @product = ProductWithValidation.new(:price => 'this is not a number')
     @product.valid?
-    assert_dom_equal '<div class="fieldWithErrors"><input id="product_price" name="product[price]" size="30" type="text" value="this is not a number" /></div>',
+    assert_dom_equal %(<div class="#{error_class}"><input id="product_price" name="product[price]" size="30" type="text" value="this is not a number" /></div>),
       text_field(:product, :price)
   end
 
