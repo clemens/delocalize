@@ -1,2 +1,4 @@
 pkg/*
-test/rails_app/log/*
+log/*
+test/rails2_app/log/*
+test/rails3_app/log/*
