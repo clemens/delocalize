@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{delocalize}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Clemens Kofler"]
@@ -45,13 +45,20 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/delocalize_test.rb",
      "test/test_helper.rb",
-     "test/rails_app/config/environments/test.rb",
-     "test/rails_app/config/environment.rb",
-     "test/rails_app/config/initializers/new_rails_defaults.rb",
-     "test/rails_app/config/initializers/session_store.rb",
-     "test/rails_app/config/routes.rb",
-     "test/rails_app/config/boot.rb",
-     "test/rails_app/app/controllers/application_controller.rb"
+     "test/rails2_app/config/environments/test.rb",
+     "test/rails2_app/config/environment.rb",
+     "test/rails2_app/config/initializers/new_rails_defaults.rb",
+     "test/rails2_app/config/initializers/session_store.rb",
+     "test/rails2_app/config/routes.rb",
+     "test/rails2_app/config/boot.rb",
+     "test/rails2_app/app/controllers/application_controller.rb",
+     "test/rails3_app/config/environments/test.rb",
+     "test/rails3_app/config/environment.rb",
+     "test/rails3_app/config/initializers/new_rails_defaults.rb",
+     "test/rails3_app/config/initializers/session_store.rb",
+     "test/rails3_app/config/routes.rb",
+     "test/rails3_app/config/boot.rb",
+     "test/rails3_app/app/controllers/application_controller.rb"
   ]
 
   if s.respond_to? :specification_version then
