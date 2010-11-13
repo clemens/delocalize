@@ -29,14 +29,15 @@ I18n.backend.store_translations :de, {
   },
   :time => {
     :input => {
-      :formats => [:long, :medium, :short, :default, :time]
+      :formats => [:long, :medium, :short, :default, :time, :date_only]
     },
     :formats => {
       :default => "%A, %e. %B %Y, %H:%M Uhr",
       :short => "%e. %B, %H:%M Uhr",
       :medium => "%e. %B %Y, %H:%M Uhr",
       :long => "%A, %e. %B %Y, %H:%M Uhr",
-      :time => "%H:%M Uhr"
+      :time => "%H:%M Uhr",
+      :date_only => "%d.%m.%Y"
     },
     :am => 'vormittags',
     :pm => 'nachmittags'

@@ -4,31 +4,32 @@
 module Delocalize
   class LocalizedDateTimeParser
     class << self
-      def parse(datetime, type)
+      def parse(datetime, type, defaults = {})
         return unless datetime
         return datetime if datetime.respond_to?(:strftime) # already a Date/Time object -> no need to parse it
 
+        today = Date.current
+        defaults = {:year => today.year, :mon => today.mon, :mday => today.mday}.update(defaults)
         translate_month_and_day_names(datetime)
         input_formats(type).each do |original_format|
           next unless datetime =~ /^#{apply_regex(original_format)}$/
 
-          datetime = DateTime.strptime(datetime, original_format)
-          return Date == type ?
-            datetime.to_date :
-            Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
+          parsed =  DateTime._strptime(datetime, original_format)
+          parsed.reverse_merge!(defaults)
+          datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
+          return Date == type ? datetime.to_date : datetime
         end
-        default_parse(datetime, type)
+        default_parse(datetime, type, defaults)
       end
 
       private
-      def default_parse(datetime, type)
+      def default_parse(datetime, type, defaults)
         return if datetime.blank?
         begin
-          today = Date.current
           parsed = Date._parse(datetime)
           return if parsed.empty? # the datetime value is invalid
           # set default year, month and day if not found
-          parsed.reverse_merge!(:year => today.year, :mon => today.mon, :mday => today.mday)
+          parsed.reverse_merge!(defaults)
           datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
           Date == type ? datetime.to_date : datetime
         rescue

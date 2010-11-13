@@ -2,6 +2,30 @@
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'test_helper'))
 
+class DelocalizeDateParseTest < Test::Unit::TestCase
+  def setup
+    Time.zone = 'Berlin'
+  end
+  
+  def test_time_parsing_should_use_defaults
+    t = Time.zone.parse_localized("2010/8/16",{:hour=>13,:min=>37})
+    assert_equal Time.zone.local(2010,8,16,13,37,0),t
+    
+    t = Time.zone.parse_localized("16.08.2010",{:hour=>13,:min=>37})
+    assert_equal Time.zone.local(2010,8,16,13,37,0),t
+    
+    t = Time.zone.parse_localized("09:31 Uhr",{:year=>2010,:mon=>2, :mday=>4})
+    assert_equal Time.zone.local(2010,2,4,9,31,0),t
+  end
+  
+  def test_time_parsing_should_use_today_as_default_day_if_no_other_day_given
+    today = Date.current
+    t = Time.zone.parse_localized("09:31 Uhr")
+    assert_equal Time.zone.local(today.year,today.mon,today.mday,9,31,0),t
+  end
+  
+end
+
 class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   def setup
     Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
