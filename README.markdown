@@ -12,7 +12,7 @@ You can use delocalize either as a gem (preferred) or as a Rails plugin.
 
 To use the gem version, put the following gem requirement in your `Gemfile`:
 
-    gem "delocalize", :source => 'http://gemcutter.org'
+    gem "delocalize"
 
 To install it as a plugin, fire up your terminal, go to your Rails app and type:
 
