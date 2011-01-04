@@ -6,7 +6,7 @@ ActionView::Helpers::InstanceTag.class_eval do
 
   alias original_to_input_field_tag to_input_field_tag
   def to_input_field_tag(field_type, options = {})
-    options.symbolize_keys!
+    options = options.symbolize_keys
     # numbers and dates/times should be localized unless value is already defined
     if object && options[:value].blank? && object.respond_to?(:column_for_attribute) && column = object.column_for_attribute(method_name)
       # a little verbose
