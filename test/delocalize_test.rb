@@ -50,11 +50,21 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal time, @product.published_at
   end
 
-  test "delocalizes localized time" do
-    now = Time.current
-    time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
-    @product.cant_think_of_a_sensible_time_field = '09:00 Uhr'
-    assert_equal time, @product.cant_think_of_a_sensible_time_field
+  # TODO can I somehow do this smarter? or should I use another zone w/o DST?
+  if Time.current.dst?
+    test "delocalizes localized time (DST)" do
+      now = Time.current
+      time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
+      @product.cant_think_of_a_sensible_time_field = '09:00 Uhr'
+      assert_equal time, @product.cant_think_of_a_sensible_time_field
+    end
+  else
+    test "delocalizes localized time (non-DST)" do
+      now = Time.current
+      time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
+      @product.cant_think_of_a_sensible_time_field = '08:00 Uhr'
+      assert_equal time, @product.cant_think_of_a_sensible_time_field
+    end
   end
 
   test "invalid dates should be delocalized to nil" do
@@ -64,20 +74,39 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal date, @product.released_on_before_type_cast
   end
 
-  test "uses default parse if format isn't found" do
-    date = Date.civil(2009, 10, 19)
+  # TODO can I somehow do this smarter? or should I use another zone w/o DST?
+  if Time.current.dst?
+    test "uses default parse if format isn't found (DST)" do
+      date = Date.civil(2009, 10, 19)
 
-    @product.released_on = '2009/10/19'
-    assert_equal date, @product.released_on
+      @product.released_on = '2009/10/19'
+      assert_equal date, @product.released_on
 
-    time = Time.gm(2009, 3, 1, 11, 0, 0).in_time_zone
-    @product.published_at = '2009/03/01 12:00'
-    assert_equal time, @product.published_at
+      time = Time.gm(2009, 3, 1, 11, 0, 0).in_time_zone
+      @product.published_at = '2009/03/01 12:00'
+      assert_equal time, @product.published_at
 
-    now = Time.current
-    time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
-    @product.cant_think_of_a_sensible_time_field = '09:00'
-    assert_equal time, @product.cant_think_of_a_sensible_time_field
+      now = Time.current
+      time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
+      @product.cant_think_of_a_sensible_time_field = '09:00'
+      assert_equal time, @product.cant_think_of_a_sensible_time_field
+    end
+  else
+    test "uses default parse if format isn't found (non-DST)" do
+      date = Date.civil(2009, 10, 19)
+
+      @product.released_on = '2009/10/19'
+      assert_equal date, @product.released_on
+
+      time = Time.gm(2009, 3, 1, 11, 0, 0).in_time_zone
+      @product.published_at = '2009/03/01 12:00'
+      assert_equal time, @product.published_at
+
+      now = Time.current
+      time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
+      @product.cant_think_of_a_sensible_time_field = '08:00'
+      assert_equal time, @product.cant_think_of_a_sensible_time_field
+    end
   end
 
   test "should return nil if the input is empty or invalid" do

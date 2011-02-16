@@ -131,6 +131,6 @@ People who have contributed to delocalize (in no particular order):
 * Implement AM/PM support
 * Cleanup, cleanup, cleanup ...
 
-Copyright (c) 2009-2010 Clemens Kofler <clemens@railway.at>
+Copyright (c) 2009-2011 Clemens Kofler <clemens@railway.at>
 <http://www.railway.at/>
 Released under the MIT license
