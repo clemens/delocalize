@@ -54,9 +54,9 @@ Gem::Specification.new do |s|
      "test/rails2_app/app/controllers/application_controller.rb",
      "test/rails3_app/config/environments/test.rb",
      "test/rails3_app/config/environment.rb",
-     "test/rails3_app/config/initializers/new_rails_defaults.rb",
-     "test/rails3_app/config/initializers/session_store.rb",
-     "test/rails3_app/config/routes.rb",
+     #"test/rails3_app/config/initializers/new_rails_defaults.rb",
+     #"test/rails3_app/config/initializers/session_store.rb",
+     #"test/rails3_app/config/routes.rb",
      "test/rails3_app/config/boot.rb",
      "test/rails3_app/app/controllers/application_controller.rb"
   ]
