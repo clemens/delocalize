@@ -5,5 +5,9 @@ DateTime.class_eval do
     def parse_localized(datetime)
       Delocalize::LocalizedDateTimeParser.parse(datetime, self)
     end
+
+    def valid_localized?(datetime)
+      Delocalize::LocalizedDateTimeParser.valid?(datetime, self)
+    end
   end
 end

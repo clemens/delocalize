@@ -20,6 +20,10 @@ module Delocalize
         default_parse(datetime, type)
       end
 
+      def valid?(datetime, type)
+        parse(datetime, type) rescue false
+      end
+
       private
       def default_parse(datetime, type)
         return if datetime.blank?
