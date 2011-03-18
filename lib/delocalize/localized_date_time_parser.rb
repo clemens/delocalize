@@ -21,7 +21,9 @@ module Delocalize
       end
 
       def valid?(datetime, type)
-        parse(datetime, type) rescue false
+        parse(datetime, type).respond_to?(:strftime)
+      rescue ArgumentError
+        false
       end
 
       private
