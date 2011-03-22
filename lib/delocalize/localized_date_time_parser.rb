@@ -12,7 +12,7 @@ module Delocalize
       '%a' => "(#{Date::ABBR_DAYNAMES.join('|')})",           # short day name
       '%Y' => "(\\d{4})",                                     # long year
       '%y' => "(\\d{2})",                                     # short year
-      '%e' => "(\\s?\\d{1,2})",                               # short day
+      '%e' => "(\\s\\d|\\d{2})",                              # short day
       '%d' => "(\\d{2})",                                     # full day
       '%H' => "(\\d{2})",                                     # hour (24)
       '%M' => "(\\d{2})",                                     # minute
