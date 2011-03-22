@@ -3,6 +3,22 @@
 #   * proper documentation (comments)
 module Delocalize
   class LocalizedDateTimeParser
+    # extend/change this according to your needs by merging your custom regexps
+    REGEXPS = {
+      '%B' => "(#{Date::MONTHNAMES.compact.join('|')})",      # long month name
+      '%b' => "(#{Date::ABBR_MONTHNAMES.compact.join('|')})", # short month name
+      '%m' => "(\\d{2})",                                     # numeric month
+      '%A' => "(#{Date::DAYNAMES.join('|')})",                # full day name
+      '%a' => "(#{Date::ABBR_DAYNAMES.join('|')})",           # short day name
+      '%Y' => "(\\d{4})",                                     # long year
+      '%y' => "(\\d{2})",                                     # short year
+      '%e' => "(\\s?\\d{1,2})",                               # short day
+      '%d' => "(\\d{2})",                                     # full day
+      '%H' => "(\\d{2})",                                     # hour (24)
+      '%M' => "(\\d{2})",                                     # minute
+      '%S' => "(\\d{2})"                                      # second
+    }
+
     class << self
       def parse(datetime, type)
         return unless datetime
@@ -49,19 +65,7 @@ module Delocalize
       end
 
       def apply_regex(format)
-        # maybe add other options as well
-        format.gsub('%B', "(#{Date::MONTHNAMES.compact.join('|')})"). # long month name
-          gsub('%b', "(#{Date::ABBR_MONTHNAMES.compact.join('|')})"). # short month name
-          gsub('%m', "(\\d{2})").                                     # numeric month
-          gsub('%A', "(#{Date::DAYNAMES.join('|')})").                # full day name
-          gsub('%a', "(#{Date::ABBR_DAYNAMES.join('|')})").           # short day name
-          gsub('%Y', "(\\d{4})").                                     # long year
-          gsub('%y', "(\\d{2})").                                     # short year
-          gsub('%e', "(\\s?\\d{1,2})").                               # short day
-          gsub('%d', "(\\d{2})").                                     # full day
-          gsub('%H', "(\\d{2})").                                     # hour (24)
-          gsub('%M', "(\\d{2})").                                     # minute
-          gsub('%S', "(\\d{2})")                                      # second
+        format.gsub(/(#{REGEXPS.keys.join('|')})/) { |s| REGEXPS[$1] }
       end
     end
   end
