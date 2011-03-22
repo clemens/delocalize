@@ -141,6 +141,13 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert @product.weight_changed?
   end
 
+  test "attributes that didn't change shouldn't be marked dirty" do
+    @product.name = "Good cookies, Really good"
+    @product.save
+    @product.name = "Good cookies, Really good"
+    assert !@product.name_changed?
+  end
+
   test "should remember the value before type cast" do
     @product.price = "asd"
     assert_equal @product.price, 0
