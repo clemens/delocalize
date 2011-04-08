@@ -39,6 +39,25 @@ ActiveRecord::Base.class_eval do
     evaluate_attribute_method attr_name, method_body, "#{attr_name}="
   end
 
+  # This is necessary for rails 3, which does not have
+  # define_write_method_for_time_zone_conversion anymore.
+  def self.define_method_attribute=(attr_name)
+    if create_time_zone_conversion_attribute?(attr_name, columns_hash[attr_name])
+      method_body, line = <<-EOV, __LINE__ + 1
+        def #{attr_name}=(time)
+          unless time.acts_like?(:time)
+            time = time.is_a?(String) ? (I18n.delocalization_enabled? ? Time.zone.parse_localized(time) : Time.zone.parse(time)) : time.to_time rescue time
+          end
+          time = time.in_time_zone rescue nil if time
+          write_attribute(:#{attr_name}, time)
+        end
+      EOV
+      generated_attribute_methods.module_eval(method_body, __FILE__, line)
+    else
+      super
+    end
+  end
+
   def convert_number_column_value_with_localization(value)
     value = convert_number_column_value_without_localization(value)
     value = Numeric.parse_localized(value) if I18n.delocalization_enabled?
