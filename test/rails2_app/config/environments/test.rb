@@ -26,3 +26,6 @@ config.action_mailer.delivery_method = :test
 # This is necessary if your schema can't be completely dumped by the schema dumper,
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
+
+# Load our custom localization file in Rails 2 test app
+config.i18n.load_path += Dir[File.join(RAILS_ROOT, 'config', 'locales', '*.{rb,yml}').to_s]

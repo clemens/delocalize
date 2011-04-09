@@ -3,7 +3,8 @@ Why this fork?
 
 This is a fork of [clemens/delocalize](http://github.com/clemens/delocalize) which fixes the following:
 * Adds Rails 3 support;
-* Fixed tests so their outcome depend less on the timezone they are run into.
+* Fixed tests so their outcome depend less on the timezone they are run into;
+* Adds support for changing the current locale of the application at runtime.
 
 delocalize
 ==========

@@ -6,6 +6,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   def setup
     Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
     @product = Product.new
+    I18n.locale = :de # so that if we change the locale in one test, it stays put in all the others
   end
 
   test "delocalizes localized number" do
@@ -107,6 +108,23 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
       @product.cant_think_of_a_sensible_time_field = '07:00'
       assert_equal time, @product.cant_think_of_a_sensible_time_field
     end
+  end
+
+  test "should parse english format when locale is changed at runtime" do
+    I18n.locale = :en
+    date = Date.civil(2009, 10, 19)
+
+    @product.released_on = '10/19/2009'
+    assert_equal date, @product.released_on
+
+    time = Time.zone.local(2009, 3, 1, 11, 0, 0)
+    @product.published_at = '03/01/2009 11:00'
+    assert_equal time, @product.published_at
+
+    now = Time.current
+    time = Time.zone.local(now.year, now.month, now.day, 7, 0, 0)
+    @product.cant_think_of_a_sensible_time_field = '07:00'
+    assert_equal time, @product.cant_think_of_a_sensible_time_field
   end
 
   test "should return nil if the input is empty or invalid" do
