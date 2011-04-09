@@ -2,11 +2,18 @@ Why this fork?
 ==============
 
 This is a fork of [clemens/delocalize](http://github.com/clemens/delocalize) which fixes the following:
+
 * Adds Rails 3 support;
 * Fixes tests so their outcome depend less on the timezone they are run into;
 * Adds support for changing the current locale of the application at runtime.
 
-Rails 3 tests can be run with "rake test RAILS_VERSION=3", Rails 2 tests with "rake test RAILS_VERSION=2".
+Rails 3 tests can be run with:
+
+    $ rake test RAILS_VERSION=3
+
+Rails 2 tests can be run with:
+
+    $ rake test RAILS_VERSION=2
 
 TODO
 ----
