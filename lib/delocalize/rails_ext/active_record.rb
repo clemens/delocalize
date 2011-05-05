@@ -1,4 +1,9 @@
 require 'active_record/connection_adapters/abstract/schema_definitions'
+begin
+  require 'active_record/connection_adapters/column'
+rescue LoadError
+  # Not Rails 3.1, it seems
+end
 
 # let's hack into ActiveRecord a bit - everything at the lowest possible level, of course, so we minimalize side effects
 ActiveRecord::ConnectionAdapters::Column.class_eval do
