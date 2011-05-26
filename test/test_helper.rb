@@ -7,7 +7,7 @@ if rails_version.to_i == 2
   require File.expand_path(File.join(File.dirname(__FILE__), "rails2_app/config/environment"))
   require 'test_help'
 else
-  require File.expand_path(File.join(File.dirname(__FILE__), "rails3_app/config/environment"))
+  require File.expand_path(File.join(File.dirname(__FILE__), "rails#{rails_version}_app/config/environment"))
   require 'rails/test_help'
 end
 
