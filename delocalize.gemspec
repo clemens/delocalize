@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{delocalize}
-  s.version = "0.2.3"
+  s.version = "0.2.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Clemens Kofler"]
@@ -54,9 +54,6 @@ Gem::Specification.new do |s|
      "test/rails2_app/app/controllers/application_controller.rb",
      "test/rails3_app/config/environments/test.rb",
      "test/rails3_app/config/environment.rb",
-     "test/rails3_app/config/initializers/new_rails_defaults.rb",
-     "test/rails3_app/config/initializers/session_store.rb",
-     "test/rails3_app/config/routes.rb",
      "test/rails3_app/config/boot.rb",
      "test/rails3_app/app/controllers/application_controller.rb"
   ]

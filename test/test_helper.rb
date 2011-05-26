@@ -6,9 +6,13 @@ rails_version = ENV["RAILS_VERSION"] || 2
 if rails_version.to_i == 2
   require File.expand_path(File.join(File.dirname(__FILE__), "rails2_app/config/environment"))
   require 'test_help'
+  # We load additional translation files for Rails 2 in test/rails2_app/config/environments/test.rb
 else
   require File.expand_path(File.join(File.dirname(__FILE__), "rails#{rails_version}_app/config/environment"))
   require 'rails/test_help'
+  # Load additional translation files for Rails 3.
+  # We use the same localization files as for the Rails 2 test app just for DRY's sake.
+  I18n.load_path += Dir[Rails.root.join('test', 'rails2_app', 'config', 'locales', '*.{rb,yml}')]
 end
 
 I18n.backend.store_translations :de, {

@@ -6,6 +6,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   def setup
     Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
     @product = Product.new
+    I18n.locale = :de # so that if we change the locale in one test, it stays put in all the others
   end
 
   test "delocalizes localized number" do
@@ -34,19 +35,19 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   end
 
   test "delocalizes localized datetime with year" do
-    time = Time.gm(2009, 3, 1, 11, 0, 0).in_time_zone
+    time = Time.zone.local(2009, 3, 1, 11, 0, 0)
 
-    @product.published_at = 'Sonntag, 1. März 2009, 12:00 Uhr'
+    @product.published_at = 'Sonntag, 1. März 2009, 11:00 Uhr'
     assert_equal time, @product.published_at
 
-    @product.published_at = '1. März 2009, 12:00 Uhr'
+    @product.published_at = '1. März 2009, 11:00 Uhr'
     assert_equal time, @product.published_at
   end
 
   test "delocalizes localized datetime without year" do
-    time = Time.gm(Date.today.year, 3, 1, 11, 0, 0).in_time_zone
+    time = Time.zone.local(Date.today.year, 3, 1, 11, 0, 0)
 
-    @product.published_at = '1. März, 12:00 Uhr'
+    @product.published_at = '1. März, 11:00 Uhr'
     assert_equal time, @product.published_at
   end
 
@@ -61,8 +62,8 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   else
     test "delocalizes localized time (non-DST)" do
       now = Time.current
-      time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
-      @product.cant_think_of_a_sensible_time_field = '08:00 Uhr'
+      time = Time.zone.local(now.year, now.month, now.day, 7, 0, 0)
+      @product.cant_think_of_a_sensible_time_field = '07:00 Uhr'
       assert_equal time, @product.cant_think_of_a_sensible_time_field
     end
   end
@@ -98,15 +99,32 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
       @product.released_on = '2009/10/19'
       assert_equal date, @product.released_on
 
-      time = Time.gm(2009, 3, 1, 11, 0, 0).in_time_zone
-      @product.published_at = '2009/03/01 12:00'
+      time = Time.zone.local(2009, 3, 1, 11, 0, 0)
+      @product.published_at = '2009/03/01 11:00'
       assert_equal time, @product.published_at
 
       now = Time.current
-      time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
-      @product.cant_think_of_a_sensible_time_field = '08:00'
+      time = Time.zone.local(now.year, now.month, now.day, 7, 0, 0)
+      @product.cant_think_of_a_sensible_time_field = '07:00'
       assert_equal time, @product.cant_think_of_a_sensible_time_field
     end
+  end
+
+  test "should parse english format when locale is changed at runtime" do
+    I18n.locale = :en
+    date = Date.civil(2009, 10, 19)
+
+    @product.released_on = '10/19/2009'
+    assert_equal date, @product.released_on
+
+    time = Time.zone.local(2009, 3, 1, 11, 0, 0)
+    @product.published_at = '03/01/2009 11:00'
+    assert_equal time, @product.published_at
+
+    now = Time.current
+    time = Time.zone.local(now.year, now.month, now.day, 7, 0, 0)
+    @product.cant_think_of_a_sensible_time_field = '07:00'
+    assert_equal time, @product.cant_think_of_a_sensible_time_field
   end
 
   test "should return nil if the input is empty or invalid" do
@@ -221,7 +239,7 @@ class DelocalizeActionViewTest < ActionView::TestCase
   end
 
   test "shows text field using formatted date and time" do
-    @product.published_at = Time.local(2009, 3, 1, 12, 0, 0)
+    @product.published_at = Time.zone.local(2009, 3, 1, 12, 0, 0)
     # careful - leading whitespace with %e
     assert_dom_equal '<input id="product_published_at" name="product[published_at]" size="30" type="text" value="Sonntag,  1. März 2009, 12:00 Uhr" />',
       text_field(:product, :published_at)
@@ -234,7 +252,7 @@ class DelocalizeActionViewTest < ActionView::TestCase
   end
 
   test "shows text field using formatted date and time with format" do
-    @product.published_at = Time.local(2009, 3, 1, 12, 0, 0)
+    @product.published_at = Time.zone.local(2009, 3, 1, 12, 0, 0)
     # careful - leading whitespace with %e
     assert_dom_equal '<input id="product_published_at" name="product[published_at]" size="30" type="text" value=" 1. März, 12:00 Uhr" />',
       text_field(:product, :published_at, :format => :short)
@@ -299,3 +317,4 @@ class DelocalizeActionViewTest < ActionView::TestCase
       text_field(:product, :some_value_with_default)
   end
 end
+
