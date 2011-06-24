@@ -36,6 +36,12 @@ module Delocalize
         default_parse(datetime, type)
       end
 
+      def valid?(datetime, type)
+        parse(datetime, type).respond_to?(:strftime)
+      rescue ArgumentError
+        false
+      end
+
       private
       def default_parse(datetime, type)
         return if datetime.blank?
