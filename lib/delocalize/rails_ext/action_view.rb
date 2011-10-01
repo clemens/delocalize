@@ -25,7 +25,7 @@ ActionView::Helpers::InstanceTag.class_eval do
           hidden_for_integer = field_type == 'hidden' && column.type == :integer
 
           # the number will be formatted only if it has no errors
-          if object.respond_to?(:errors) && !object.errors[method_name].try(:any?)
+          if object.respond_to?(:errors) && !Array(object.errors[method_name]).try(:any?)
             # we don't format integer hidden fields because this breaks nested_attributes
             options[:value] = number_with_precision(value, opts) unless hidden_for_integer
           end
