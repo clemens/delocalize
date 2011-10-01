@@ -14,4 +14,6 @@ task :test_all do
   sh "rake test"
   puts "\n * Running tests against Rails 3...\n\n"
   sh "rake test RAILS_VERSION=3"
+  puts "\n * Running tests against Rails 3.1...\n\n"
+  sh "rake test RAILS_VERSION=3.1"
 end
