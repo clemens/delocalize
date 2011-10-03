@@ -20,6 +20,8 @@ To install it as a plugin, fire up your terminal, go to your Rails app and type:
 
 ### Rails 2
 
+Note: Support for Rails 2 has been discontinued. This version is only considered stable for Rails 3. If you need Rails 2 support, please use the `0.2.x` versions or the `0-2-stable` branch respectively.
+
 To use the gem version, put the following gem requirement in your `environment.rb`:
 
     config.gem "delocalize", :source => 'http://gemcutter.org'
