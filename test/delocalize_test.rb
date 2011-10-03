@@ -77,39 +77,20 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal date, @product.released_on_before_type_cast
   end
 
-  # TODO can I somehow do this smarter? or should I use another zone w/o DST?
-  if Time.current.dst?
-    test "uses default parse if format isn't found (DST)" do
-      date = Date.civil(2009, 10, 19)
+  test "uses default parse if format isn't found (non-DST)" do
+    date = Date.civil(2009, 10, 19)
 
-      @product.released_on = '2009/10/19'
-      assert_equal date, @product.released_on
+    @product.released_on = '2009/10/19'
+    assert_equal date, @product.released_on
 
-      time = Time.gm(2009, 3, 1, 11, 0, 0).in_time_zone
-      @product.published_at = '2009/03/01 12:00'
-      assert_equal time, @product.published_at
+    time = Time.zone.local(2009, 3, 1, 12, 0, 0)
+    @product.published_at = '2009/03/01 12:00'
+    assert_equal time, @product.published_at
 
-      now = Time.current
-      time = Time.gm(now.year, now.month, now.day, 7, 0, 0).in_time_zone
-      @product.cant_think_of_a_sensible_time_field = '09:00'
-      assert_equal time, @product.cant_think_of_a_sensible_time_field
-    end
-  else
-    test "uses default parse if format isn't found (non-DST)" do
-      date = Date.civil(2009, 10, 19)
-
-      @product.released_on = '2009/10/19'
-      assert_equal date, @product.released_on
-
-      time = Time.zone.local(2009, 3, 1, 12, 0, 0)
-      @product.published_at = '2009/03/01 12:00'
-      assert_equal time, @product.published_at
-
-      now = Time.current
-      time = Time.zone.local(now.year, now.month, now.day, 8, 0, 0)
-      @product.cant_think_of_a_sensible_time_field = '08:00'
-      assert_equal time, @product.cant_think_of_a_sensible_time_field
-    end
+    now = Time.current
+    time = Time.zone.local(now.year, now.month, now.day, 8, 0, 0)
+    @product.cant_think_of_a_sensible_time_field = '08:00'
+    assert_equal time, @product.cant_think_of_a_sensible_time_field
   end
 
   test "should return nil if the input is empty or invalid" do
