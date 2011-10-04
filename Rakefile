@@ -2,7 +2,7 @@ require 'rake'
 require 'rake/testtask'
 require 'rdoc/task'
 
-desc 'Test the delocalize plugin.'
+desc 'Test the delocalize gem.'
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib'
   t.libs << 'test'
