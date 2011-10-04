@@ -6,30 +6,23 @@ delocalize provides localized date/time and number parsing functionality for Rai
 Installation
 ------------
 
-You can use delocalize either as a gem (preferred) or as a Rails plugin.
+You can use delocalize as a gem (preferred). Using delocalize as a Rails plugin has been discontinued and is no supported. If you want/need to use delocalize as a gem (I really don't see a reason why you'd want to), consider using the `0-2-stable` branch.
 
 ### Rails 3
 
-To use the gem version, put the following gem requirement in your `Gemfile`:
+To use delocalize, put the following gem requirement in your `Gemfile`:
 
     gem "delocalize"
-
-To install it as a plugin, fire up your terminal, go to your Rails app and type:
-
-    $ ruby rails plugin install git://github.com/clemens/delocalize.git
 
 ### Rails 2
 
 Note: Support for Rails 2 has been discontinued. This version is only considered stable for Rails 3. If you need Rails 2 support, please use the `0.2.x` versions or the `0-2-stable` branch respectively.
 
-To use the gem version, put the following gem requirement in your `environment.rb`:
+To use delocalize, put the following gem requirement in your `environment.rb`:
 
     config.gem "delocalize", :source => 'http://gemcutter.org'
 
-To install it as a plugin, fire up your terminal, go to your Rails app and type:
-
-    $ ruby script/plugin install git://github.com/clemens/delocalize.git
-
+In Rails 2.3, alternatively, you can use it with Bundler. See http://gembundler.com/rails23.html for instructions.
 
 What does it do? And how do I use it?
 --------------------------------------
