@@ -1,6 +1,8 @@
 delocalize
 ==========
 
+[![Build Status](https://secure.travis-ci.org/clemens/delocalize.png)](http://travis-ci.org/clemens/delocalize)
+
 delocalize provides localized date/time and number parsing functionality for Rails.
 
 Installation
