@@ -257,6 +257,12 @@ class DelocalizeActionViewTest < ActionView::TestCase
       text_field(:product, :price, :value => "1.499,90")
   end
 
+  test "delocalizes given :value" do
+    @product.price = 1299.9
+    assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1.499,90" />',
+      text_field(:product, :price, :value => 1499.90)
+  end
+
   test "doesn't convert the value if field has errors" do
     @product = ProductWithValidation.new(:price => 'this is not a number')
     @product.valid?
