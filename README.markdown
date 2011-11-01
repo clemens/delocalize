@@ -108,6 +108,102 @@ You can also customize the output using some options:
   Since `I18n.localize` supports localizing `strftime` strings, we can also do this:
       <%= f.text_field :released_on, :format => "%B %Y" %>
 
+### Ruby 1.9 + Psych YAML Parser
+
+You will need to adjust the localization formatting when using the new YAML parser Psych.  Below is an example error message you may receive in your logs as well as an example of acceptable formatting and helpful links for reference:
+
+__Error message from logs:__
+
+    Psych::SyntaxError (couldn't parse YAML at line x column y):
+
+__References:__
+
+The solution can be found here: http://stackoverflow.com/questions/4980877/rails-error-couldnt-parse-yaml#answer-5323060
+
+http://pivotallabs.com/users/mkocher/blog/articles/1692-yaml-psych-and-ruby-1-9-2-p180-here-there-be-dragons
+
+__Psych Preferred Formatting:__
+
+    en:
+      number:
+        format:
+          separator: '.'
+          delimiter: ','
+          precision: 2
+      date:
+        input:
+          formats:
+            - :default
+            - :long
+            - :short
+        formats:
+          default: "%m/%d/%Y"
+          short: "%b %e"
+          long: "%B %e, %Y"
+          only_day: "%e"
+        day_names:
+          - Sunday
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
+        abbr_day_names:
+          - Sun
+          - Mon
+          - Tue
+          - Wed
+          - Thur
+          - Fri
+          - Sat
+        month_names:
+          - ~
+          - January
+          - February
+          - March
+          - April
+          - May
+          - June
+          - July
+          - August
+          - September
+          - October
+          - November
+          - December
+        abbr_month_names:
+          - ~
+          - Jan
+          - Feb
+          - Mar
+          - Apr
+          - May
+          - Jun
+          - Jul
+          - Aug
+          - Sep
+          - Oct
+          - Nov
+          - Dec
+        order:
+          - :month
+          - :day
+          - :year
+      time:
+        input:
+          formats: 
+            - :default
+            - :long
+            - :short
+            - :time
+        formats:
+          default: "%m/%d/%Y %I:%M%p"
+          short: "%B %e %I:%M %p"
+          long: "%A, %B %e, %Y %I:%M%p"
+          time: "%l:%M%p"
+        am: "am"
+        pm: "pm"
+
 ### Compatibility
 
 * Tested with Rails 2.3.5 in Ruby 1.8.7, Ruby 1.9.1 and Ruby 1.9.2 (head)
