@@ -7,13 +7,13 @@ module Delocalize
     REGEXPS = {
       '%B' => "(#{Date::MONTHNAMES.compact.join('|')})",      # long month name
       '%b' => "(#{Date::ABBR_MONTHNAMES.compact.join('|')})", # short month name
-      '%m' => "(\\d{2})",                                     # numeric month
+      '%m' => "(\\d{1,2})",                                   # numeric month
       '%A' => "(#{Date::DAYNAMES.join('|')})",                # full day name
       '%a' => "(#{Date::ABBR_DAYNAMES.join('|')})",           # short day name
       '%Y' => "(\\d{4})",                                     # long year
       '%y' => "(\\d{2})",                                     # short year
       '%e' => "(\\s\\d|\\d{2})",                              # short day
-      '%d' => "(\\d{2})",                                     # full day
+      '%d' => "(\\d{1,2})",                                   # full day
       '%H' => "(\\d{2})",                                     # hour (24)
       '%M' => "(\\d{2})",                                     # minute
       '%S' => "(\\d{2})"                                      # second
@@ -61,7 +61,8 @@ module Delocalize
       def input_formats(type)
         # Date uses date formats, all others use time formats
         type = type == Date ? :date : :time
-        (@input_formats ||= {})[type] ||= I18n.t(:"#{type}.formats").slice(*I18n.t(:"#{type}.input.formats")).values
+        (@input_formats ||= {})[type] ||=
+            I18n.t(:"#{type}.formats").slice(*I18n.t(:"#{type}.input.formats").collect{|k|k.to_sym}).values
       end
 
       def apply_regex(format)
