@@ -11,7 +11,7 @@ require 'delocalize/rails_ext/action_view'
 require 'delocalize/rails_ext/active_record'
 require 'delocalize/rails_ext/time_zone'
 
-I18n.backend.store_translations :de, {
+de = {
   :date => {
     :input => {
       :formats => [:long, :short, :default]
@@ -49,6 +49,13 @@ I18n.backend.store_translations :de, {
     }
   }
 }
+
+# deeply clone the hash for a fantasy language called tt
+tt = Marshal.load(Marshal.dump(de))
+tt[:date][:formats][:default] = '%d|%m|%Y'
+
+I18n.backend.store_translations :de, de
+I18n.backend.store_translations :tt, tt
 
 I18n.locale = :de
 

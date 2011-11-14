@@ -61,7 +61,7 @@ module Delocalize
       def input_formats(type)
         # Date uses date formats, all others use time formats
         type = type == Date ? :date : :time
-        (@input_formats ||= {})[type] ||= I18n.t(:"#{type}.formats").slice(*I18n.t(:"#{type}.input.formats")).values
+        ((@input_formats ||= {})[I18n.locale] ||= {})[type] ||= I18n.t(:"#{type}.formats").slice(*I18n.t(:"#{type}.input.formats")).values
       end
 
       def apply_regex(format)
