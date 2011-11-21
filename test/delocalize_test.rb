@@ -29,6 +29,19 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal date, @product.released_on
   end
 
+  test "delocalizes localized date with year even if locale changes" do
+    date = Date.civil(2009, 10, 19)
+
+    @product.released_on = '19. Oktober 2009'
+    assert_equal date, @product.released_on
+
+    I18n.with_locale :tt do
+      @product.released_on = '10|11|2009'
+      date = Date.civil(2009, 11, 10)
+      assert_equal date, @product.released_on
+    end
+  end
+
   test "delocalizes localized date without year" do
     date = Date.civil(Date.today.year, 10, 19)
 
