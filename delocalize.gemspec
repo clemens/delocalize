@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{delocalize}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.authors = ["Clemens Kofler"]
   s.summary = %q{Localized date/time and number parsing}
