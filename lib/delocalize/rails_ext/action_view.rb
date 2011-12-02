@@ -1,3 +1,5 @@
+require 'action_view'
+
 # TODO: also override other methods like to_check_box_tag since they might contain numeric values?
 # ActionView needs some patching too
 

@@ -1,3 +1,5 @@
+require 'active_support/core_ext/module/attribute_accessors'
+
 module I18n
   mattr_accessor :enable_delocalization
   I18n.enable_delocalization = true

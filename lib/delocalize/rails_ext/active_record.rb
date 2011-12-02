@@ -1,3 +1,5 @@
+require 'active_record'
+
 require 'active_record/connection_adapters/abstract/schema_definitions'
 begin
   require 'active_record/connection_adapters/column'
