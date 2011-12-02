@@ -1,15 +1,13 @@
 # encoding: utf-8
 
-ENV["RAILS_ENV"] = "test"
-rails_version = ENV["RAILS_VERSION"] || 2
+require 'rubygems'
+require 'bundler'
 
-if rails_version.to_i == 2
-  require File.expand_path(File.join(File.dirname(__FILE__), "rails2_app/config/environment"))
-  require 'test_help'
-else
-  require File.expand_path(File.join(File.dirname(__FILE__), "rails#{rails_version}_app/config/environment"))
-  require 'rails/test_help'
-end
+Bundler.require(:default, :development)
+
+Combustion.initialize!
+
+require 'test/unit'
 
 I18n.backend.store_translations :de, {
   :date => {

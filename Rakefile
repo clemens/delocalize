@@ -1,19 +1,14 @@
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
+require 'rdoc/task'
 
-require File.expand_path(File.join(File.dirname(__FILE__), 'tasks/documentation'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'tasks/testing'))
+desc 'Test the delocalize plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/delocalize_test.rb'
+  t.verbose = true
+end
 
 desc 'Default: run unit tests.'
 task :default => :test
-
-desc 'Run unit tests against Rails 2 and 3.'
-task :test_all do
-  puts "\n * Running tests against Rails 2...\n\n"
-  sh "rake test"
-  puts "\n * Running tests against Rails 3...\n\n"
-  sh "rake test RAILS_VERSION=3"
-  puts "\n * Running tests against Rails 3.1...\n\n"
-  sh "rake test RAILS_VERSION=3.1"
-end

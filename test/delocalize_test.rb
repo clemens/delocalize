@@ -1,6 +1,8 @@
 # encoding: utf-8
 
-require File.expand_path(File.join(File.dirname(__FILE__), 'test_helper'))
+require 'test_helper'
+require 'active_record/test_case'
+require 'action_view/test_case'
 
 class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   def setup

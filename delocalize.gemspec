@@ -59,5 +59,7 @@ Gem::Specification.new do |s|
      "test/rails3.1_app/app/controllers/application_controller.rb"
   ]
 
-  s.add_dependency 'rails', '>= 2.3'
+  s.add_dependency 'rails', '>= 3.0'
+  s.add_development_dependency 'combustion', '~> 0.3.1'
+  s.add_development_dependency 'sqlite3', '~> 1.3.4'
 end
