@@ -47,6 +47,13 @@ de = {
       :separator => ',',
       :delimiter => '.'
     }
+  },
+  :activerecord => {
+    :errors => {
+      :messages => {
+        :not_a_number => 'is not a number'
+      }
+    }
   }
 }
 
@@ -73,6 +80,14 @@ class ProductWithValidation < Product
   validates_presence_of :price
 end
 
+class ProductWithBusinessValidation < Product
+  validate do |record|
+    if record.price > 10
+      record.errors.add(:price, :invalid)
+    end
+  end
+end
+
 config = YAML.load_file(File.dirname(__FILE__) + '/database.yml')
 ActiveRecord::Base.establish_connection(config['test'])
 
@@ -86,3 +101,4 @@ ActiveRecord::Base.connection.create_table :products do |t|
   t.integer :times_sold
   t.decimal :some_value_with_default, :default => 0, :precision => 20, :scale => 2
 end
+

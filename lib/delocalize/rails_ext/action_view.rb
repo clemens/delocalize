@@ -26,8 +26,8 @@ ActionView::Helpers::InstanceTag.class_eval do
 
           hidden_for_integer = field_type == 'hidden' && column.type == :integer
 
-          # the number will be formatted only if it has no errors
-          if object.respond_to?(:errors) && !Array(object.errors[method_name]).try(:any?)
+          # the number will be formatted only if it has no numericality errors
+          if object.respond_to?(:errors) && !Array(object.errors[method_name]).try(:include?, 'is not a number')
             # we don't format integer hidden fields because this breaks nested_attributes
             options[:value] = number_with_precision(value, opts) unless hidden_for_integer
           end
@@ -44,7 +44,7 @@ end
 # TODO: does it make sense to also override FormTagHelper methods?
 # ActionView::Helpers::FormTagHelper.class_eval do
 #   include ActionView::Helpers::NumberHelper
-# 
+#
 #   alias original_text_field_tag text_field_tag
 #   def text_field_tag(name, value = nil, options = {})
 #     value = options.delete(:value) if options.key?(:value)
@@ -54,3 +54,4 @@ end
 #     original_text_field_tag(name, value, options)
 #   end
 # end
+
