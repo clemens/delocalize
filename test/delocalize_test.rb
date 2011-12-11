@@ -291,6 +291,13 @@ class DelocalizeActionViewTest < ActionView::TestCase
       text_field(:product, :weight)
   end
 
+  test "doesn't convert the value if the field have a custom numericality error message" do
+    @product = ProductWithCustomMessage.new(:price => 'more than I can pay for!')
+    @product.valid?
+    assert_dom_equal %(<div class="field_with_errors"><input id="product_price" name="product[price]" size="30" type="text" value="more than I can pay for!" /></div>),
+      text_field(:product, :price)
+  end
+
   test "should convert the value if field have non-numericality errors, but have other errors, e.g. business rules" do
     @product = ProductWithBusinessValidation.new(:price => '1.337,66')
     @product.valid?

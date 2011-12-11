@@ -105,6 +105,10 @@ end
 class ProductWithNestedMessage < Product
 end
 
+class ProductWithCustomMessage < Product
+  validates_numericality_of :price, :message => 'custom message'
+end
+
 config = YAML.load_file(File.dirname(__FILE__) + '/database.yml')
 ActiveRecord::Base.establish_connection(config['test'])
 
