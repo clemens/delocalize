@@ -49,7 +49,21 @@ de = {
     }
   },
   :activerecord => {
+    # http://guides.rubyonrails.org/i18n.html#highlighter_92251
+    # activerecord.errors.models.user.attributes.name.not_a_number
+    # activerecord.errors.models.user.not_a_number
+    # activerecord.errors.messages.not_a_number
     :errors => {
+      :models => {
+        :product_with_nested_message => {
+          :not_a_number => 'is not a property from nested example',
+          :attributes => {
+            :price => {
+              :not_a_number => 'is not a price'
+            }
+          }
+        }
+      },
       :messages => {
         :not_a_number => 'is not a number'
       }
@@ -86,6 +100,9 @@ class ProductWithBusinessValidation < Product
       record.errors.add(:price, :invalid)
     end
   end
+end
+
+class ProductWithNestedMessage < Product
 end
 
 config = YAML.load_file(File.dirname(__FILE__) + '/database.yml')

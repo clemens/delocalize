@@ -26,11 +26,30 @@ ActionView::Helpers::InstanceTag.class_eval do
 
           hidden_for_integer = field_type == 'hidden' && column.type == :integer
 
-          # the number will be formatted only if it has no numericality errors
-          if object.respond_to?(:errors) && !Array(object.errors[method_name]).try(:include?, 'is not a number')
-            # we don't format integer hidden fields because this breaks nested_attributes
-            options[:value] = number_with_precision(value, opts) unless hidden_for_integer
+          # checks for :not_a_number numericality errors.
+          has_numericality_errors_that_dont_allow_formatting = object.respond_to?(:errors) && begin
+            i18n_scope = :"#{object.class.i18n_scope}.errors" # :"activerecord.errors"
+            model_name = object.class.to_s.underscore # :product
+            errors_for_method = Array(object.errors[method_name])
+
+            # Searches through the following keys for any error that tell that a :not_a_number error is present
+            # * activerecord.errors.models.product.attributes.price.not_a_number
+            # * activerecord.errors.models.product.not_a_number
+            # * activerecord.errors.messages.not_a_number
+            ["models.#{model_name}.attributes.#{method_name}.not_a_number",
+            "models.#{model_name}.not_a_number",
+            "messages.not_a_number"].any? do |i18n_key|
+              error_message = I18n.t!(i18n_key, :scope => i18n_scope, :default => 'is not a number')
+              errors_for_method.try(:include?, error_message)
+            end
           end
+
+          # the number will be formatted only if it has no numericality errors
+          # we don't format integer hidden fields because this breaks nested_attributes
+          unless has_numericality_errors_that_dont_allow_formatting || hidden_for_integer
+            options[:value] = number_with_precision(value, opts)
+          end
+
         elsif column.date? || column.time?
           options[:value] = value ? I18n.l(value, :format => options.delete(:format)) : nil
         end
