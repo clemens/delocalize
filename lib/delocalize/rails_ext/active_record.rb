@@ -47,7 +47,7 @@ ActiveRecord::Base.class_eval do
         # If an old value of 0 is set to '' we want this to get changed to nil as otherwise it'll
         # be typecast back to 0 (''.to_i => 0)
         value = nil
-      elsif column.number?
+      elsif (column.number? && column.type != :integer)
         value = column.type_cast(convert_number_column_value_with_localization(value))
       else
         value = column.type_cast(value)

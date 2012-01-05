@@ -12,7 +12,7 @@ ActionView::Helpers::InstanceTag.class_eval do
     # numbers and dates/times should be localized unless value is already defined
     if object && options[:value].blank? && object.respond_to?(:column_for_attribute) && column = object.column_for_attribute(method_name)
       # a little verbose
-      if column.number? || column.date? || column.time?
+      if (column.number? && column.type != :integer) || column.date? || column.time?
         value = object.send(method_name)
 
         if column.number?
