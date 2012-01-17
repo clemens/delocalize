@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{delocalize}
-  s.version = "0.3.1"
+  s.version = "1.0.0.beta1"
 
   s.authors = ["Clemens Kofler"]
   s.summary = %q{Localized date/time and number parsing}
@@ -14,25 +14,22 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "lib/delocalize.rb",
-    "lib/delocalize/i18n_ext.rb",
+    "lib/delocalize/action_view.rb",
+    "lib/delocalize/delocalizable.rb",
     "lib/delocalize/localized_date_time_parser.rb",
     "lib/delocalize/localized_numeric_parser.rb",
-    "lib/delocalize/rails_ext/action_view.rb",
-    "lib/delocalize/rails_ext/active_record.rb",
-    "lib/delocalize/rails_ext/time_zone.rb",
     "lib/delocalize/railtie.rb",
-    "lib/delocalize/ruby_ext.rb",
-    "lib/delocalize/ruby_ext/date.rb",
-    "lib/delocalize/ruby_ext/datetime.rb",
-    "lib/delocalize/ruby_ext/numeric.rb",
-    "lib/delocalize/ruby_ext/time.rb"
   ]
   s.homepage = %q{http://github.com/clemens/delocalize}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.test_files = [
     "test/database.yml",
+    "test/delocalizable_test.rb",
     "test/delocalize_test.rb",
+    "test/isolated_test_helper.rb",
+    "test/localized_date_time_parser_test.rb",
+    "test/localized_numeric_parser_test.rb",
     "test/test_helper.rb",
   ]
 
