@@ -5,8 +5,7 @@ delocalize
 
 delocalize provides localized date/time and number parsing functionality for Rails.
 
-Installation
-------------
+## Installation
 
 You can use delocalize as a gem (preferred). Using delocalize as a Rails plugin has been discontinued and is no supported. If you want/need to use delocalize as a gem (I really don't see a reason why you'd want to), consider using the `0-2-stable` branch.
 
@@ -26,8 +25,7 @@ To use delocalize, put the following gem requirement in your `environment.rb`:
 
 In Rails 2.3, alternatively, you can use it with Bundler. See http://gembundler.com/rails23.html for instructions.
 
-What does it do? And how do I use it?
---------------------------------------
+## Use case and usage
 
 Delocalize, just as the name suggest, does pretty much the opposite of localize.
 
@@ -37,7 +35,33 @@ In the grey past, if you want your users to be able to input localized data, suc
       write_attribute(:price, price.gsub(',', '.'))
     end
 
-delocalize does this under the covers -- all you need is your regular translation data (as YAML or Ruby file) where you need Rails' standard translations:
+You also had to take care of proper formatting in forms on the frontend so people would see localized values in their forms.
+
+Delocalize does most of this under the covers. All you need is a simple declaration and your regular translation data (as YAML or Ruby file) where you need Rails' standard translations.
+
+### Usage in a model
+
+  class Product < ActiveRecord::Base
+    delocalize :price => :number, :released_on => :date, :published_at => :time
+  end
+
+### Usage outside of Rails/ActiveRecord
+
+Delocalize should – in theory – work independently of Rails and ActiveRecord.
+
+To use Delocalize for your own non-ActiveRecord models, just include the Delocalizable module:
+
+  class Product
+    include Delocalize::Delocalizable
+  end
+
+Caveat: Delocalize currently expects that it can call a method named _write_attribute_ – so make sure it's there! This might change as soon as I figure out a better way to do this.
+
+As for the view part, you're on your own – Delocalize only supports ActionView right now.
+
+If you run into any issues with using Delocalize outside Rails, please file an [issue](https://github.com/clemens/delocalize/issues). I'm happy to take a look at it.
+
+### Sample translation file
 
     de:
       number:
@@ -104,6 +128,14 @@ You can also customize the output using some options:
   
   Since `I18n.localize` supports localizing `strftime` strings, we can also do this:
       <%= f.text_field :released_on, :format => "%B %Y" %>
+
+## Gotchas
+
+### Update from 0.x.x to 1.x.x
+
+Delocalize underwent a major API change – hence the incremented major version number. The whole code base is much cleaner now because it lost much of the magic that shouldn't have been there in the first place.
+
+If you haven't been hacking around in Delocalize's hacks (I hope you haven't ;-)), all you should have to do is declare all the fields you want Delocalize to pick up in their respective models. See the usage example for details.
 
 ### Ruby 1.9 + Psych YAML Parser
 
@@ -201,12 +233,12 @@ __Psych Preferred Formatting:__
         am: "am"
         pm: "pm"
 
-### Compatibility
+## Compatibility
 
 * Tested with Rails 2.3.5 in Ruby 1.8.7, Ruby 1.9.1 and Ruby 1.9.2 (head)
 * Tested with Rails 3 Beta 3 in Ruby 1.9.2 (head)
 
-### Contributors
+## Contributors
 
 People who have contributed to delocalize (in no particular order):
 
@@ -220,14 +252,11 @@ People who have contributed to delocalize (in no particular order):
 * [Blake Lucchesi](https://github.com/BlakeLucchesi)
 * [Ralph von der Heyden](https://github.com/ralph)
 
-### TODO
+## TODO
 
 * Improve test coverage
-* Separate Ruby/Rails stuff to make it usable outside Rails
-* Decide on other ActionView hacks (e.g. `text_field_tag`)
 * Implement AM/PM support
-* Cleanup, cleanup, cleanup ...
 
-Copyright (c) 2009-2011 Clemens Kofler <clemens@railway.at>
+Copyright (c) 2009-2012 Clemens Kofler <clemens@railway.at> and contributors.
 <http://www.railway.at/>
 Released under the MIT license
