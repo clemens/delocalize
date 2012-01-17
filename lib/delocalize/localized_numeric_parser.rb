@@ -1,5 +1,6 @@
 # TODO:
 #   * proper documentation (comments)
+#   * should take into account negative formats etc. (see ActionView's NumberHelper)
 module Delocalize
   class LocalizedNumericParser
     class << self
