@@ -41,9 +41,9 @@ Delocalize does most of this under the covers. All you need is a simple declarat
 
 ### Usage in a model
 
-  class Product < ActiveRecord::Base
-    delocalize :price => :number, :released_on => :date, :published_at => :time
-  end
+    class Product < ActiveRecord::Base
+      delocalize :price => :number, :released_on => :date, :published_at => :time
+    end
 
 ### Usage outside of Rails/ActiveRecord
 
@@ -51,9 +51,9 @@ Delocalize should – in theory – work independently of Rails and ActiveRecord
 
 To use Delocalize for your own non-ActiveRecord models, just include the Delocalizable module:
 
-  class Product
-    include Delocalize::Delocalizable
-  end
+    class Product
+      include Delocalize::Delocalizable
+    end
 
 Caveat: Delocalize currently expects that it can call a method named _write_attribute_ – so make sure it's there! This might change as soon as I figure out a better way to do this.
 
