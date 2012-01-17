@@ -60,6 +60,10 @@ class LocalizedDateTimeParserTest < ActiveSupport::TestCase
   end
 
   test "doesn't calculate if given object is already a time-like object" do
-    pending
+    # don't like to test on that method ... but well ...
+    Delocalize::LocalizedDateTimeParser.expects(:translate_month_and_day_names).never
+
+    date = Delocalize::LocalizedDateTimeParser.parse(Date.civil(2012, 1, 17), Date)
+    assert_equal Date.civil(2012, 1, 17), date
   end
 end
