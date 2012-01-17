@@ -48,8 +48,11 @@ module Delocalize
               type = delocalize_type_for(:#{field})
 
               case type
-              when :number then value = LocalizedNumericParser.parse(value) rescue value
-              when :date, :time then value = LocalizedDateTimeParser.parse(value, type.to_s.classify.constantize) rescue value
+              when :number
+                value = LocalizedNumericParser.parse(value) rescue value
+              when :date, :time
+                value = LocalizedDateTimeParser.parse(value, type.to_s.classify.constantize) rescue value
+                value = value.in_time_zone if value.acts_like?(:time)
               end
             end
 
