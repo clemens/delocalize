@@ -6,7 +6,7 @@ module Delocalize
       end
 
       ActiveSupport.on_load :action_view do
-        require 'delocalize/rails_ext/action_view'
+        require 'delocalize/action_view'
       end
     end
   end
