@@ -17,7 +17,7 @@ ActionView::Helpers::InstanceTag.class_eval do
     # - the field has errors
     # - the object does not delocalize at all
     # - the object does not delocalize the given field
-    do_return = I18n.delocalization_disabled? ||
+    do_return = Delocalize.disabled? ||
                 object.blank? ||
                 options[:value].present? ||
                 field_type == 'hidden' ||

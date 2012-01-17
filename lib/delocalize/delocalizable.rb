@@ -44,7 +44,7 @@ module Delocalize
           end
 
           def #{writer_method}(value)
-            if I18n.delocalization_enabled? && delocalizes?(:#{field})
+            if Delocalize.enabled? && delocalizes?(:#{field})
               type = delocalize_type_for(:#{field})
 
               case type

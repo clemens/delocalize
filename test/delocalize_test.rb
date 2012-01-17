@@ -124,7 +124,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   end
 
   test "uses default formats if enable_delocalization is false" do
-    I18n.enable_delocalization = false
+    Delocalize.enabled = false
 
     @product.price = '1299.99'
     assert_equal 1299.99, @product.price
@@ -134,7 +134,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   end
 
   test "uses default formats if called with with_delocalization_disabled" do
-    I18n.with_delocalization_disabled do
+    Delocalize.with_delocalization_disabled do
       @product.price = '1299.99'
       assert_equal 1299.99, @product.price
 
@@ -146,7 +146,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   test "uses localized parsing if called with with_delocalization_enabled" do
     pending "this test doesn't make sense – it should test for correct behavior if delocalization is disabled (rather than enabled)!"
 
-    I18n.with_delocalization_enabled do
+    Delocalize.with_delocalization_enabled do
       @product.price = '1.299,99'
       assert_equal 1299.99, @product.price
 
