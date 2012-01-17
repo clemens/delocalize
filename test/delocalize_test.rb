@@ -5,13 +5,13 @@ require 'active_record/test_case'
 require 'action_view/test_case'
 
 class DelocalizeActiveRecordTest < ActiveRecord::TestCase
-  def setup
+  setup do
     Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
     Timecop.freeze(Time.zone.local(2009, 3, 1, 12, 0))
     @product = Product.new
   end
 
-  def teardown
+  teardown do
     Timecop.return
   end
 
