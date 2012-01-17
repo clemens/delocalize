@@ -6,6 +6,7 @@ require 'bundler'
 Bundler.require(:default, :development)
 
 require 'test/unit'
+require 'mocha'
 
 require 'active_record'
 
