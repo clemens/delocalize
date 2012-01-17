@@ -99,11 +99,11 @@ class DelocalizableTest < ActiveSupport::TestCase
 
   test "tells the delocalize type of a field" do
     DelocalizableClass.delocalize :foo => :number
-    assert_equal :number, DelocalizableClass.delocalizes_type_for(:foo)
+    assert_equal :number, DelocalizableClass.delocalize_type_for(:foo)
   end
 
   test "tells the delocalize type of a field (on an instance)" do
     DelocalizableClass.delocalize :foo => :number
-    assert_equal :number, DelocalizableClass.new.delocalizes_type_for(:foo)
+    assert_equal :number, DelocalizableClass.new.delocalize_type_for(:foo)
   end
 end

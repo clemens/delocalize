@@ -29,7 +29,7 @@ module Delocalize
         delocalizing? && (delocalizable_fields || []).include?(field.to_sym)
       end
 
-      def delocalizes_type_for(field)
+      def delocalize_type_for(field)
         delocalize_conversions[field.to_sym]
       end
 
@@ -45,7 +45,7 @@ module Delocalize
 
           def #{writer_method}(value)
             if I18n.delocalization_enabled? && delocalizes?(:#{field})
-              type = delocalizes_type_for(:#{field})
+              type = delocalize_type_for(:#{field})
 
               case type
               when :number then value = LocalizedNumericParser.parse(value)
@@ -70,8 +70,8 @@ module Delocalize
         self.class.delocalizes?(field)
       end
 
-      def delocalizes_type_for(field)
-        self.class.delocalizes_type_for(field)
+      def delocalize_type_for(field)
+        self.class.delocalize_type_for(field)
       end
     end
   end
