@@ -42,6 +42,10 @@ class LocalizedDateTimeParserTest < ActiveSupport::TestCase
     Timecop.freeze(Time.zone.local(2009, 3, 1, 12, 0))
   end
 
+  teardown do
+    Timecop.return
+  end
+
   test "parses a date" do
     date = Delocalize::LocalizedDateTimeParser.parse('17. Januar 2012', Date)
     assert_equal Date.civil(2012, 1, 17), date
