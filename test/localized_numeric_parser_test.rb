@@ -1,8 +1,6 @@
 # encoding: utf-8
 
-require 'i18n'
-require 'active_support/all'
-require 'timecop'
+require_relative 'isolated_test_helper'
 
 require 'delocalize/localized_numeric_parser'
 

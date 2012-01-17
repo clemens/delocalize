@@ -1,4 +1,4 @@
-require 'active_support/all'
+require_relative 'isolated_test_helper'
 
 require 'delocalize/delocalizable'
 
