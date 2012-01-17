@@ -83,7 +83,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     end
   end
 
-  test "invalid dates should be delocalized to nil" do
+  test "invalid dates should be delocalized to nil and keep its value before type cast" do
     date = '32. Oktober 2009'
     @product.released_on = date
     assert_equal nil, @product.released_on
@@ -144,6 +144,8 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   end
 
   test "uses localized parsing if called with with_delocalization_enabled" do
+    pending "this test doesn't make sense – it should test for correct behavior if delocalization is disabled (rather than enabled)!"
+
     I18n.with_delocalization_enabled do
       @product.price = '1.299,99'
       assert_equal 1299.99, @product.price
@@ -196,12 +198,16 @@ class DelocalizeActionViewTest < ActionView::TestCase
   end
 
   test "shows text field using formatted number with options" do
+    pending 'not sure I want this right now'
+
     @product.price = 1299.995
     assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1,299.995" />',
       text_field(:product, :price, :precision => 3, :delimiter => ',', :separator => '.')
   end
 
   test "shows text field using formatted number without precision if column is an integer" do
+    pending "right now there is no notion of a 'column' so there can't be an integer 'column'"
+
     @product.times_sold = 20
     assert_dom_equal '<input id="product_times_sold" name="product[times_sold]" size="30" type="text" value="20" />',
       text_field(:product, :times_sold)
@@ -290,7 +296,7 @@ class DelocalizeActionViewTest < ActionView::TestCase
   end
 
   test "formats field with default value correctly" do
-    assert_dom_equal '<input id="product_some_value_with_default" name="product[some_value_with_default]" size="30" type="text" value="0,00" />',
+    assert_dom_equal '<input id="product_some_value_with_default" name="product[some_value_with_default]" size="30" type="text" value="13,37" />',
       text_field(:product, :some_value_with_default)
   end
 end

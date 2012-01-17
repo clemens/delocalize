@@ -7,8 +7,9 @@ Bundler.require(:default, :development)
 
 require 'test/unit'
 
+require 'active_record'
+
 require 'delocalize/rails_ext/action_view'
-require 'delocalize/rails_ext/active_record'
 require 'delocalize/rails_ext/time_zone'
 
 de = {
@@ -59,6 +60,9 @@ I18n.backend.store_translations :tt, tt
 
 I18n.locale = :de
 
+# include Delocalize::Delocalizable manually since the Railtie isn't triggered
+ActiveRecord::Base.send(:include, Delocalize::Delocalizable)
+
 class NonArProduct
   attr_accessor :name, :price, :times_sold,
     :cant_think_of_a_sensible_time_field,
@@ -66,6 +70,8 @@ class NonArProduct
 end
 
 class Product < ActiveRecord::Base
+  delocalize :price => :number, :weight => :number, :times_sold => :number, :some_value_with_default => :number,
+             :released_on => :date, :published_at => :time, :cant_think_of_a_sensible_time_field => :time
 end
 
 class ProductWithValidation < Product
@@ -84,5 +90,5 @@ ActiveRecord::Base.connection.create_table :products do |t|
   t.decimal :price
   t.float :weight
   t.integer :times_sold
-  t.decimal :some_value_with_default, :default => 0, :precision => 20, :scale => 2
+  t.decimal :some_value_with_default, :default => 13.37, :precision => 20, :scale => 2
 end
