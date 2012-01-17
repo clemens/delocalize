@@ -17,6 +17,7 @@ module Delocalize
         conversions.each do |field, type|
           delocalizable_fields << field.to_sym unless delocalizable_fields.include?(field.to_sym)
           delocalize_conversions[field.to_sym] = type.to_sym
+          define_delocalize_attr_writer field.to_sym
         end
       end
 
@@ -31,6 +32,32 @@ module Delocalize
       def delocalizes_type_for(field)
         delocalize_conversions[field.to_sym]
       end
+
+    private
+
+      def define_delocalize_attr_writer(field)
+        writer_method = "#{field}="
+
+        class_eval <<-ruby, __FILE__, __LINE__ + 1
+          if method_defined?(:#{writer_method})
+            remove_method(:#{writer_method})
+          end
+
+          def #{writer_method}(value)
+            if I18n.delocalization_enabled? && delocalizes?(:#{field})
+              type = delocalizes_type_for(:#{field})
+
+              case type
+              when :number then value = LocalizedNumericParser.parse(value)
+              when :date, :time then value = LocalizedDateTimeParser.parse(value, type.to_s.classify.constantize)
+              end
+            end
+
+            write_attribute(:#{field}, value)
+          end
+        ruby
+      end
+
     end
 
     # The instance methods are just here for convenience. They all delegate to their class.

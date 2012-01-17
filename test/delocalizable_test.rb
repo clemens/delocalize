@@ -12,24 +12,6 @@ class DelocalizableTest < ActiveSupport::TestCase
     DelocalizableClass.delocalize_conversions = {}
   end
 
-  test "tells that it is delocalizing" do
-    DelocalizableClass.delocalize :foo => :number, :bar => :time
-    assert DelocalizableClass.delocalizing?
-  end
-
-  test "tells that it is not delocalizing" do
-    assert !DelocalizableClass.delocalizing?
-  end
-
-  test "tells that it is delocalizing (on an instance)" do
-    DelocalizableClass.delocalize :foo => :number, :bar => :time
-    assert DelocalizableClass.new.delocalizing?
-  end
-
-  test "tells that it is not delocalizing (on an instance)" do
-    assert !DelocalizableClass.new.delocalizing?
-  end
-
   test "stores the delocalizable fields" do
     DelocalizableClass.delocalize :foo => :number, :bar => :time
     assert_equal [:foo, :bar], DelocalizableClass.delocalizable_fields
@@ -68,6 +50,31 @@ class DelocalizableTest < ActiveSupport::TestCase
     DelocalizableClass.delocalize :foo => :number
     DelocalizableClass.delocalize :foo => :date
     assert_equal :date, DelocalizableClass.delocalize_conversions[:foo]
+  end
+
+  test "defines attribute writers" do
+    DelocalizableClass.delocalize :foo => :number, :bar => :time
+    instance = DelocalizableClass.new
+    assert instance.respond_to?(:foo=)
+    assert instance.respond_to?(:bar=)
+  end
+
+  test "tells that it is delocalizing" do
+    DelocalizableClass.delocalize :foo => :number, :bar => :time
+    assert DelocalizableClass.delocalizing?
+  end
+
+  test "tells that it is not delocalizing" do
+    assert !DelocalizableClass.delocalizing?
+  end
+
+  test "tells that it is delocalizing (on an instance)" do
+    DelocalizableClass.delocalize :foo => :number, :bar => :time
+    assert DelocalizableClass.new.delocalizing?
+  end
+
+  test "tells that it is not delocalizing (on an instance)" do
+    assert !DelocalizableClass.new.delocalizing?
   end
 
   test "tells that a field is to be delocalized" do
