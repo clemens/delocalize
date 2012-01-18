@@ -33,7 +33,8 @@ Gem::Specification.new do |s|
     "test/test_helper.rb",
   ]
 
-  s.add_dependency 'rails', '>= 3.0'
+  s.add_dependency 'activesupport', '>= 3.0'
+  s.add_dependency 'i18n'
   s.add_development_dependency 'sqlite3', '~> 1.3.4'
   s.add_development_dependency 'timecop', '~> 0.3.5'
   s.add_development_dependency 'mocha', '~> 0.10.2'
