@@ -186,7 +186,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
 
     #Simulate Dutch
     I18n.t('date.month_names')[3] = 'Maart'
-    I18n.t('date.abbr_day_names')[1] = "Ma"
+    I18n.t('date.abbr_day_names')[1] = 'Ma'
 
     subject = '30 Maart 2011'
     Delocalize::LocalizedDateTimeParser.send(:translate_month_and_day_names, subject)
