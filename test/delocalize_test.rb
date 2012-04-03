@@ -179,6 +179,23 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal @product.price, 0
     assert_equal @product.price_before_type_cast, "asd"
   end
+
+  test 'it should gsub only whole translated words and not mess up the original string' do
+    orig_march = I18n.t('date.month_names')[3]
+    orig_monday = I18n.t('date.abbr_day_names')[1]
+
+    #Simulate Dutch
+    I18n.t('date.month_names')[3] = 'Maart'
+    I18n.t('date.abbr_day_names')[1] = 'Ma'
+
+    subject = '30 Maart 2011'
+    Delocalize::LocalizedDateTimeParser.send(:translate_month_and_day_names, subject)
+
+    assert_equal subject, '30 March 2011'
+
+    I18n.t('date.month_names')[3] = orig_march
+    I18n.t('date.abbr_day_names')[1] = orig_monday
+  end
 end
 
 class DelocalizeActionViewTest < ActionView::TestCase
