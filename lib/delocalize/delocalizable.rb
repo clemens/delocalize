@@ -39,9 +39,7 @@ module Delocalize
         writer_method = "#{field}="
 
         class_eval <<-ruby, __FILE__, __LINE__ + 1
-          if method_defined?(:#{writer_method})
-            remove_method(:#{writer_method})
-          end
+          remove_possible_method(:#{writer_method})
 
           def #{writer_method}(value)
             if Delocalize.enabled? && delocalizes?(:#{field})
