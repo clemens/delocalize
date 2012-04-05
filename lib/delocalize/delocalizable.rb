@@ -7,13 +7,12 @@ module Delocalize
     included do
       class_attribute :delocalizable_fields
       class_attribute :delocalize_conversions
+      self.delocalize_conversions = {}
+      self.delocalizable_fields = []
     end
 
     module ClassMethods
       def delocalize(conversions = {})
-        self.delocalize_conversions ||= {}
-        self.delocalizable_fields ||= []
-
         conversions.each do |field, type|
           delocalizable_fields << field.to_sym unless delocalizable_fields.include?(field.to_sym)
           delocalize_conversions[field.to_sym] = type.to_sym
