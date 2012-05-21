@@ -1,5 +1,8 @@
 $: << 'lib'
 
+require 'bundler'
+Bundler.require(:default, :development)
+
 require 'active_support/all'
 require 'i18n'
 

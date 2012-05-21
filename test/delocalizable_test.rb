@@ -1,4 +1,4 @@
-require_relative 'isolated_test_helper'
+require File.expand_path(File.join(__FILE__, '..', 'isolated_test_helper'))
 
 require 'delocalize/delocalizable'
 
