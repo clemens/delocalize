@@ -61,9 +61,7 @@ module Delocalize
         end.flatten.compact
 
         original = (Date::MONTHNAMES + Date::ABBR_MONTHNAMES + Date::DAYNAMES + Date::ABBR_DAYNAMES).compact
-        translated.each_with_index { |name, i|
-          datetime.gsub!(/\b#{name}\b/, original[i])
-        }
+        translated.each_with_index { |name, i| datetime.gsub!(/\b#{name}\b/, original[i]) }
       end
 
       def input_formats(type)
