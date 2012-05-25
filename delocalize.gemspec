@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
     "README.markdown"
   ]
   s.files = [
+    "Gemfile",
     "MIT-LICENSE",
     "Rakefile",
     "VERSION",
