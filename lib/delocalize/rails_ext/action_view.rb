@@ -24,12 +24,12 @@ ActionView::Helpers::InstanceTag.class_eval do
           # integers don't need a precision
           opts.merge!(:precision => 0) if column.type == :integer
 
-          hidden_for_integer = field_type == 'hidden' && column.type == :integer
+          hidden_for = field_type == 'hidden'
 
           # the number will be formatted only if it has no numericality errors
           if object.respond_to?(:errors) && !Array(object.errors[method_name]).try(:include?, 'is not a number')
             # we don't format integer hidden fields because this breaks nested_attributes
-            options[:value] = number_with_precision(value, opts) unless hidden_for_integer
+            options[:value] = number_with_precision(value, opts) unless hidden_for
           end
         elsif column.date? || column.time?
           options[:value] = value ? I18n.l(value, :format => options.delete(:format)) : nil
