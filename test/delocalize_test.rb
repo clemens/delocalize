@@ -11,6 +11,10 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     @product = Product.new
   end
 
+  def teardown
+    Timecop.return
+  end
+
   test "delocalizes localized number" do
     @product.price = '1.299,99'
     assert_equal 1299.99, @product.price
