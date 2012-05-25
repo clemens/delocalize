@@ -53,6 +53,9 @@ module Delocalize
       end
 
       def translate_month_and_day_names(datetime)
+        # Note: This should be a bulk lookup but due to a bug in i18n it doesn't work properly with fallbacks.
+        # See https://github.com/svenfuchs/i18n/issues/104.
+        # TODO Make it a bulk lookup again at some point in the future when the bug is fixed in i18n.
         translated = [:month_names, :abbr_month_names, :day_names, :abbr_day_names].map do |key|
           I18n.t(key, :scope => :date)
         end.flatten.compact
