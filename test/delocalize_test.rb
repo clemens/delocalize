@@ -59,6 +59,17 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal time, @product.published_at
   end
 
+  test "delocalizes with fallback locale" do
+    I18n::Backend::Simple.include(I18n::Backend::Fallbacks)
+    I18n.fallbacks[:xx] = [:xx, :tt]
+
+    I18n.with_locale :xx do
+      @product.released_on = '10|11|2009'
+      date = Date.civil(2009, 11, 10)
+      assert_equal date, @product.released_on
+    end
+  end
+
   test "delocalizes localized datetime without year" do
     time = Time.zone.local(Date.today.year, 3, 1, 12, 0, 0)
 

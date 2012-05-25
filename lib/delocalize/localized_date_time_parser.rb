@@ -53,7 +53,10 @@ module Delocalize
       end
 
       def translate_month_and_day_names(datetime)
-        translated = I18n.t([:month_names, :abbr_month_names, :day_names, :abbr_day_names], :scope => :date).flatten.compact
+        translated = [:month_names, :abbr_month_names, :day_names, :abbr_day_names].map do |key|
+          I18n.t(key, :scope => :date)
+        end.flatten.compact
+
         original = (Date::MONTHNAMES + Date::ABBR_MONTHNAMES + Date::DAYNAMES + Date::ABBR_DAYNAMES).compact
         translated.each_with_index { |name, i| datetime.gsub!(name, original[i]) }
       end
