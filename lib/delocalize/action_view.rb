@@ -31,9 +31,12 @@ ActionView::Helpers::InstanceTag.class_eval do
 
     case type
     when :number
-      options[:value] = number_with_precision(value)
+      options[:value] = number_with_precision(value, object.delocalize_options_for(method_name))
     when :date, :time
-      options[:value] = value ? I18n.l(value, :format => options.delete(:format) || :default) : nil
+      localize_options = object.delocalize_options_for(method_name).dup
+      localize_options[:format] ||= :default
+      localize_options[:format] = options.delete(:format) if options[:format]
+      options[:value] = value ? I18n.l(value, localize_options) : nil
     end
 
     original_to_input_field_tag(field_type, options)

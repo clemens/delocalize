@@ -45,6 +45,14 @@ Delocalize does most of this under the covers. All you need is a simple declarat
       delocalize :price => :number, :released_on => :date, :published_at => :time
     end
 
+It is also possible to specify additional format options for attributes:
+
+    delocalize :price => {:type => :number, :precision => 0},
+               :released_on => {:type => :date, :format => "%d.%m.%Y"}
+
+The additional options are simply passed through to `number_with_precision` (for numbers) or `I18n.l` (for dates and times).
+
+
 ### Usage outside of Rails/ActiveRecord
 
 Delocalize should – in theory – work independently of Rails and ActiveRecord.

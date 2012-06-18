@@ -5,17 +5,26 @@ module Delocalize
     extend ActiveSupport::Concern
 
     included do
-      class_attribute :delocalizable_fields
       class_attribute :delocalize_conversions
+      class_attribute :delocalize_options
+      class_attribute :delocalizable_fields
       self.delocalize_conversions = {}
+      self.delocalize_options = {}
       self.delocalizable_fields = []
     end
 
     module ClassMethods
       def delocalize(conversions = {})
-        conversions.each do |field, type|
+        conversions.each do |field, options|
           delocalizable_fields << field.to_sym unless delocalizable_fields.include?(field.to_sym)
+          if options.is_a?(Hash)
+            type = options.delete(:type)
+          else
+            type = options
+            options = {}
+          end
           delocalize_conversions[field.to_sym] = type.to_sym
+          delocalize_options[field.to_sym] = options
           define_delocalize_attr_writer field.to_sym
         end
       end
@@ -30,6 +39,10 @@ module Delocalize
 
       def delocalize_type_for(field)
         delocalize_conversions[field.to_sym]
+      end
+
+      def delocalize_options_for(field)
+        delocalize_options[field.to_sym]
       end
 
     private
@@ -72,6 +85,10 @@ module Delocalize
 
       def delocalize_type_for(field)
         self.class.delocalize_type_for(field)
+      end
+
+      def delocalize_options_for(field)
+        self.class.delocalize_options_for(field)
       end
     end
   end

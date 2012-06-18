@@ -71,7 +71,8 @@ end
 
 class Product < ActiveRecord::Base
   delocalize :price => :number, :weight => :number, :times_sold => :number, :some_value_with_default => :number,
-             :released_on => :date, :published_at => :time, :cant_think_of_a_sensible_time_field => :time
+             :released_on => :date, :published_at => :time, :cant_think_of_a_sensible_time_field => :time,
+             :count => { :type => :number, :precision => 0 }, :created_on => { :type => :date, :format => "%d. %B %Y" }
 end
 
 class ProductWithValidation < Product
@@ -85,10 +86,12 @@ ActiveRecord::Base.establish_connection(config['test'])
 ActiveRecord::Base.connection.create_table :products do |t|
   t.string :name
   t.date :released_on
+  t.date :created_on
   t.datetime :published_at
   t.time :cant_think_of_a_sensible_time_field
   t.decimal :price
   t.float :weight
   t.integer :times_sold
+  t.integer :count
   t.decimal :some_value_with_default, :default => 13.37, :precision => 20, :scale => 2
 end
