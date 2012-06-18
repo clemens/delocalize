@@ -202,11 +202,9 @@ class DelocalizeActionViewTest < ActionView::TestCase
   end
 
   test "shows text field using formatted number with options" do
-    pending 'not sure I want this right now'
-
-    @product.price = 1299.995
-    assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1,299.995" />',
-      text_field(:product, :price, :precision => 3, :delimiter => ',', :separator => '.')
+    @product.count = 1001.0
+    assert_dom_equal '<input id="product_count" name="product[count]" size="30" type="text" value="1.001" />',
+      text_field(:product, :count)
   end
 
   test "shows text field using formatted number without precision if column is an integer" do
@@ -225,6 +223,18 @@ class DelocalizeActionViewTest < ActionView::TestCase
     @product.released_on = Date.civil(2009, 10, 19)
     assert_dom_equal '<input id="product_released_on" name="product[released_on]" size="30" type="text" value="19.10.2009" />',
       text_field(:product, :released_on)
+  end
+
+  test "shows text field using formatted date with options" do
+    @product.created_on = Date.civil(2009, 10, 19)
+    assert_dom_equal '<input id="product_created_on" name="product[created_on]" size="30" type="text" value="19. Oktober 2009" />',
+      text_field(:product, :created_on)
+  end
+
+  test "shows text field using formatted date with format overriding options" do
+    @product.created_on = Date.civil(2009, 10, 19)
+    assert_dom_equal '<input id="product_created_on" name="product[created_on]" size="30" type="text" value="19. Okt" />',
+      text_field(:product, :created_on, :format => :short)
   end
 
   test "shows text field using formatted date and time" do
