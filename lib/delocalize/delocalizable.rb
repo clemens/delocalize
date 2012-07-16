@@ -60,19 +60,16 @@ module Delocalize
 
     end
 
-    # The instance methods are just here for convenience. They all delegate to their class.
-    module InstanceMethods
-      def delocalizing?
-        self.class.delocalizing?
-      end
+    def delocalizing?
+      self.class.delocalizing?
+    end
 
-      def delocalizes?(field)
-        self.class.delocalizes?(field)
-      end
+    def delocalizes?(field)
+      self.class.delocalizes?(field)
+    end
 
-      def delocalize_type_for(field)
-        self.class.delocalize_type_for(field)
-      end
+    def delocalize_type_for(field)
+      self.class.delocalize_type_for(field)
     end
   end
 end
