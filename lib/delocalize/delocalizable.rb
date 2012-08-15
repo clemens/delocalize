@@ -43,10 +43,18 @@ module Delocalize
 
     private
 
+      def delocalize_attribute_writers
+        @delocalize_attribute_writers ||= begin
+          mod = Module.new
+          include(mod)
+          mod
+        end
+      end
+
       def define_delocalize_attr_writer(field)
         writer_method = "#{field}="
 
-        class_eval <<-ruby, __FILE__, __LINE__ + 1
+        delocalize_attribute_writers.module_eval <<-ruby, __FILE__, __LINE__ + 1
           remove_possible_method(:#{writer_method})
 
           def #{writer_method}(value)

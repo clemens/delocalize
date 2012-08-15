@@ -185,6 +185,14 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal @product.price, 0
     assert_equal @product.price_before_type_cast, "asd"
   end
+
+  test "overriding attribute writers should be possible" do
+    @product = ProductWithOverriddenPriceWriter.new
+    assert !@product.price_writer_has_been_called
+    @product.price = "123,45"
+    assert @product.price_writer_has_been_called
+    assert_equal 123.45, @product.price
+  end
 end
 
 class DelocalizeActionViewTest < ActionView::TestCase

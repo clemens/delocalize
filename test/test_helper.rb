@@ -79,6 +79,15 @@ class ProductWithValidation < Product
   validates_presence_of :price
 end
 
+class ProductWithOverriddenPriceWriter < Product
+  attr_accessor :price_writer_has_been_called
+
+  def price=(val)
+    self.price_writer_has_been_called = true
+    super
+  end
+end
+
 config = YAML.load_file(File.dirname(__FILE__) + '/database.yml')
 ActiveRecord::Base.establish_connection(config['test'])
 
