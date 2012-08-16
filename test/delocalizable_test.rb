@@ -32,6 +32,15 @@ class DelocalizableTest < ActiveSupport::TestCase
     assert_equal [:foo, :bar], @delocalizable_class.delocalizable_fields
   end
 
+  test "inheriting delocalizable fields works correctly" do
+    @delocalizable_class.delocalize :base => :number
+    foo_class = Class.new(@delocalizable_class) { delocalize :foo => :number }
+    bar_class = Class.new(@delocalizable_class) { delocalize :bar => :number }
+    assert_equal [:base], @delocalizable_class.delocalizable_fields
+    assert_equal [:base, :foo], foo_class.delocalizable_fields
+    assert_equal [:base, :bar], bar_class.delocalizable_fields
+  end
+
   test "stores conversions" do
     @delocalizable_class.delocalize :foo => :number, :bar => :time
     assert_equal :number, @delocalizable_class.delocalize_conversions[:foo]
@@ -48,6 +57,15 @@ class DelocalizableTest < ActiveSupport::TestCase
     @delocalizable_class.delocalize :foo => :number
     @delocalizable_class.delocalize :foo => :date
     assert_equal :date, @delocalizable_class.delocalize_conversions[:foo]
+  end
+
+  test "inheriting conversions works correctly" do
+    @delocalizable_class.delocalize :foo => :number
+    foo_class = Class.new(@delocalizable_class) { delocalize :foo => :date }
+    bar_class = Class.new(@delocalizable_class) { delocalize :bar => :time }
+    assert_equal({:foo => :number}, @delocalizable_class.delocalize_conversions)
+    assert_equal({:foo => :date}, foo_class.delocalize_conversions)
+    assert_equal({:foo => :number, :bar => :time}, bar_class.delocalize_conversions)
   end
 
   test "defines attribute writers" do
