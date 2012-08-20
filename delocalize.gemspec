@@ -38,4 +38,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sqlite3', '~> 1.3.4'
   s.add_development_dependency 'timecop', '~> 0.3.5'
   s.add_development_dependency 'mocha', '~> 0.10.2'
+  s.add_development_dependency 'activerecord', '>= 3.0'
+  s.add_development_dependency 'actionpack', '>= 3.0'
 end
