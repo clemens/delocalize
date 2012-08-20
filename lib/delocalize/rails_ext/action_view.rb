@@ -10,30 +10,27 @@ ActionView::Helpers::InstanceTag.class_eval do
   def to_input_field_tag(field_type, options = {})
     options.symbolize_keys!
     # numbers and dates/times should be localized unless value is already defined
-    if object && options[:value].blank? && object.respond_to?(:column_for_attribute) && column = object.column_for_attribute(method_name)
-      # a little verbose
-      if column.number? || column.date? || column.time?
-        value = object.send(method_name)
+    if object && (options[:value].blank? || !options[:value].is_a?(String)) && object.respond_to?(:column_for_attribute) && column = object.column_for_attribute(method_name)
+      value = options[:value] || object.send(method_name)
 
-        if column.number?
-          number_options = I18n.t(:'number.format')
-          separator = options.delete(:separator) || number_options[:separator]
-          delimiter = options.delete(:delimiter) || number_options[:delimiter]
-          precision = options.delete(:precision) || number_options[:precision]
-          opts = { :separator => separator, :delimiter => delimiter, :precision => precision }
-          # integers don't need a precision
-          opts.merge!(:precision => 0) if column.type == :integer
+      if column.number?
+        number_options = I18n.t(:'number.format')
+        separator = options.delete(:separator) || number_options[:separator]
+        delimiter = options.delete(:delimiter) || number_options[:delimiter]
+        precision = options.delete(:precision) || number_options[:precision]
+        opts = { :separator => separator, :delimiter => delimiter, :precision => precision }
+        # integers don't need a precision
+        opts.merge!(:precision => 0) if column.type == :integer
 
-          hidden_for_integer = field_type == 'hidden' && column.type == :integer
+        hidden_for_integer = field_type == 'hidden' && column.type == :integer
 
-          # the number will be formatted only if it has no numericality errors
-          if object.respond_to?(:errors) && !Array(object.errors[method_name]).try(:include?, 'is not a number')
-            # we don't format integer hidden fields because this breaks nested_attributes
-            options[:value] = number_with_precision(value, opts) unless hidden_for_integer
-          end
-        elsif column.date? || column.time?
-          options[:value] = value ? I18n.l(value, :format => options.delete(:format)) : nil
+        # the number will be formatted only if it has no numericality errors
+        if object.respond_to?(:errors) && !Array(object.errors[method_name]).try(:include?, 'is not a number')
+          # we don't format integer hidden fields because this breaks nested_attributes
+          options[:value] = number_with_precision(value, opts) unless hidden_for_integer
         end
+      elsif column.date? || column.time?
+        options[:value] = value ? I18n.l(value, :format => options.delete(:format)) : nil
       end
     end
 

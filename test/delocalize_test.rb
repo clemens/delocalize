@@ -296,7 +296,13 @@ class DelocalizeActionViewTest < ActionView::TestCase
     }
   end
 
-  test "doesn't override given :value" do
+  test "delocalizes a given non-string :value" do
+    @product.price = 1299.9
+    assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1.499,90" />',
+      text_field(:product, :price, :value => 1499.90)
+  end
+
+  test "doesn't override given string :value" do
     @product.price = 1299.9
     assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1.499,90" />',
       text_field(:product, :price, :value => "1.499,90")
