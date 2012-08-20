@@ -4,20 +4,22 @@
 module Delocalize
   class LocalizedDateTimeParser
     # extend/change this according to your needs by merging your custom regexps
-    REGEXPS = {
-      '%B' => "(#{Date::MONTHNAMES.compact.join('|')})",      # long month name
-      '%b' => "(#{Date::ABBR_MONTHNAMES.compact.join('|')})", # short month name
-      '%m' => "(\\d{2})",                                     # numeric month
-      '%A' => "(#{Date::DAYNAMES.join('|')})",                # full day name
-      '%a' => "(#{Date::ABBR_DAYNAMES.join('|')})",           # short day name
-      '%Y' => "(\\d{4})",                                     # long year
-      '%y' => "(\\d{2})",                                     # short year
-      '%e' => "(\\s\\d|\\d{2})",                              # short day
-      '%d' => "(\\d{2})",                                     # full day
-      '%H' => "(\\d{2})",                                     # hour (24)
-      '%M' => "(\\d{2})",                                     # minute
-      '%S' => "(\\d{2})"                                      # second
-    }
+    REGEXPS = -> do
+      {
+        '%B' => "(#{I18n.t('date.month_names').compact.join('|')})",      # long month name
+        '%b' => "(#{I18n.t('date.abbr_month_names').compact.join('|')})", # short month name
+        '%m' => "(\\d{2})",                                               # numeric month
+        '%A' => "(#{I18n.t('date.day_names').join('|')})",                # full day name
+        '%a' => "(#{I18n.t('date.abbr_day_names').join('|')})",           # short day name
+        '%Y' => "(\\d{4})",                                               # long year
+        '%y' => "(\\d{2})",                                               # short year
+        '%e' => "(\\s\\d|\\d{2})",                                        # short day
+        '%d' => "(\\d{2})",                                               # full day
+        '%H' => "(\\d{2})",                                               # hour (24)
+        '%M' => "(\\d{2})",                                               # minute
+        '%S' => "(\\d{2})"                                                # second
+      }
+    end
 
     class << self
       def parse(datetime, type)
@@ -65,7 +67,7 @@ module Delocalize
       end
 
       def apply_regex(format)
-        format.gsub(/(#{REGEXPS.keys.join('|')})/) { |s| REGEXPS[$1] }
+        format.gsub(/(#{REGEXPS.call.keys.join('|')})/) { |s| REGEXPS.call[$1] }
       end
     end
   end
