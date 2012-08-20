@@ -43,18 +43,15 @@ module Delocalize
 
     private
 
-      def delocalize_attribute_writers
-        @delocalize_attribute_writers ||= begin
-          mod = Module.new
-          include(mod)
-          mod
-        end
-      end
-
       def define_delocalize_attr_writer(field)
         writer_method = "#{field}="
 
-        delocalize_attribute_writers.module_eval <<-ruby, __FILE__, __LINE__ + 1
+        # Define the attribute writers in an included module - this makes
+        # it possible to override them in model classes and still use
+        # delocalize functionality (by calling `super`).
+        @delocalize_attribute_writers ||= Module.new.tap{|mod| include(mod)}
+
+        @delocalize_attribute_writers.module_eval <<-ruby, __FILE__, __LINE__ + 1
           remove_possible_method(:#{writer_method})
 
           def #{writer_method}(value)
