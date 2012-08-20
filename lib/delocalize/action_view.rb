@@ -12,21 +12,21 @@ ActionView::Helpers::InstanceTag.class_eval do
     # We can return in the following cases:
     # - delocalization is disabled
     # - no object is present
-    # - a value is present
+    # - a string value is present
     # - the field type is hidden
     # - the field has errors
     # - the object does not delocalize at all
     # - the object does not delocalize the given field
     do_return = Delocalize.disabled? ||
                 object.blank? ||
-                options[:value].present? ||
+                (options[:value].present? && options[:value].is_a?(String)) ||
                 field_type == 'hidden' ||
                 (object.respond_to?(:errors) && object.errors[method_name].any?) ||
                 !(object.respond_to?(:delocalizes?) && object.delocalizes?(method_name))
 
     return original_to_input_field_tag(field_type, options) if do_return
 
-    value = object.send(method_name)
+    value = options[:value] || object.send(method_name)
     type = object.delocalize_type_for(method_name)
 
     case type
