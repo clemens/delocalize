@@ -73,6 +73,7 @@ class NonArProduct
 end
 
 class Product < ActiveRecord::Base
+  attr_accessor :virtual_price
 end
 
 class ProductWithValidation < Product

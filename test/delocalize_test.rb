@@ -221,6 +221,12 @@ class DelocalizeActionViewTest < ActionView::TestCase
     @product = Product.new
   end
 
+  test "shows text field using formatted number for virtual attribute" do
+    @product.virtual_price = 1299.9
+    assert_dom_equal '<input id="product_virtual_price" name="product[virtual_price]" size="30" type="text" value="1.299,90" />',
+      text_field(:product, :virtual_price)
+  end  
+
   test "shows text field using formatted number" do
     @product.price = 1299.9
     assert_dom_equal '<input id="product_price" name="product[price]" size="30" type="text" value="1.299,90" />',
