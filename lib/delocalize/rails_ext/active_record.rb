@@ -39,7 +39,7 @@ ActiveRecord::Base.class_eval do
   end
   alias_method_chain :convert_number_column_value, :localization
 
-  def field_changed?(attr, old, value)
+  def _field_changed?(attr, old, value)
     if column = column_for_attribute(attr)
       if column.number? && column.null && (old.nil? || old == 0) && value.blank?
         # For nullable numeric columns, NULL gets stored in database for blank (i.e. '') values.
