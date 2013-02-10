@@ -39,7 +39,8 @@ ActiveRecord::Base.class_eval do
   end
   alias_method_chain :convert_number_column_value, :localization
 
-  def field_changed?(attr, old, value)
+
+  define_method( (Gem::Version.new(ActiveRecord::VERSION::STRING) < Gem::Version.new('3.2.9')) ? :field_changed? : :_field_changed? ) do |attr, old, value|
     if column = column_for_attribute(attr)
       if column.number? && column.null && (old.nil? || old == 0) && value.blank?
         # For nullable numeric columns, NULL gets stored in database for blank (i.e. '') values.
@@ -53,7 +54,6 @@ ActiveRecord::Base.class_eval do
         value = column.type_cast(value)
       end
     end
-
     old != value
   end
 end
