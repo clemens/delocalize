@@ -18,43 +18,46 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
   end
 end
 
-ActiveRecord::Base.class_eval do
-  def write_attribute_with_localization(attr_name, original_value)
-    new_value = original_value
-    if column = column_for_attribute(attr_name.to_s)
-      if column.date?
-        new_value = Date.parse_localized(original_value) rescue original_value
-      elsif column.time?
-        new_value = Time.parse_localized(original_value) rescue original_value
+if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('4.0.0.beta')
+  require 'active_record_rails4'
+else
+  ActiveRecord::Base.class_eval do
+    def write_attribute_with_localization(attr_name, original_value)
+      new_value = original_value
+      if column = column_for_attribute(attr_name.to_s)
+        if column.date?
+          new_value = Date.parse_localized(original_value) rescue original_value
+        elsif column.time?
+          new_value = Time.parse_localized(original_value) rescue original_value
+        end
       end
+      write_attribute_without_localization(attr_name, new_value)
     end
-    write_attribute_without_localization(attr_name, new_value)
-  end
-  alias_method_chain :write_attribute, :localization
+    alias_method_chain :write_attribute, :localization
 
-  def convert_number_column_value_with_localization(value)
-    value = convert_number_column_value_without_localization(value)
-    value = Numeric.parse_localized(value) if I18n.delocalization_enabled?
-    value
-  end
-  alias_method_chain :convert_number_column_value, :localization
+    def convert_number_column_value_with_localization(value)
+      value = convert_number_column_value_without_localization(value)
+      value = Numeric.parse_localized(value) if I18n.delocalization_enabled?
+      value
+    end
+    alias_method_chain :convert_number_column_value, :localization
 
-
-  define_method( (Gem::Version.new(ActiveRecord::VERSION::STRING) < Gem::Version.new('3.2.9')) ? :field_changed? : :_field_changed? ) do |attr, old, value|
-    if column = column_for_attribute(attr)
-      if column.number? && column.null && (old.nil? || old == 0) && value.blank?
-        # For nullable numeric columns, NULL gets stored in database for blank (i.e. '') values.
-        # Hence we don't record it as a change if the value changes from nil to ''.
-        # If an old value of 0 is set to '' we want this to get changed to nil as otherwise it'll
-        # be typecast back to 0 (''.to_i => 0)
-        value = nil
-      elsif column.number?
-        value = column.type_cast(convert_number_column_value_with_localization(value))
-      else
-        value = column.type_cast(value)
+    define_method( (Gem::Version.new(ActiveRecord::VERSION::STRING) < Gem::Version.new('3.2.9')) ? :field_changed? : :_field_changed? ) do |attr, old, value|
+      if column = column_for_attribute(attr)
+        if column.number? && column.null && (old.nil? || old == 0) && value.blank?
+          # For nullable numeric columns, NULL gets stored in database for blank (i.e. '') values.
+          # Hence we don't record it as a change if the value changes from nil to ''.
+          # If an old value of 0 is set to '' we want this to get changed to nil as otherwise it'll
+          # be typecast back to 0 (''.to_i => 0)
+          value = nil
+        elsif column.number?
+          value = column.type_cast(convert_number_column_value_with_localization(value))
+        else
+          value = column.type_cast(value)
+        end
       end
+      old != value
     end
-    old != value
   end
 end
 
