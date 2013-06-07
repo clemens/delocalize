@@ -1,7 +1,7 @@
 require 'action_view'
 
 if Gem::Version.new(ActionPack::VERSION::STRING) >= Gem::Version.new('4.0.0.beta')
-  require 'action_view_rails4'
+  require 'delocalize/rails_ext/action_view_rails4'
 else
   # TODO: also override other methods like to_check_box_tag since they might contain numeric values?
   # ActionView needs some patching too

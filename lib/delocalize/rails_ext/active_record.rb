@@ -19,7 +19,7 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
 end
 
 if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('4.0.0.beta')
-  require 'active_record_rails4'
+  require 'delocalize/rails_ext/active_record_rails4'
 else
   ActiveRecord::Base.class_eval do
     def write_attribute_with_localization(attr_name, original_value)
