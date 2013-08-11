@@ -1,3 +1,4 @@
+.ruby-version
 pkg/*
 log/*
 test/rails2_app/log/*
