@@ -1,3 +1,5 @@
+require 'date'
+
 # TODO:
 #   * AM/PM calculation
 #   * proper documentation (comments)

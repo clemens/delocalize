@@ -8,8 +8,6 @@ module Delocalize
       ActiveSupport.on_load :action_view do
         require 'delocalize/rails_ext/action_view'
       end
-
-      require 'delocalize/rails_ext/time_zone'
     end
   end
 end
