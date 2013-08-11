@@ -1,5 +1,4 @@
-# TODO:
-#   * proper documentation (comments)
+# TODO Rethink: Shouldn't this return numbers instead of reformatted strings?
 module Delocalize
   class LocalizedNumericParser
     class << self

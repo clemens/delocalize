@@ -8,6 +8,7 @@ Bundler.require(:default, :development)
 require 'rails/all'
 
 require 'test/unit'
+require 'minitest/spec'
 
 require 'delocalize/rails_ext/action_view'
 require 'delocalize/rails_ext/active_record'
