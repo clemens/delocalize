@@ -8,7 +8,11 @@ module Delocalize
 
     def delocalize_hash(hash, options, key_stack = [])
       hash.each do |key, value|
-        hash[key] = value.is_a?(Hash) ? delocalize_hash(hash[key], options, [*key_stack, key]) : delocalize_parse(options, [*key_stack, key], value)
+        key_stack = [*key_stack, key] # don't modify original key stack!
+
+        hash[key] = value.is_a?(Hash) ?
+          delocalize_hash(hash[key], options, key_stack) :
+          delocalize_parse(options, key_stack, value)
       end
     end
 
@@ -22,7 +26,9 @@ module Delocalize
       return unless parser_type
 
       parser_name = "delocalize_#{parser_type}_parser"
-      respond_to?(parser_name, true) ? send(parser_name) : raise(Delocalize::ParserNotFound.new("Unknown parser: #{parser_type}"))
+      respond_to?(parser_name, true) ?
+        send(parser_name) :
+        raise(Delocalize::ParserNotFound.new("Unknown parser: #{parser_type}"))
     end
 
     def delocalize_number_parser
