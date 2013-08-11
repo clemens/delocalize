@@ -21,60 +21,65 @@ module Delocalize
       '%S' => "(\\d{2})"                                      # second
     }
 
-    class << self
-      def parse(datetime, type)
-        return unless datetime
-        return datetime if datetime.respond_to?(:strftime) # already a Date/Time object -> no need to parse it
+    attr_reader :type
 
-        translate_month_and_day_names(datetime)
-        input_formats(type).each do |original_format|
-          next unless datetime =~ /^#{apply_regex(original_format)}$/
+    def initialize(type)
+      @type = type
+    end
 
-          datetime = DateTime.strptime(datetime, original_format)
-          return Date == type ?
-            datetime.to_date :
-            Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
-        end
-        default_parse(datetime, type)
+    def parse(datetime)
+      return unless datetime
+      return datetime if datetime.respond_to?(:strftime) # already a Date/Time object -> no need to parse it
+
+      translate_month_and_day_names(datetime)
+      input_formats(type).each do |original_format|
+        next unless datetime =~ /^#{apply_regex(original_format)}$/
+
+        datetime = DateTime.strptime(datetime, original_format)
+        return Date == type ?
+          datetime.to_date :
+          Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
       end
+      default_parse(datetime, type)
+    end
 
-      private
-      def default_parse(datetime, type)
-        return if datetime.blank?
-        begin
-          today = Date.current
-          parsed = Date._parse(datetime)
-          return if parsed.empty? # the datetime value is invalid
-          # set default year, month and day if not found
-          parsed.reverse_merge!(:year => today.year, :mon => today.mon, :mday => today.mday)
-          datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
-          Date == type ? datetime.to_date : datetime
-        rescue
-          datetime
-        end
+  private
+
+    def default_parse(datetime, type)
+      return if datetime.blank?
+      begin
+        today = Date.current
+        parsed = Date._parse(datetime)
+        return if parsed.empty? # the datetime value is invalid
+        # set default year, month and day if not found
+        parsed.reverse_merge!(:year => today.year, :mon => today.mon, :mday => today.mday)
+        datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
+        Date == type ? datetime.to_date : datetime
+      rescue
+        datetime
       end
+    end
 
-      def translate_month_and_day_names(datetime)
-        # Note: This should be a bulk lookup but due to a bug in i18n it doesn't work properly with fallbacks.
-        # See https://github.com/svenfuchs/i18n/issues/104.
-        # TODO Make it a bulk lookup again at some point in the future when the bug is fixed in i18n.
-        translated = [:month_names, :abbr_month_names, :day_names, :abbr_day_names].map do |key|
-          I18n.t(key, :scope => :date)
-        end.flatten.compact
+    def translate_month_and_day_names(datetime)
+      # Note: This should be a bulk lookup but due to a bug in i18n it doesn't work properly with fallbacks.
+      # See https://github.com/svenfuchs/i18n/issues/104.
+      # TODO Make it a bulk lookup again at some point in the future when the bug is fixed in i18n.
+      translated = [:month_names, :abbr_month_names, :day_names, :abbr_day_names].map do |key|
+        I18n.t(key, :scope => :date)
+      end.flatten.compact
 
-        original = (Date::MONTHNAMES + Date::ABBR_MONTHNAMES + Date::DAYNAMES + Date::ABBR_DAYNAMES).compact
-        translated.each_with_index { |name, i| datetime.gsub!(/\b#{name}\b/, original[i]) }
-      end
+      original = (Date::MONTHNAMES + Date::ABBR_MONTHNAMES + Date::DAYNAMES + Date::ABBR_DAYNAMES).compact
+      translated.each_with_index { |name, i| datetime.gsub!(/\b#{name}\b/, original[i]) }
+    end
 
-      def input_formats(type)
-        # Date uses date formats, all others use time formats
-        type = type == Date ? :date : :time
-        I18n.t(:"#{type}.formats").slice(*I18n.t(:"#{type}.input.formats")).values
-      end
+    def input_formats(type)
+      # Date uses date formats, all others use time formats
+      type = type == Date ? :date : :time
+      I18n.t(:"#{type}.formats").slice(*I18n.t(:"#{type}.input.formats")).values
+    end
 
-      def apply_regex(format)
-        format.gsub(/(#{REGEXPS.keys.join('|')})/) { |s| REGEXPS[$1] }
-      end
+    def apply_regex(format)
+      format.gsub(/(#{REGEXPS.keys.join('|')})/) { |s| REGEXPS[$1] }
     end
   end
 end

@@ -23,9 +23,9 @@ ActiveRecord::Base.class_eval do
     new_value = original_value
     if column = column_for_attribute(attr_name.to_s)
       if column.date?
-        new_value = Delocalize::LocalizedDateTimeParser.parse(original_value, Date) rescue original_value
+        new_value = delocalize_date_parser.parse(original_value) rescue original_value
       elsif column.time?
-        new_value = Delocalize::LocalizedDateTimeParser.parse(original_value, Time) rescue original_value
+        new_value = delocalize_time_parser.parse(original_value) rescue original_value
       end
     end
     write_attribute_without_localization(attr_name, new_value)
@@ -34,7 +34,7 @@ ActiveRecord::Base.class_eval do
 
   def convert_number_column_value_with_localization(value)
     value = convert_number_column_value_without_localization(value)
-    value = Delocalize::LocalizedNumericParser.parse(value) if I18n.delocalization_enabled?
+    value = delocalize_numeric_parser.parse(value) if I18n.delocalization_enabled?
     value
   end
   alias_method_chain :convert_number_column_value, :localization
@@ -56,6 +56,25 @@ ActiveRecord::Base.class_eval do
     end
     old != value
   end
+
+private
+
+  def delocalize_numeric_parser
+    @delocalize_numeric_parser ||= Delocalize::LocalizedNumericParser.new
+  end
+
+  def delocalize_date_parser
+    @delocalize_date_parser ||= Delocalize::LocalizedDateTimeParser.new(Date)
+  end
+
+  def delocalize_time_parser
+    @delocalize_time_parser ||= Delocalize::LocalizedDateTimeParser.new(Time)
+  end
+
+  def delocalize_time_with_zone_parser
+    @delocalize_time_parser ||= Delocalize::LocalizedDateTimeParser.new(Time.zone)
+  end
+
 end
 
 ActiveRecord::Base.instance_eval do
@@ -65,7 +84,7 @@ ActiveRecord::Base.instance_eval do
         def #{attr_name}=(original_time)
           time = original_time
           unless time.acts_like?(:time)
-            time = time.is_a?(String) ? (I18n.delocalization_enabled? ? Delocalize::LocalizedDateTimeParser.parse(time, Time.zone) : Time.zone.parse(time)) : time.to_time rescue time
+            time = time.is_a?(String) ? (I18n.delocalization_enabled? ? delocalize_time_with_zone_parser.parse(time) : Time.zone.parse(time)) : time.to_time rescue time
           end
           time = time.in_time_zone rescue nil if time
           write_attribute(:#{attr_name}, original_time)

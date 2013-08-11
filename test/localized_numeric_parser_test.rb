@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe Delocalize::LocalizedNumericParser do
   before do
-    @parser = Delocalize::LocalizedNumericParser
+    @parser = Delocalize::LocalizedNumericParser.new
   end
 
   it "parses a number from a string" do
