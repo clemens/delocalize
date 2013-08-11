@@ -8,6 +8,8 @@ elsif defined?(Rails::Initializer)
 end
 
 module Delocalize
+  autoload :Delocalizing, 'delocalize/delocalizing'
+
   autoload :LocalizedNumericParser,  'delocalize/localized_numeric_parser'
   autoload :LocalizedDateTimeParser, 'delocalize/localized_date_time_parser'
 end

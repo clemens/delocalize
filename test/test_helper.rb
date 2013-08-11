@@ -9,6 +9,7 @@ require 'rails/all'
 
 require 'test/unit'
 require 'minitest/spec'
+require 'mocha/setup'
 
 require 'delocalize/rails_ext/action_view'
 require 'delocalize/rails_ext/active_record'
@@ -103,4 +104,3 @@ ActiveRecord::Base.connection.create_table :products do |t|
   t.integer :times_sold
   t.decimal :some_value_with_default, :default => 0, :precision => 20, :scale => 2
 end
-
