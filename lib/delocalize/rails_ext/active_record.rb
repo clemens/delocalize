@@ -60,19 +60,19 @@ ActiveRecord::Base.class_eval do
 private
 
   def delocalize_number_parser
-    @delocalize_number_parser ||= Delocalize::NumberParser.new
+    @delocalize_number_parser ||= Delocalize::Parsers::Number.new
   end
 
   def delocalize_date_parser
-    @delocalize_date_parser ||= Delocalize::DateTimeParser.new(Date)
+    @delocalize_date_parser ||= Delocalize::Parsers::DateTime.new(Date)
   end
 
   def delocalize_time_parser
-    @delocalize_time_parser ||= Delocalize::DateTimeParser.new(Time)
+    @delocalize_time_parser ||= Delocalize::Parsers::DateTime.new(Time)
   end
 
   def delocalize_time_with_zone_parser
-    @delocalize_time_parser ||= Delocalize::DateTimeParser.new(Time.zone)
+    @delocalize_time_parser ||= Delocalize::Parsers::DateTime.new(Time.zone)
   end
 
 end

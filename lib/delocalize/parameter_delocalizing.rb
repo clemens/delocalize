@@ -32,15 +32,15 @@ module Delocalize
     end
 
     def delocalize_number_parser
-      @delocalize_number_parser ||= NumberParser.new
+      @delocalize_number_parser ||= Parsers::Number.new
     end
 
     def delocalize_time_parser
-      @delocalize_time_parser ||= DateTimeParser.new(Time)
+      @delocalize_time_parser ||= Parsers::DateTime.new(Time)
     end
 
     def delocalize_date_parser
-      @delocalize_date_parser ||= DateTimeParser.new(Date)
+      @delocalize_date_parser ||= Parsers::DateTime.new(Date)
     end
 
   end
