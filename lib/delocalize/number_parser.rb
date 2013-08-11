@@ -1,6 +1,6 @@
 # TODO Rethink: Shouldn't this return numbers instead of reformatted strings?
 module Delocalize
-  class LocalizedNumericParser
+  class NumberParser
     # Parse numbers removing unneeded characters and replacing decimal separator
     # through I18n. This will return a valid Ruby Numeric value (as String).
     def parse(value)

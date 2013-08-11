@@ -1,5 +1,4 @@
 require 'delocalize/i18n_ext'
-require 'delocalize/localized_date_time_parser'
 
 if defined?(Rails::Railtie)
   require 'delocalize/railtie'
@@ -10,6 +9,6 @@ end
 module Delocalize
   autoload :Delocalizing, 'delocalize/delocalizing'
 
-  autoload :LocalizedNumericParser,  'delocalize/localized_numeric_parser'
-  autoload :LocalizedDateTimeParser, 'delocalize/localized_date_time_parser'
+  autoload :NumberParser,   'delocalize/number_parser'
+  autoload :DateTimeParser, 'delocalize/date_time_parser'
 end

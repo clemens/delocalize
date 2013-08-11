@@ -34,7 +34,7 @@ ActiveRecord::Base.class_eval do
 
   def convert_number_column_value_with_localization(value)
     value = convert_number_column_value_without_localization(value)
-    value = delocalize_numeric_parser.parse(value) if I18n.delocalization_enabled?
+    value = delocalize_number_parser.parse(value) if I18n.delocalization_enabled?
     value
   end
   alias_method_chain :convert_number_column_value, :localization
@@ -59,20 +59,20 @@ ActiveRecord::Base.class_eval do
 
 private
 
-  def delocalize_numeric_parser
-    @delocalize_numeric_parser ||= Delocalize::LocalizedNumericParser.new
+  def delocalize_number_parser
+    @delocalize_number_parser ||= Delocalize::NumberParser.new
   end
 
   def delocalize_date_parser
-    @delocalize_date_parser ||= Delocalize::LocalizedDateTimeParser.new(Date)
+    @delocalize_date_parser ||= Delocalize::DateTimeParser.new(Date)
   end
 
   def delocalize_time_parser
-    @delocalize_time_parser ||= Delocalize::LocalizedDateTimeParser.new(Time)
+    @delocalize_time_parser ||= Delocalize::DateTimeParser.new(Time)
   end
 
   def delocalize_time_with_zone_parser
-    @delocalize_time_parser ||= Delocalize::LocalizedDateTimeParser.new(Time.zone)
+    @delocalize_time_parser ||= Delocalize::DateTimeParser.new(Time.zone)
   end
 
 end

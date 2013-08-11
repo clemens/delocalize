@@ -204,7 +204,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     I18n.t('date.abbr_day_names')[1] = 'Ma'
 
     subject = '30 Maart 2011'
-    Delocalize::LocalizedDateTimeParser.new(Date).send(:translate_month_and_day_names, subject)
+    Delocalize::DateTimeParser.new(Date).send(:translate_month_and_day_names, subject)
 
     assert_equal subject, '30 March 2011'
 

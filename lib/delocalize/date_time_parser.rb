@@ -4,7 +4,7 @@ require 'date'
 #   * AM/PM calculation
 #   * proper documentation (comments)
 module Delocalize
-  class LocalizedDateTimeParser
+  class DateTimeParser
     # extend/change this according to your needs by merging your custom regexps
     REGEXPS = {
       '%B' => "(#{Date::MONTHNAMES.compact.join('|')})",      # long month name

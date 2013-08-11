@@ -2,11 +2,11 @@
 
 require 'test_helper'
 
-describe Delocalize::LocalizedDateTimeParser do
+describe Delocalize::DateTimeParser do
   before do
     Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
-    @time_parser = Delocalize::LocalizedDateTimeParser.new(Time)
-    @date_parser = Delocalize::LocalizedDateTimeParser.new(Date)
+    @time_parser = Delocalize::DateTimeParser.new(Time)
+    @date_parser = Delocalize::DateTimeParser.new(Date)
   end
 
   after do
