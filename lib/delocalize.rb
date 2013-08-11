@@ -7,7 +7,10 @@ elsif defined?(Rails::Initializer)
 end
 
 module Delocalize
-  autoload :Delocalizing, 'delocalize/delocalizing'
+  class ParserNotFound < ArgumentError; end
+
+  autoload :Parameters,            'delocalize/parameters'
+  autoload :ParameterDelocalizing, 'delocalize/parameter_delocalizing'
 
   autoload :NumberParser,   'delocalize/number_parser'
   autoload :DateTimeParser, 'delocalize/date_time_parser'
