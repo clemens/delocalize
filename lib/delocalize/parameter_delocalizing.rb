@@ -1,7 +1,7 @@
 module Delocalize
   module ParameterDelocalizing
     def delocalize(options)
-      self.class.new(delocalize_hash(self, options))
+      delocalize_hash(self, options)
     end
 
   private
