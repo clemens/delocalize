@@ -2,14 +2,21 @@ before_install:
   - gem install bundler
 
 rvm:
-  - 1.9.2
   - 1.9.3
-  - 2.0.0
-  - jruby-19mode
-  - rbx-19mode
 
 gemfile:
   - Gemfile
   - ci/Gemfile.rails3
   - ci/Gemfile.rails31
   - ci/Gemfile.rails32
+
+matrix:
+  include:
+    - rvm: 2.0.0
+      gemfile: ci/Gemfile.rails32
+    - rvm: 1.9.2
+      gemfile: ci/Gemfile.rails32
+    - rvm: jruby-19mode
+      gemfile: ci/Gemfile.rails32
+    - rvm: rbx-19mode
+      gemfile: ci/Gemfile.rails32
