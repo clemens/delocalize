@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', :git => 'https://github.com/rails/rails.git', :branch => '3-0-stable'
+gem 'rails', :git => 'https://github.com/rails/rails.git', :branch => '3-2-stable'
 gem 'delocalize', :path => '../'
 
 gemspec :path => '../'
