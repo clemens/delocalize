@@ -6,8 +6,6 @@ rvm:
 
 gemfile:
   - Gemfile
-  - ci/Gemfile.rails3
-  - ci/Gemfile.rails31
   - ci/Gemfile.rails32
 
 matrix:
