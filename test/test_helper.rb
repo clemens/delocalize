@@ -5,6 +5,8 @@ require 'bundler'
 
 Bundler.require(:default, :development)
 
+require 'rails/all'
+
 require 'test/unit'
 
 require 'delocalize/rails_ext/action_view'
