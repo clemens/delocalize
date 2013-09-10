@@ -47,6 +47,7 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
   end
 
   test "delocalizes localized date without year" do
+    Timecop.return
     date = Date.civil(Date.today.year, 10, 19)
 
     @product.released_on = '19. Okt'
@@ -81,21 +82,9 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     assert_equal time, @product.published_at
   end
 
-  # TODO can I somehow do this smarter? or should I use another zone w/o DST?
-  if Time.current.dst?
-    test "delocalizes localized time (DST)" do
-      now = Date.today
-      time = Time.zone.local(now.year, now.month, now.day, 9, 0, 0)
-      @product.cant_think_of_a_sensible_time_field = '09:00 Uhr'
-      assert_equal time, @product.cant_think_of_a_sensible_time_field
-    end
-  else
-    test "delocalizes localized time (non-DST)" do
-      now = Date.today
-      time = Time.zone.local(now.year, now.month, now.day, 8, 0, 0)
-      @product.cant_think_of_a_sensible_time_field = '08:00 Uhr'
-      assert_equal time, @product.cant_think_of_a_sensible_time_field
-    end
+  test "delocalizes localized time (DST)" do
+    @product.cant_think_of_a_sensible_time_field = '09:00 Uhr'
+    assert_equal '09:00', @product.cant_think_of_a_sensible_time_field.strftime('%H:%M')
   end
 
   test "invalid dates should be delocalized to nil" do
