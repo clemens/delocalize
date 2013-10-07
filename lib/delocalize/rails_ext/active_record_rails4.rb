@@ -15,7 +15,12 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
 
   def type_cast_for_write_with_localization(value)
     if number? && I18n.delocalization_enabled?
-      value = Numeric.parse_localized(value).to_f
+      value = Numeric.parse_localized(value)
+      if value =~ /./
+        value = value.to_f
+      else
+        value = value.to_i
+      end
     end
     type_cast_for_write_without_localization(value)
   end
