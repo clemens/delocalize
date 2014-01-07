@@ -89,8 +89,8 @@ Assuming you want to use all of delocalize's parsers (date, time, number), the r
 * number.format.separator
 * date.input.formats
 * time.input.formats
-* date.formats.<format> for all formats specified in date.input.formats
-* time.formats.<format> for all formats specified in time.input.formats
+* date.formats.SOME_FORMAT for all formats specified in date.input.formats
+* time.formats.SOME_FORMAT for all formats specified in time.input.formats
 
 ```yml
 de:
