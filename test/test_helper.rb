@@ -11,9 +11,6 @@ require 'test/unit'
 require 'minitest/spec'
 require 'mocha/setup'
 
-require 'delocalize/rails_ext/action_view'
-require 'delocalize/rails_ext/active_record'
-
 de = {
   :date => {
     :input => {
