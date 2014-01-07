@@ -5,8 +5,6 @@ require 'bundler'
 
 Bundler.require(:default, :development)
 
-require 'rails/all'
-
 require 'minitest/autorun'
 require 'minitest/spec'
 require 'mocha/setup'

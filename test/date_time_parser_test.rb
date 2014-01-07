@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'test_helper'
+require 'active_support/time'
 
 describe Delocalize::Parsers::DateTime do
   before do
