@@ -36,7 +36,7 @@ module Delocalize
         input_formats(type).each do |original_format|
           next unless datetime =~ /^#{apply_regex(original_format)}$/
 
-          datetime = DateTime.strptime(datetime, original_format)
+          datetime = ::DateTime.strptime(datetime, original_format)
           return Date == type ?
             datetime.to_date :
             Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
