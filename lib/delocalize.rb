@@ -1,5 +1,3 @@
-require 'delocalize/i18n_ext'
-
 if defined?(Rails::Railtie)
   require 'delocalize/railtie'
 elsif defined?(Rails::Initializer)
