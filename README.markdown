@@ -131,10 +131,6 @@ For dates and times, you have to define input formats which are taken from the a
 
 **Be careful with formats containing only numbers: It's very hard to produce reliable matches if you provide multiple strictly numeric formats!**
 
-### View setup
-
-TODO!
-
 ### Contributors and Copyright
 
 People who have contributed to delocalize (in no particular order):
@@ -149,6 +145,6 @@ People who have contributed to delocalize (in no particular order):
 * [Blake Lucchesi](https://github.com/BlakeLucchesi)
 * [Ralph von der Heyden](https://github.com/ralph)
 
-Copyright (c) 2009-2013 Clemens Kofler <clemens@railway.at>
+Copyright (c) 2009-2014 Clemens Kofler <clemens@railway.at>
 <http://www.railway.at/>
 Released under the MIT license
