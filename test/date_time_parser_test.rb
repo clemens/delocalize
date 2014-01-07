@@ -21,12 +21,11 @@ describe Delocalize::Parsers::DateTime do
     @date_parser.parse('19.10.2009').must_equal date
   end
 
-  # FIXME
-  # it "parses a date without a year from a string, defaulting to the current year" do
-  #   date = Date.civil(Date.today.year, 10, 19)
-  #   @date_parser.parse('19. Oktober').must_equal date
-  #   @date_parser.parse('19.10.').must_equal date
-  # end
+  it "parses a date without a year from a string, defaulting to the current year" do
+    date = Date.civil(Date.today.year, 10, 19)
+    @date_parser.parse('19. Okt.').must_equal date
+    @date_parser.parse('19.10.').must_equal date
+  end
 
   # datetime
   it "parses a datetime from a string" do

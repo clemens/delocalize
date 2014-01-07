@@ -12,11 +12,12 @@ require 'mocha/setup'
 de = {
   :date => {
     :input => {
-      :formats => [:long, :short, :default]
+      :formats => [:long, :short, :short_with_name, :default]
     },
     :formats => {
       :default => "%d.%m.%Y",
-      :short => "%e. %b",
+      :short => "%e.%m.",
+      :short_with_name => "%e. %b.",
       :long => "%e. %B %Y",
       :only_day => "%e"
     },
