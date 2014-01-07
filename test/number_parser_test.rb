@@ -1,8 +1,8 @@
 require 'test_helper'
 
-describe Delocalize::NumberParser do
+describe Delocalize::Parsers::Number do
   before do
-    @parser = Delocalize::NumberParser.new
+    @parser = Delocalize::Parsers::Number.new
   end
 
   it "parses a number from a string" do

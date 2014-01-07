@@ -1,9 +1,14 @@
 require 'test_helper'
 
-# FIXME Can this happen automatically, e.g. by loading the Railtie?
-ActionController::Parameters.send(:include, Delocalize::ParameterDelocalizing)
+parameters_classes = [Delocalize::Parameters]
 
-[ActionController::Parameters, Delocalize::Parameters].each do |parameters_class|
+if defined?(ActionController::Parameters)
+  # FIXME Can this happen automatically, e.g. by loading the Railtie?
+  ActionController::Parameters.send(:include, Delocalize::ParameterDelocalizing)
+  parameters_classes << ActionController::Parameters
+end
+
+parameters_classes.each do |parameters_class|
   describe parameters_class do
     before do
       Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
