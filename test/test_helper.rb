@@ -65,39 +65,3 @@ I18n.backend.store_translations :de, de
 I18n.backend.store_translations :tt, tt
 
 I18n.locale = :de
-
-class NonArProduct
-  attr_accessor :name, :price, :times_sold,
-    :cant_think_of_a_sensible_time_field,
-    :released_on, :published_at
-end
-
-class Product < ActiveRecord::Base
-end
-
-class ProductWithValidation < Product
-  validates_numericality_of :price
-  validates_presence_of :price
-end
-
-class ProductWithBusinessValidation < Product
-  validate do |record|
-    if record.price > 10
-      record.errors.add(:price, :invalid)
-    end
-  end
-end
-
-config = YAML.load_file(File.dirname(__FILE__) + '/database.yml')
-ActiveRecord::Base.establish_connection(config['test'])
-
-ActiveRecord::Base.connection.create_table :products do |t|
-  t.string :name
-  t.date :released_on
-  t.datetime :published_at
-  t.time :cant_think_of_a_sensible_time_field
-  t.decimal :price
-  t.float :weight
-  t.integer :times_sold
-  t.decimal :some_value_with_default, :default => 0, :precision => 20, :scale => 2
-end
