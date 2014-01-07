@@ -76,7 +76,7 @@ private
   end
 
 end
-```ruby
+```
 
 If you want to delocalize only certain parameters, configure those parameters and leave the others out – they will be kept as they are.
 
