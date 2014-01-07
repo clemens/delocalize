@@ -6,12 +6,12 @@ module Delocalize
 
   private
 
-    def delocalize_hash(hash, options, key_stack = [])
+    def delocalize_hash(hash, options, base_key_stack = [])
       hash.each do |key, value|
-        key_stack = [*key_stack, key] # don't modify original key stack!
+        key_stack = [*base_key_stack, key] # don't modify original key stack!
 
         hash[key] = value.is_a?(Hash) ?
-          delocalize_hash(hash[key], options, key_stack) :
+          delocalize_hash(value, options, key_stack) :
           delocalize_parse(options, key_stack, value)
       end
     end
