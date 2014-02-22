@@ -1,12 +1,5 @@
 require 'active_record'
 
-require 'active_record/connection_adapters/abstract/schema_definitions'
-begin
-  require 'active_record/connection_adapters/column'
-rescue LoadError
-  # Not Rails 3.1, it seems
-end
-
 # let's hack into ActiveRecord a bit - everything at the lowest possible level, of course, so we minimalize side effects
 ActiveRecord::ConnectionAdapters::Column.class_eval do
   def date?
@@ -15,6 +8,15 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
 
   def time?
     klass == Time
+  end
+end
+
+module ActiveRecord::AttributeMethods::Write
+  def type_cast_attribute_for_write(column, value)
+    return value unless column
+
+    value = Numeric.parse_localized(value) if column.number? && I18n.delocalization_enabled?
+    column.type_cast_for_write value
   end
 end
 
@@ -32,15 +34,7 @@ ActiveRecord::Base.class_eval do
   end
   alias_method_chain :write_attribute, :localization
 
-  def convert_number_column_value_with_localization(value)
-    value = convert_number_column_value_without_localization(value)
-    value = Numeric.parse_localized(value) if I18n.delocalization_enabled?
-    value
-  end
-  alias_method_chain :convert_number_column_value, :localization
-
-
-  define_method( (Gem::Version.new(ActiveRecord::VERSION::STRING) < Gem::Version.new('3.2.9')) ? :field_changed? : :_field_changed? ) do |attr, old, value|
+  define_method :_field_changed? do |attr, old, value|
     if column = column_for_attribute(attr)
       if column.number? && column.null && (old.nil? || old == 0) && value.blank?
         # For nullable numeric columns, NULL gets stored in database for blank (i.e. '') values.
@@ -49,16 +43,14 @@ ActiveRecord::Base.class_eval do
         # be typecast back to 0 (''.to_i => 0)
         value = nil
       elsif column.number?
-        value = column.type_cast(convert_number_column_value_with_localization(value))
+        value = column.type_cast(Numeric.parse_localized(value))
       else
         value = column.type_cast(value)
       end
     end
     old != value
   end
-end
 
-ActiveRecord::Base.instance_eval do
   def define_method_attribute=(attr_name)
     if create_time_zone_conversion_attribute?(attr_name, columns_hash[attr_name])
       method_body, line = <<-EOV, __LINE__ + 1
