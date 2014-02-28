@@ -2,7 +2,7 @@ before_install:
   - gem install bundler
 
 rvm:
-  - 1.9.3
+  - 2.1.0
 
 gemfile:
   - Gemfile
@@ -10,13 +10,9 @@ gemfile:
 
 matrix:
   include:
-    - rvm: 2.1.0
-      gemfile: ci/Gemfile.rails4
     - rvm: 2.0.0
       gemfile: ci/Gemfile.rails4
-    - rvm: 1.9.2
+    - rvm: 1.9.3
       gemfile: ci/Gemfile.rails4
     - rvm: jruby-19mode
-      gemfile: ci/Gemfile.rails4
-    - rvm: rbx-19mode
       gemfile: ci/Gemfile.rails4
