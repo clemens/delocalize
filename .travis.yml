@@ -6,15 +6,17 @@ rvm:
 
 gemfile:
   - Gemfile
-  - ci/Gemfile.rails32
+  - ci/Gemfile.rails4
 
 matrix:
   include:
+    - rvm: 2.1.0
+      gemfile: ci/Gemfile.rails4
     - rvm: 2.0.0
-      gemfile: ci/Gemfile.rails32
+      gemfile: ci/Gemfile.rails4
     - rvm: 1.9.2
-      gemfile: ci/Gemfile.rails32
+      gemfile: ci/Gemfile.rails4
     - rvm: jruby-19mode
-      gemfile: ci/Gemfile.rails32
+      gemfile: ci/Gemfile.rails4
     - rvm: rbx-19mode
-      gemfile: ci/Gemfile.rails32
+      gemfile: ci/Gemfile.rails4
