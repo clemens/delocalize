@@ -147,6 +147,14 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
     end
   end
 
+  test "properly resets when an error is raised in a with_delocalization_disabled block" do
+    I18n.enable_delocalization = true
+    I18n.with_delocalization_disabled do
+      raise 'error'
+    end rescue nil
+    assert_equal true, I18n.enable_delocalization
+  end
+
   test "uses localized parsing if called with with_delocalization_enabled" do
     I18n.with_delocalization_enabled do
       @product.price = '1.299,99'
@@ -155,6 +163,14 @@ class DelocalizeActiveRecordTest < ActiveRecord::TestCase
       @product.price = '-1.299,99'
       assert_equal -1299.99, @product.price
     end
+  end
+
+  test "properly resets when an error is raised in a with_delocalization_enabled block" do
+    I18n.enable_delocalization = false
+    I18n.with_delocalization_enabled do
+      raise 'error'
+    end rescue nil
+    assert_equal false, I18n.enable_delocalization
   end
 
   test "dirty attributes must detect changes in decimal columns" do
