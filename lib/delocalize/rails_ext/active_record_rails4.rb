@@ -22,7 +22,7 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
         when :float
           value.to_f
         when :decimal
-          BigDecimal(value)
+          BigDecimal(value.to_s)
         else
           value
       end
