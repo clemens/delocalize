@@ -14,7 +14,7 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
   alias_method_chain :type_cast, :localization
 
   def type_cast_for_write_with_localization(value)
-    if number? && I18n.delocalization_enabled?
+    if number? && I18n.delocalization_enabled? && value.is_a?(String)
       value = Numeric.parse_localized(value)
       value = value.presence && case type
         when :integer
@@ -22,7 +22,7 @@ ActiveRecord::ConnectionAdapters::Column.class_eval do
         when :float
           value.to_f
         when :decimal
-          BigDecimal(value.to_s)
+          BigDecimal(value)
         else
           value
       end
