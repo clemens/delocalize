@@ -6,7 +6,7 @@ rvm:
 
 gemfile:
   - Gemfile
-  - ci/Gemfile.rails4
+  - ci/Gemfile.rails41
 
 matrix:
   include:
