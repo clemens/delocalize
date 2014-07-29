@@ -15,6 +15,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_dependency 'minitest', '< 5'
-  s.add_dependency 'rails', '>= 4.0'
+  s.add_dependency 'rails', '>= 3.0'
   s.add_development_dependency 'timecop', '~> 0.3.5'
 end
