@@ -226,12 +226,12 @@ class DelocalizeActionViewTest < ActiveSupport::TestCase
 
   test "shows text field using formatted number" do
     @product.price = 1299.9
-    assert_match /value="1.299,90"/, text_field(:product, :price)
+    assert_match /value="1\.299,90"/, text_field(:product, :price)
   end
 
   test "shows text field using formatted number with options" do
     @product.price = 1299.995
-    assert_match /value="1,299.995"/, text_field(:product, :price, :precision => 3, :delimiter => ',', :separator => '.')
+    assert_match /value="1,299\.995"/, text_field(:product, :price, :precision => 3, :delimiter => ',', :separator => '.')
   end
 
   test "shows text field using formatted number without precision if column is an integer" do
@@ -239,29 +239,29 @@ class DelocalizeActionViewTest < ActiveSupport::TestCase
     assert_match /value="20"/, text_field(:product, :times_sold)
 
     @product.times_sold = 2000
-    assert_match /value="2.000"/, text_field(:product, :times_sold)
+    assert_match /value="2\.000"/, text_field(:product, :times_sold)
   end
 
   test "shows text field using formatted date" do
     @product.released_on = Date.civil(2009, 10, 19)
-    assert_match /value="19.10.2009"/, text_field(:product, :released_on)
+    assert_match /value="19\.10\.2009"/, text_field(:product, :released_on)
   end
 
   test "shows text field using formatted date and time" do
     @product.published_at = Time.zone.local(2009, 3, 1, 12, 0, 0)
     # careful - leading whitespace with %e
-    assert_match /value="Sonntag,  1. März 2009, 12:00 Uhr"/, text_field(:product, :published_at)
+    assert_match /value="Sonntag,  1\. März 2009, 12:00 Uhr"/, text_field(:product, :published_at)
   end
 
   test "shows text field using formatted date with format" do
     @product.released_on = Date.civil(2009, 10, 19)
-    assert_match /value="19. Oktober 2009"/, text_field(:product, :released_on, :format => :long)
+    assert_match /value="19\. Oktober 2009"/, text_field(:product, :released_on, :format => :long)
   end
 
   test "shows text field using formatted date and time with format" do
     @product.published_at = Time.zone.local(2009, 3, 1, 12, 0, 0)
     # careful - leading whitespace with %e
-    assert_match /value=" 1. März, 12:00 Uhr"/, text_field(:product, :published_at, :format => :short)
+    assert_match /value=" 1\. März, 12:00 Uhr"/, text_field(:product, :published_at, :format => :short)
   end
 
   test "shows text field using formatted time with format" do
@@ -291,12 +291,12 @@ class DelocalizeActionViewTest < ActiveSupport::TestCase
 
   test "delocalizes a given non-string :value" do
     @product.price = 1299.9
-    assert_match /value="1.499,90"/, text_field(:product, :price, :value => 1499.90)
+    assert_match /value="1\.499,90"/, text_field(:product, :price, :value => 1499.90)
   end
 
   test "doesn't override given string :value" do
     @product.price = 1299.9
-    assert_match /value="1.499,90"/, text_field(:product, :price, :value => "1.499,90")
+    assert_match /value="1\.499,90"/, text_field(:product, :price, :value => "1.499,90")
   end
 
   test "doesn't convert the value if field has numericality errors" do
@@ -308,7 +308,7 @@ class DelocalizeActionViewTest < ActiveSupport::TestCase
   test "should convert the value if field have non-numericality errors, but have other errors, e.g. business rules" do
     @product = ProductWithBusinessValidation.new(:price => '1.337,66')
     @product.valid?
-    assert_match /value="1.337,66"/, text_field(:product, :price)
+    assert_match /value="1\.337,66"/, text_field(:product, :price)
   end
 
   test "doesn't raise an exception when object isn't an ActiveReccord" do
