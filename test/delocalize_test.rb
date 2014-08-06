@@ -63,7 +63,7 @@ class DelocalizeActiveRecordTest < ActiveSupport::TestCase
   end
 
   test "delocalizes with fallback locale" do
-    I18n::Backend::Simple.include(I18n::Backend::Fallbacks)
+    I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
     I18n.fallbacks[:xx] = [:xx, :tt]
 
     I18n.with_locale :xx do
