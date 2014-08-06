@@ -1,50 +1,12 @@
-before_install:
-  - gem install bundler
-
 rvm:
-  - 2.1.0
+  - 1.9.3
+  - 2.0.0
+  - 2.1.2
+  - jruby-19mode
 
 gemfile:
-  - Gemfile
+  - ci/Gemfile.rails30
+  - ci/Gemfile.rails31
+  - ci/Gemfile.rails32
+  - ci/Gemfile.rails40
   - ci/Gemfile.rails41
-
-matrix:
-  include:
-    - rvm: 2.0.0
-      gemfile: ci/Gemfile.rails41
-    - rvm: 1.9.3
-      gemfile: ci/Gemfile.rails41
-    - rvm: jruby-19mode
-      gemfile: ci/Gemfile.rails41
-    - rvm: 2.1.0
-      gemfile: ci/Gemfile.rails4
-    - rvm: 2.0.0
-      gemfile: ci/Gemfile.rails4
-    - rvm: 1.9.3
-      gemfile: ci/Gemfile.rails4
-    - rvm: jruby-19mode
-      gemfile: ci/Gemfile.rails4
-    - rvm: 2.1.0
-      gemfile: ci/Gemfile.rails32
-    - rvm: 2.0.0
-      gemfile: ci/Gemfile.rails32
-    - rvm: 1.9.3
-      gemfile: ci/Gemfile.rails32
-    - rvm: jruby-19mode
-      gemfile: ci/Gemfile.rails32
-    - rvm: 2.1.0
-      gemfile: ci/Gemfile.rails31
-    - rvm: 2.0.0
-      gemfile: ci/Gemfile.rails31
-    - rvm: 1.9.3
-      gemfile: ci/Gemfile.rails31
-    - rvm: jruby-19mode
-      gemfile: ci/Gemfile.rails31
-    - rvm: 2.1.0
-      gemfile: ci/Gemfile.rails3
-    - rvm: 2.0.0
-      gemfile: ci/Gemfile.rails3
-    - rvm: 1.9.3
-      gemfile: ci/Gemfile.rails3
-    - rvm: jruby-19mode
-      gemfile: ci/Gemfile.rails3
