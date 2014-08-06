@@ -16,15 +16,21 @@ module I18n
     def with_delocalization_disabled(&block)
       old_value = I18n.enable_delocalization
       I18n.enable_delocalization = false
-      yield
-      I18n.enable_delocalization = old_value
+      begin
+        yield
+      ensure
+        I18n.enable_delocalization = old_value
+      end
     end
 
     def with_delocalization_enabled(&block)
       old_value = I18n.enable_delocalization
       I18n.enable_delocalization = true
-      yield
-      I18n.enable_delocalization = old_value
+      begin
+        yield
+      ensure
+        I18n.enable_delocalization = old_value
+      end
     end
   end
 end

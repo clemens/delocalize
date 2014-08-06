@@ -10,7 +10,7 @@ Installation
 
 You can use delocalize as a gem (preferred). Using delocalize as a Rails plugin has been discontinued and is no supported. If you want/need to use delocalize as a gem (I really don't see a reason why you'd want to), consider using the `0-2-stable` branch.
 
-### Rails 3
+### Rails 3 and Rails 4
 
 To use delocalize, put the following gem requirement in your `Gemfile`:
 
@@ -20,7 +20,7 @@ gem "delocalize"
 
 ### Rails 2
 
-Note: Support for Rails 2 has been discontinued. This version is only considered stable for Rails 3. If you need Rails 2 support, please use the `0.2.x` versions or the `0-2-stable` branch respectively.
+Note: Support for Rails 2 has been discontinued. This version is only considered stable for Rails >= 3. If you need Rails 2 support, please use the `0.2.x` versions or the `0-2-stable` branch respectively.
 
 To use delocalize, put the following gem requirement in your `environment.rb`:
 
@@ -96,8 +96,8 @@ delocalize then overrides `to_input_field_tag` in ActionView's `InstanceTag` so 
 
 In this example, a user can enter the release date and the price just like he's used to in his language, for example:
 
->  Name: "Couch"  
->  Released on: "12. Oktober 2009"  
+>  Name: "Couch"
+>  Released on: "12. Oktober 2009"
 >  Price: "2.999,90"
 
 When saved, ActiveRecord automatically converts these to a regular Ruby date and number.
@@ -107,11 +107,11 @@ Edit forms then also show localized dates/numbers. By default, dates and times a
 You can also customize the output using some options:
 
   The price should always show two decimal digits and we don't need the delimiter:
-  
+
 ```erb
 <%= f.text_field :price, :precision => 2, :delimiter => '' %>
 ```
-  
+
   The `released_on` date should be shown in the `:full` format:
 
 ```erb
@@ -208,7 +208,7 @@ en:
       - :year
   time:
     input:
-      formats: 
+      formats:
         - :default
         - :long
         - :short
@@ -225,7 +225,8 @@ en:
 ### Compatibility
 
 * Tested with Rails 2.3.5 in Ruby 1.8.7, Ruby 1.9.1 and Ruby 1.9.2 (head)
-* Tested with Rails 3 Beta 3 in Ruby 1.9.2 (head)
+* Tested with Rails 3 in Ruby 1.9.3, Ruby 2.0 and Ruby 2.1 (head)
+* Tested with Rails 4 in Ruby 1.9.3, Ruby 2.0 and Ruby 2.1 (head)
 
 ### Contributors
 
@@ -240,6 +241,7 @@ People who have contributed to delocalize (in no particular order):
 * [Jan De Poorter](https://github.com/DefV)
 * [Blake Lucchesi](https://github.com/BlakeLucchesi)
 * [Ralph von der Heyden](https://github.com/ralph)
+* [Fábio Rodrigues](https://github.com/fabiomr)
 
 ### TODO
 
