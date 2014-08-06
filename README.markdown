@@ -1,12 +1,16 @@
-delocalize
-==========
+# delocalize
 
 [![Build Status](https://secure.travis-ci.org/clemens/delocalize.png)](http://travis-ci.org/clemens/delocalize)
 
 delocalize provides localized date/time and number parsing functionality for Rails.
 
-Installation
-------------
+## 1.0 Beta
+
+Check out the [1-0-beta branch](https://github.com/clemens/delocalize/tree/1-0-beta) for an unfinished/unreleased improved version of delocalize. The goal is to get rid of all the nasty hacks and have a library that doesn't break with every new release of Rails.
+
+Also check out the [ongoing discussion the wiki](https://github.com/clemens/delocalize/wiki/delocalize-1.0) and feel free to put in your opinion there.
+
+## Installation
 
 You can use delocalize as a gem (preferred). Using delocalize as a Rails plugin has been discontinued and is no supported. If you want/need to use delocalize as a gem (I really don't see a reason why you'd want to), consider using the `0-2-stable` branch.
 
@@ -30,8 +34,7 @@ config.gem "delocalize", :source => 'http://gemcutter.org'
 
 In Rails 2.3, alternatively, you can use it with Bundler. See http://gembundler.com/rails23.html for instructions.
 
-What does it do? And how do I use it?
---------------------------------------
+## What does it do? And how do I use it?
 
 Delocalize, just as the name suggest, does pretty much the opposite of localize.
 
@@ -124,7 +127,7 @@ You can also customize the output using some options:
 <%= f.text_field :released_on, :format => "%B %Y" %>
 ```
 
-### Ruby 1.9 + Psych YAML Parser
+## Ruby 1.9 + Psych YAML Parser
 
 You will need to adjust the localization formatting when using the new YAML parser Psych.  Below is an example error message you may receive in your logs as well as an example of acceptable formatting and helpful links for reference:
 
@@ -222,28 +225,17 @@ en:
     pm: "pm"
 ```
 
-### Compatibility
+## Compatibility
 
 * Tested with Rails 2.3.5 in Ruby 1.8.7, Ruby 1.9.1 and Ruby 1.9.2 (head)
 * Tested with Rails 3 in Ruby 1.9.3, Ruby 2.0 and Ruby 2.1 (head)
 * Tested with Rails 4 in Ruby 1.9.3, Ruby 2.0 and Ruby 2.1 (head)
 
-### Contributors
+## Contributors
 
-People who have contributed to delocalize (in no particular order):
+Thanks to [all the people who contributed](https://github.com/clemens/delocalize/graphs/contributors) and submitted issues.
 
-* [Fernando Luizao](http://github.com/fernandoluizao)
-* [Stephan Zalewski](http://github.com/stepahn)
-* [Lailson Bandeira](http://github.com/lailsonbm)
-* [Carlos Antonio da Silva](http://github.com/carlosantoniodasilva)
-* [Michele Franzin](http://github.com/michelefranzin)
-* [Raphaela Wrede](https://github.com/rwrede)
-* [Jan De Poorter](https://github.com/DefV)
-* [Blake Lucchesi](https://github.com/BlakeLucchesi)
-* [Ralph von der Heyden](https://github.com/ralph)
-* [Fábio Rodrigues](https://github.com/fabiomr)
-
-### TODO
+## TODO
 
 * Improve test coverage
 * Separate Ruby/Rails stuff to make it usable outside Rails
@@ -251,6 +243,6 @@ People who have contributed to delocalize (in no particular order):
 * Implement AM/PM support
 * Cleanup, cleanup, cleanup ...
 
-Copyright (c) 2009-2011 Clemens Kofler <clemens@railway.at>
+Copyright (c) 2009-2014 Clemens Kofler <clemens@railway.at>
 <http://www.railway.at/>
 Released under the MIT license
