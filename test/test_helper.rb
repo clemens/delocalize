@@ -8,7 +8,6 @@ Bundler.require(:default, :development)
 require 'minitest/autorun'
 require 'minitest/spec'
 require 'mocha/setup'
-require 'i18n'
 
 require 'rails'
 
