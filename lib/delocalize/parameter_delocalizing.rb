@@ -22,7 +22,16 @@ module Delocalize
     end
 
     def delocalize_parser_for(options, key_stack)
-      parser_type = key_stack.reduce(options) { |h, key| h.stringify_keys[key.to_s] }
+      parser_type = key_stack.reduce(options) do |h, key|
+        break unless h.is_a? Hash
+        h = h.stringify_keys
+        if key =~ /\A-?\d+\z/ && !h.key?(key.to_s)
+          h
+        else
+          h[key.to_s]
+        end
+      end
+
       return unless parser_type
 
       parser_name = "delocalize_#{parser_type}_parser"
