@@ -131,29 +131,11 @@ parameters_classes.each do |parameters_class|
       delocalized_params[:price].must_equal '1299.99'
     end
     
-    it "doesn't raise when nested params given and not nested options" do
-      delocalize_options = {
-        :top_level_date => :date,
-        :top_level_time => :time,
-        :top_level_number => :number
-      }
-      params = parameters_class.new(
-        :top_level_date => '21. Mai 1986',
-        :top_level_time => '25. Dezember 2013, 23:59 Uhr',
-        :top_level_number => '1.299,99',
-        :parent => {
-          :parent_date => '21. Mai 2004',
-          :parent_time => '24. Dezember 2013, 23:59 Uhr',
-          :parent_number => '999,99',
-          :child => {
-            :child_date => '21. Mai 2011',
-            :child_time => '31. Dezember 2013, 23:59 Uhr',
-            :child_number => '9.999'
-          }
-        }
-      )
+    it "doesn't raise when nested params given and which aren't defined in options" do
+      params = parameters_class.new(:parent => { :parent_date => '21. Mai 2004' })
+
       ## Should not throw an error:
-      delocalized_params = params.delocalize(delocalize_options)
+      delocalized_params = params.delocalize({})
     end
   end
 end
