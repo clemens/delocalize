@@ -14,3 +14,14 @@ gemfile:
   - ci/Gemfile.rails4
   - ci/Gemfile.rails41
   - ci/Gemfile.rails42
+
+# In my humble opinion, these can be excluded because they're highly unlikely: Rails 3.2 users
+# won't be using the newest Ruby version and neither will Rails 4.2 users use such outdated Ruby
+# versions.
+exclude:
+  - rvm: 2.2.0
+    gemfile: ci/Gemfile.rails32
+  - rvm: 2.0.0
+    gemfile: ci/Gemfile.rails42
+  - rvm: 1.9.3
+    gemfile: ci/Gemfile.rails42
