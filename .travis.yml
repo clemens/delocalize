@@ -9,6 +9,7 @@ gemfile:
   - ci/Gemfile.rails32
   - ci/Gemfile.rails4
   - ci/Gemfile.rails41
+  - ci/Gemfile.rails42
 
 matrix:
   include:
@@ -18,6 +19,8 @@ matrix:
       gemfile: ci/Gemfile.rails4
     - rvm: 2.0.0
       gemfile: ci/Gemfile.rails41
+    - rvm: 2.0.0
+      gemfile: ci/Gemfile.rails42
     - rvm: 1.9.2
       gemfile: ci/Gemfile.rails32
     - rvm: jruby-19mode
