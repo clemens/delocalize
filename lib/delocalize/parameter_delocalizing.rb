@@ -23,12 +23,14 @@ module Delocalize
 
     def delocalize_parser_for(options, key_stack)
       parser_type = key_stack.reduce(options) do |h, key|
-        break unless h.is_a? Hash
+        break unless h.is_a?(Hash)
+
         h = h.stringify_keys
-        if key =~ /\A-?\d+\z/ && !h.key?(key.to_s)
+        key = key.to_s
+        if key =~ /\A-?\d+\z/ && !h.key?(key)
           h
         else
-          h[key.to_s]
+          h[key]
         end
       end
 
