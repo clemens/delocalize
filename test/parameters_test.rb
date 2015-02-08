@@ -34,6 +34,27 @@ parameters_classes.each do |parameters_class|
       delocalized_params[:product][:price].must_equal '1299.99'
     end
 
+    it "delocalizes field-for type params based on the given options" do
+      params = parameters_class.new(
+          :product => {
+              variant_attributes: {
+                  "0" => { :released_on => '21. Mai 1986', :available_until => '25. Dezember 2013, 23:59 Uhr', :price => '1.299,99' },
+                  "1" => { :released_on => '1. Juni 2001', :available_until => '12. November 2014, 00:00 Uhr', :price => '1.099,01' },
+              }
+          }
+      )
+
+      delocalized_params = params.delocalize(:product => { :variant_attributes => { :released_on => :date, :available_until => :time, :price => :number } })
+
+      delocalized_params[:product][:variant_attributes]['0'][:released_on].must_equal Date.civil(1986, 5, 21)
+      delocalized_params[:product][:variant_attributes]['0'][:available_until].must_equal Time.zone.local(2013, 12, 25, 23, 59)
+      delocalized_params[:product][:variant_attributes]['0'][:price].must_equal '1299.99'
+
+      delocalized_params[:product][:variant_attributes]['1'][:released_on].must_equal Date.civil(2001, 6, 1)
+      delocalized_params[:product][:variant_attributes]['1'][:available_until].must_equal Time.zone.local(2014, 11, 12, 00, 00)
+      delocalized_params[:product][:variant_attributes]['1'][:price].must_equal '1099.01'
+    end
+
     it "delocalizes nested params on the key itself based on the given options" do
       params = parameters_class.new(:product => { :released_on => '21. Mai 1986', :available_until => '25. Dezember 2013, 23:59 Uhr', :price => '1.299,99' })
 
