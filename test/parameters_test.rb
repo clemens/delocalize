@@ -158,5 +158,14 @@ parameters_classes.each do |parameters_class|
       ## Should not throw an error:
       delocalized_params = params.delocalize({})
     end
+
+    it "delocalizes arrays" do
+      params = parameters_class.new(:location => ['13,456', '51,234'], :interval => ['25. Dezember 2013', '31. Januar 2014'])
+
+      delocalized_params = params.delocalize(:location => [:number], interval: [:date])
+
+      delocalized_params[:location].must_equal ['13.456', '51.234']
+      delocalized_params[:interval].must_equal [Date.civil(2013, 12, 25), Date.civil(2014, 1, 31)]
+    end
   end
 end

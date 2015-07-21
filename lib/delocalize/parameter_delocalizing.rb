@@ -10,9 +10,15 @@ module Delocalize
       hash.each do |key, value|
         key_stack = [*base_key_stack, key] # don't modify original key stack!
 
-        hash[key] = value.is_a?(Hash) ?
-          delocalize_hash(value, options, key_stack) :
-          delocalize_parse(options, key_stack, value)
+        hash[key] = case value
+                    when Hash
+                      delocalize_hash(value, options, key_stack)
+                    when Array
+                      key_stack += [:[]] # pseudo-key to denote arrays
+                      value.map { |item| delocalize_parse(options, key_stack, item) }
+                    else
+                      delocalize_parse(options, key_stack, value)
+                    end
       end
     end
 
@@ -23,14 +29,20 @@ module Delocalize
 
     def delocalize_parser_for(options, key_stack)
       parser_type = key_stack.reduce(options) do |h, key|
-        break unless h.is_a?(Hash)
-
-        h = h.stringify_keys
-        key = key.to_s
-        if key =~ /\A-?\d+\z/ && !h.key?(key)
-          h
+        case h
+        when Hash
+          h = h.stringify_keys
+          key = key.to_s
+          if key =~ /\A-?\d+\z/ && !h.key?(key)
+            h
+          else
+            h[key]
+          end
+        when Array
+          break unless key == :[]
+          h.first
         else
-          h[key]
+          break
         end
       end
 
