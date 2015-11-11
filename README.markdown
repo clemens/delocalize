@@ -4,12 +4,18 @@
 
 delocalize provides localized date/time and number parsing functionality for Rails.
 
+## Demo Application
+
+Find a demo application [here](https://github.com/clemens/delocalize_demo).
+
 ## Compability
 
 This gem requires the following versions:
 
 * Ruby >= 1.9.2
 * Rails >= 3.0 (Rails 2 and probably even Rails 1 *should* work but aren't officially supported)
+
+Check [the Travis configuration](https://github.com/clemens/delocalize/blob/1-0-beta/.travis.yml) in order to see which configurations we are testing.
 
 ## Installation
 
@@ -80,6 +86,26 @@ end
 
 If you want to delocalize only certain parameters, configure those parameters and leave the others out – they will be kept as they are.
 
+### Views
+
+Delocalize doesn't automatically localize your data again (yet). There are various reasons for that but the main reasons are:
+
+- It's hard to do this properly with some amount of flexibility for you as the user of the gem without crazy hacks of Rails internals (a problem that delocalize previously suffered from).
+- Personally I feel that presentation logic (including forms) should be split out into separate objects (presenters, decorators, form objects and the like).
+
+I might change my mind but as it stands but for the time being the gist is: Wherever you want to see localized values, you have to localize them yourself.
+
+Examples:
+
+``` ruby
+text_field :product, :released_on, :value => product.released_on ? l(product.released_on) : nil
+text_field_tag 'product[price]', number_with_precision(product.price, :precision => 2)
+```
+
+You can of course use something like the [Draper gem](https://github.com/drapergem/draper) or the great [Reform gem](https://github.com/apotonick/reform) to wrap your actual object and override the relevant accessors.
+
+Check out how this can be done in the [demo app](https://github.com/clemens/delocalize_demo).
+
 ### Locale setup
 
 In addition to your controller setup, you also need to configure your locale file(s). If you intend to use delocalize, you probably have a working locale file anyways. In this case, you only need to add two extra keys: `date.input.formats` and `time.input.formats`.
@@ -145,6 +171,6 @@ People who have contributed to delocalize (in no particular order):
 * [Blake Lucchesi](https://github.com/BlakeLucchesi)
 * [Ralph von der Heyden](https://github.com/ralph)
 
-Copyright (c) 2009-2014 Clemens Kofler <clemens@railway.at>
+Copyright (c) 2009-2015 Clemens Kofler <clemens@railway.at>
 <http://www.railway.at/>
 Released under the MIT license
