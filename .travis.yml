@@ -2,8 +2,8 @@ before_install:
   - gem install bundler
 
 rvm:
-  - 2.2.0
-  - 2.1.5
+  - 2.2.3
+  - 2.1.7
   - 2.0.0
   - 1.9.3
   - jruby-19mode
@@ -19,9 +19,9 @@ gemfile:
 # won't be using the newest Ruby version and neither will Rails 4.2 users use such outdated Ruby
 # versions.
 exclude:
-  - rvm: 2.2.0
+  - rvm: 2.2.3
     gemfile: ci/Gemfile.rails32
-  - rvm: 2.0.0
+  - rvm: 2.0.3
     gemfile: ci/Gemfile.rails42
   - rvm: 1.9.3
     gemfile: ci/Gemfile.rails42
