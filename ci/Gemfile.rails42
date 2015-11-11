@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', github: 'rails/rails', branch: '4-2-stable'
-gem 'delocalize', path: '../'
+gem 'rails', '~> 4.2.4'
 
 gem 'sqlite3', platforms: [:ruby, :mswin, :mingw]
 gem 'jdbc-sqlite3', platform: :jruby
