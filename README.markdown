@@ -106,6 +106,8 @@ You can of course use something like the [Draper gem](https://github.com/draperg
 
 Check out how this can be done in the [demo app](https://github.com/clemens/delocalize_demo).
 
+There's also a wiki page on [how to write a custom input for SimpleForm](https://github.com/clemens/delocalize/wiki/Using-with-simple-form).
+
 ### Locale setup
 
 In addition to your controller setup, you also need to configure your locale file(s). If you intend to use delocalize, you probably have a working locale file anyways. In this case, you only need to add two extra keys: `date.input.formats` and `time.input.formats`.
