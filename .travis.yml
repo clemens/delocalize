@@ -22,14 +22,15 @@ gemfile:
   - ci/Gemfile.rails42
 
 # Following the compatibility table at http://logfile.swobspace.net/blog/2015/01/01/Ruby-and-Rails.html, we can exclude these.
-exclude:
-  - rvm: 2.2.3
-    gemfile: ci/Gemfile.rails32
-  - rvm: 2.2.3
-    gemfile: ci/Gemfile.rails40
-  - rvm: 2.2.3
-    gemfile: ci/Gemfile.rails41
-  - rvm: 2.1.7
-    gemfile: ci/Gemfile.rails32
-  - rvm: 2.1.7
-    gemfile: ci/Gemfile.rails40
+matrix:
+  exclude:
+    - rvm: 2.2.3
+      gemfile: ci/Gemfile.rails32
+    - rvm: 2.2.3
+      gemfile: ci/Gemfile.rails40
+    - rvm: 2.2.3
+      gemfile: ci/Gemfile.rails41
+    - rvm: 2.1.7
+      gemfile: ci/Gemfile.rails32
+    - rvm: 2.1.7
+      gemfile: ci/Gemfile.rails40
