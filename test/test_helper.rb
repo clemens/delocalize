@@ -5,21 +5,21 @@ require 'bundler'
 
 Bundler.require(:default, :development)
 
-require 'rails/all'
-require 'rails/test_help'
+require 'minitest/autorun'
+require 'minitest/spec'
+require 'mocha/setup'
 
-require 'delocalize/rails_ext/action_view'
-require 'delocalize/rails_ext/active_record'
-require 'delocalize/rails_ext/time_zone'
+require 'rails'
 
 de = {
   :date => {
     :input => {
-      :formats => [:long, :short, :default]
+      :formats => [:long, :short, :short_with_name, :default]
     },
     :formats => {
       :default => "%d.%m.%Y",
-      :short => "%e. %b",
+      :short => "%e.%m.",
+      :short_with_name => "%e. %b.",
       :long => "%e. %B %Y",
       :only_day => "%e"
     },
@@ -65,38 +65,4 @@ tt[:date][:formats][:default] = '%d|%m|%Y'
 I18n.backend.store_translations :de, de
 I18n.backend.store_translations :tt, tt
 
-I18n.enforce_available_locales = false
 I18n.locale = :de
-
-class NonArProduct
-  attr_accessor :name, :price, :times_sold,
-    :cant_think_of_a_sensible_time_field,
-    :released_on, :published_at
-end
-
-class Product < ActiveRecord::Base
-end
-
-class ProductWithValidation < Product
-  validates_numericality_of :price
-  validates_presence_of :price
-end
-
-class ProductWithBusinessValidation < Product
-  validates_numericality_of :price, :less_than => 10
-end
-
-config = YAML.load_file(File.dirname(__FILE__) + '/database.yml')
-ActiveRecord::Base.establish_connection(config['test'])
-
-ActiveRecord::Base.connection.create_table :products do |t|
-  t.string :name
-  t.date :released_on
-  t.datetime :published_at
-  t.time :cant_think_of_a_sensible_time_field
-  t.decimal :price
-  t.float :weight
-  t.integer :times_sold
-  t.decimal :some_value_with_default, :default => 0, :precision => 20, :scale => 2
-end
-

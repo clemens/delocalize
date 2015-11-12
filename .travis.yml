@@ -1,12 +1,34 @@
+# use containers
+sudo: false
+
+before_install:
+  - gem install bundler
+
+language: ruby
+cache: bundler
+
 rvm:
-  - 1.9.3
+  - 2.2.3
+  - 2.1.7
   - 2.0.0
-  - 2.1.2
+  - 1.9.3
   - jruby-19mode
+  - rbx-19mode
 
 gemfile:
-  - ci/Gemfile.rails30
-  - ci/Gemfile.rails31
   - ci/Gemfile.rails32
   - ci/Gemfile.rails40
   - ci/Gemfile.rails41
+  - ci/Gemfile.rails42
+
+# Following the compatibility table at http://logfile.swobspace.net/blog/2015/01/01/Ruby-and-Rails.html, we can exclude these.
+matrix:
+  exclude:
+    - rvm: 2.2.3
+      gemfile: ci/Gemfile.rails32
+    - rvm: 2.2.3
+      gemfile: ci/Gemfile.rails40
+    - rvm: 2.1.7
+      gemfile: ci/Gemfile.rails32
+    - rvm: 2.1.7
+      gemfile: ci/Gemfile.rails40

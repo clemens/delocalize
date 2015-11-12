@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'delocalize'
-  s.version = '0.4.0'
+  s.version = '1.0.0.beta1'
 
   s.authors = ['Clemens Kofler']
   s.summary = %q{Localized date/time and number parsing}
@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'rails', '>= 3.0'
-  s.add_development_dependency 'timecop', '~> 0.3.5'
+  s.add_dependency 'rails', '>= 2'
+  s.add_development_dependency 'mocha'
+  s.add_development_dependency 'timecop'
 end

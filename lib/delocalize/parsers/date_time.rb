@@ -1,26 +1,34 @@
+require 'date'
+
 # TODO:
 #   * AM/PM calculation
 #   * proper documentation (comments)
 module Delocalize
-  class LocalizedDateTimeParser
-    # extend/change this according to your needs by merging your custom regexps
-    REGEXPS = {
-      '%B' => "(#{Date::MONTHNAMES.compact.join('|')})",      # long month name
-      '%b' => "(#{Date::ABBR_MONTHNAMES.compact.join('|')})", # short month name
-      '%m' => "(\\d{2})",                                     # numeric month
-      '%A' => "(#{Date::DAYNAMES.join('|')})",                # full day name
-      '%a' => "(#{Date::ABBR_DAYNAMES.join('|')})",           # short day name
-      '%Y' => "(\\d{4})",                                     # long year
-      '%y' => "(\\d{2})",                                     # short year
-      '%e' => "(\\s\\d|\\d{2})",                              # short day
-      '%d' => "(\\d{2})",                                     # full day
-      '%H' => "(\\d{2})",                                     # hour (24)
-      '%M' => "(\\d{2})",                                     # minute
-      '%S' => "(\\d{2})"                                      # second
-    }
+  module Parsers
+    class DateTime
+      # extend/change this according to your needs by merging your custom regexps
+      REGEXPS = {
+        '%B' => "(#{Date::MONTHNAMES.compact.join('|')})",      # long month name
+        '%b' => "(#{Date::ABBR_MONTHNAMES.compact.join('|')})", # short month name
+        '%m' => "(\\d{2})",                                     # numeric month
+        '%A' => "(#{Date::DAYNAMES.join('|')})",                # full day name
+        '%a' => "(#{Date::ABBR_DAYNAMES.join('|')})",           # short day name
+        '%Y' => "(\\d{4})",                                     # long year
+        '%y' => "(\\d{2})",                                     # short year
+        '%e' => "(\\s\\d|\\d{2})",                              # short day
+        '%d' => "(\\d{2})",                                     # full day
+        '%H' => "(\\d{2})",                                     # hour (24)
+        '%M' => "(\\d{2})",                                     # minute
+        '%S' => "(\\d{2})"                                      # second
+      }
 
-    class << self
-      def parse(datetime, type)
+      attr_reader :type
+
+      def initialize(type)
+        @type = type
+      end
+
+      def parse(datetime)
         return unless datetime
         return datetime if datetime.respond_to?(:strftime) # already a Date/Time object -> no need to parse it
 
@@ -28,7 +36,7 @@ module Delocalize
         input_formats(type).each do |original_format|
           next unless datetime =~ /^#{apply_regex(original_format)}$/
 
-          datetime = DateTime.strptime(datetime, original_format)
+          datetime = ::DateTime.strptime(datetime, original_format)
           return Date == type ?
             datetime.to_date :
             Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
@@ -36,20 +44,20 @@ module Delocalize
         default_parse(datetime, type)
       end
 
-      private
+    private
+
       def default_parse(datetime, type)
         return if datetime.blank?
-        begin
-          today = Date.current
-          parsed = Date._parse(datetime)
-          return if parsed.empty? # the datetime value is invalid
-          # set default year, month and day if not found
-          parsed.reverse_merge!(:year => today.year, :mon => today.mon, :mday => today.mday)
-          datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
-          Date == type ? datetime.to_date : datetime
-        rescue
-          datetime
-        end
+
+        today = Date.current
+        parsed = Date._parse(datetime)
+        return if parsed.empty? # the datetime value is invalid
+
+        # set default year, month and day if not found
+        parsed.reverse_merge!(:year => today.year, :mon => today.mon, :mday => today.mday)
+        datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
+
+        Date == type ? datetime.to_date : datetime
       end
 
       def translate_month_and_day_names(datetime)
