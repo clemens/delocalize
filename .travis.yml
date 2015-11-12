@@ -17,7 +17,7 @@ rvm:
 
 gemfile:
   - ci/Gemfile.rails32
-  - ci/Gemfile.rails4
+  - ci/Gemfile.rails40
   - ci/Gemfile.rails41
   - ci/Gemfile.rails42
 
