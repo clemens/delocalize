@@ -161,17 +161,7 @@ For dates and times, you have to define input formats which are taken from the a
 
 ### Contributors and Copyright
 
-People who have contributed to delocalize (in no particular order):
-
-* [Fernando Luizao](http://github.com/fernandoluizao)
-* [Stephan Zalewski](http://github.com/stepahn)
-* [Lailson Bandeira](http://github.com/lailsonbm)
-* [Carlos Antonio da Silva](http://github.com/carlosantoniodasilva)
-* [Michele Franzin](http://github.com/michelefranzin)
-* [Raphaela Wrede](https://github.com/rwrede)
-* [Jan De Poorter](https://github.com/DefV)
-* [Blake Lucchesi](https://github.com/BlakeLucchesi)
-* [Ralph von der Heyden](https://github.com/ralph)
+[Here](https://github.com/clemens/delocalize/graphs/contributors) is a list of all people who ever contributed to delocalize.
 
 Copyright (c) 2009-2015 Clemens Kofler <clemens@railway.at>
 <http://www.railway.at/>
