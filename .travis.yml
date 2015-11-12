@@ -28,8 +28,6 @@ matrix:
       gemfile: ci/Gemfile.rails32
     - rvm: 2.2.3
       gemfile: ci/Gemfile.rails40
-    - rvm: 2.2.3
-      gemfile: ci/Gemfile.rails41
     - rvm: 2.1.7
       gemfile: ci/Gemfile.rails32
     - rvm: 2.1.7
