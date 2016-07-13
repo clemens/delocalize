@@ -11,6 +11,7 @@ module Delocalize
 
   autoload :Parameters,            'delocalize/parameters'
   autoload :ParameterDelocalizing, 'delocalize/parameter_delocalizing'
+  autoload :DelocalizableParameters, 'delocalize/delocalizable_parameters'
 
   autoload :NumberParser,          'delocalize/number_parser'
   autoload :DateTimeParser,        'delocalize/date_time_parser'
