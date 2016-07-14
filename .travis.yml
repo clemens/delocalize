@@ -8,6 +8,7 @@ language: ruby
 cache: bundler
 
 rvm:
+  - 2.3.1
   - 2.2.3
   - 2.1.7
   - 2.0.0
@@ -20,15 +21,29 @@ gemfile:
   - ci/Gemfile.rails40
   - ci/Gemfile.rails41
   - ci/Gemfile.rails42
+  - ci/Gemfile.rails50
 
 # Following the compatibility table at http://logfile.swobspace.net/blog/2015/01/01/Ruby-and-Rails.html, we can exclude these.
 matrix:
   exclude:
-    - rvm: 2.2.3
-      gemfile: ci/Gemfile.rails32
+    # Rails 5.0
+    - rvm: 1.9.3
+      gemfile: ci/Gemfile.rails50
+    - rvm: 2.0.0
+      gemfile: ci/Gemfile.rails50
+    - rvm: 2.1.7
+      gemfile: ci/Gemfile.rails50
+    # Rails 4.0
+    - rvm: 2.3.1
+      gemfile: ci/Gemfile.rails40
     - rvm: 2.2.3
       gemfile: ci/Gemfile.rails40
     - rvm: 2.1.7
+      gemfile: ci/Gemfile.rails40
+    # Rails 3.2
+    - rvm: 2.3.1
+      gemfile: ci/Gemfile.rails32
+    - rvm: 2.2.3
       gemfile: ci/Gemfile.rails32
     - rvm: 2.1.7
-      gemfile: ci/Gemfile.rails40
+      gemfile: ci/Gemfile.rails32
