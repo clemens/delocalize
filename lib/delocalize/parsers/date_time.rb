@@ -36,7 +36,7 @@ module Delocalize
         input_formats(type).each do |original_format|
           next unless datetime =~ /^#{apply_regex(original_format)}$/
 
-          datetime = ::DateTime.strptime(datetime, original_format)
+          datetime = ::DateTime.strptime(datetime, original_format) rescue break
           return Date == type ?
             datetime.to_date :
             Time.zone.local(datetime.year, datetime.mon, datetime.mday, datetime.hour, datetime.min, datetime.sec)
@@ -55,9 +55,12 @@ module Delocalize
 
         # set default year, month and day if not found
         parsed.reverse_merge!(:year => today.year, :mon => today.mon, :mday => today.mday)
-        datetime = Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
 
-        Date == type ? datetime.to_date : datetime
+        if Date == type
+          Date.civil(*parsed.values_at(:year, :mon, :mday))
+        else
+          Time.zone.local(*parsed.values_at(:year, :mon, :mday, :hour, :min, :sec))
+        end
       end
 
       def translate_month_and_day_names(datetime)

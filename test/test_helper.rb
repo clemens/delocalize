@@ -65,4 +65,5 @@ tt[:date][:formats][:default] = '%d|%m|%Y'
 I18n.backend.store_translations :de, de
 I18n.backend.store_translations :tt, tt
 
+I18n.default_locale = :de
 I18n.locale = :de
