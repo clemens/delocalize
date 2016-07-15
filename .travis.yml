@@ -14,7 +14,7 @@ rvm:
   - 2.0.0
   - 1.9.3
   - jruby-19mode
-  - jruby-9000
+  - jruby-9.1.2.0
   - rbx-19mode
 
 gemfile:
@@ -41,7 +41,7 @@ matrix:
       gemfile: ci/Gemfile.rails40
     - rvm: 2.3.1
       gemfile: ci/Gemfile.rails40
-    - rvm: jruby-9000
+    - rvm: jruby-9.1.2.0
       gemfile: ci/Gemfile.rails40
     # Rails 3.2
     - rvm: 2.1.10
@@ -50,5 +50,5 @@ matrix:
       gemfile: ci/Gemfile.rails32
     - rvm: 2.3.1
       gemfile: ci/Gemfile.rails32
-    - rvm: jruby-9000
+    - rvm: jruby-9.1.2.0
       gemfile: ci/Gemfile.rails32
