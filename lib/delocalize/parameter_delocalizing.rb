@@ -10,10 +10,10 @@ module Delocalize
       hash.each do |key, value|
         key_stack = [*base_key_stack, key] # don't modify original key stack!
 
-        hash[key] = case value
-                    when Hash
+        hash[key] = case
+                    when value.respond_to?(:each_pair)
                       delocalize_hash(value, options, key_stack)
-                    when Array
+                    when Array === value
                       key_stack += [:[]] # pseudo-key to denote arrays
                       value.map { |item| delocalize_parse(options, key_stack, item) }
                     else
