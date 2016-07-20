@@ -4,10 +4,6 @@
 
 delocalize provides localized date/time and number parsing functionality for Rails.
 
-## Demo Application
-
-Find a demo application [here](https://github.com/clemens/delocalize_demo).
-
 ## Compability
 
 This gem requires the following versions:
