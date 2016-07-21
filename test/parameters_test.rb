@@ -159,7 +159,7 @@ parameters_classes.each do |parameters_class|
       params = parameters_class.new(:parent => { :parent_date => '21. Mai 2004' })
 
       ## Should not throw an error:
-      delocalized_params = params.delocalize({})
+      params.delocalize({})
     end
 
     it "delocalizes arrays" do

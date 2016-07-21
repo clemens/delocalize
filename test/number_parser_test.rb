@@ -23,8 +23,8 @@ describe Delocalize::Parsers::Number do
 
   it "doesn't change a number if it's already a numeric type" do
     @parser.parse(1299.99).must_equal 1299.99
-    @parser.parse(-1299.99).must_equal -1299.99
+    @parser.parse(-1299.99).must_equal(-1299.99)
     @parser.parse(1299).must_equal 1299
-    @parser.parse(-1299).must_equal -1299
+    @parser.parse(-1299).must_equal(-1299)
   end
 end
