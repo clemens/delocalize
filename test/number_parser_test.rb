@@ -2,6 +2,7 @@ require 'test_helper'
 
 describe Delocalize::Parsers::Number do
   before do
+    I18n.locale = I18n.default_locale
     @parser = Delocalize::Parsers::Number.new
   end
 
