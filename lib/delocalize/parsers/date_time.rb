@@ -51,7 +51,7 @@ module Delocalize
 
         today = Date.current
         parsed = Date._parse(datetime)
-        return if parsed.empty? # the datetime value is invalid
+        raise ArgumentError, "invalid date: #{datetime}" if parsed.empty? # the datetime value is invalid
 
         # set default year, month and day if not found
         parsed.reverse_merge!(:year => today.year, :mon => today.mon, :mday => today.mday)
