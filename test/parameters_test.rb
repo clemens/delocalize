@@ -171,5 +171,15 @@ parameters_classes.each do |parameters_class|
       delocalized_params[:location].must_equal ['13.456', '51.234']
       delocalized_params[:interval].must_equal [Date.civil(2013, 12, 25), Date.civil(2014, 1, 31)]
     end
+
+    it "keeps invalid dates in the params hash" do
+      params = parameters_class.new(:first_date => "asdf", :second_date => "02.0.2017", :third_date => "02.123.2017")
+
+      delocalized_params = params.delocalize(:first_date => :date, :second_date => :date, :third_date => :date)
+
+      delocalized_params[:first_date].must_equal "asdf"
+      delocalized_params[:second_date].must_equal "02.0.2017"
+      delocalized_params[:third_date].must_equal "02.123.2017"
+    end
   end
 end

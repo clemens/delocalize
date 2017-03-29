@@ -24,7 +24,12 @@ module Delocalize
 
     def delocalize_parse(options, key_stack, value)
       parser = delocalize_parser_for(options, key_stack)
-      parser ? parser.parse(value) : value
+      return value unless parser
+      begin
+        parser.parse(value)
+      rescue ArgumentError
+        value
+      end
     end
 
     def delocalize_parser_for(options, key_stack)
