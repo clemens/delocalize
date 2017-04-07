@@ -11,7 +11,7 @@ This gem requires the following versions:
 * Ruby >= 2.1.10 (Ruby >= 1.9.2 *should* work but isn't officially supported)
 * Rails >= 4.2 (earlier versions including probably even Rails 1 *should* work but aren't officially supported)
 
-Check [the Travis configuration](https://github.com/clemens/delocalize/blob/1-0-beta/.travis.yml) in order to see which configurations we are testing.
+Check [the Travis configuration](https://github.com/clemens/delocalize/blob/master/.travis.yml) in order to see which configurations we are testing.
 
 ## Installation
 
