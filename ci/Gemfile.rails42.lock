@@ -111,6 +111,7 @@ DEPENDENCIES
   activerecord-jdbcsqlite3-adapter
   delocalize!
   jdbc-sqlite3
+  mime-types (~> 2.99.3)
   mocha
   rails (~> 4.2.4)
   sqlite3

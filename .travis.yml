@@ -12,9 +12,8 @@ rvm:
   - 2.3.4
   - 2.2.7
   - 2.1.10
-  - jruby-19mode
   - jruby-9.1.2.0
-  - rbx-19mode
+  - rbx
 
 gemfile:
   - ci/Gemfile.rails42
@@ -24,6 +23,4 @@ matrix:
   exclude:
     # Rails 5.0 needs Ruby > 2.2.2
     - rvm: 2.1.10
-      gemfile: ci/Gemfile.rails50
-    - rvm: jruby-19mode
       gemfile: ci/Gemfile.rails50
