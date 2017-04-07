@@ -4,12 +4,12 @@
 
 delocalize provides localized date/time and number parsing functionality for Rails.
 
-## Compability
+## Compatibility
 
 This gem requires the following versions:
 
-* Ruby >= 1.9.2
-* Rails >= 3.0 (Rails 2 and probably even Rails 1 *should* work but aren't officially supported)
+* Ruby >= 2.1.10 (Ruby >= 1.9.2 *should* work but isn't officially supported)
+* Rails >= 4.2 (earlier versions including probably even Rails 1 *should* work but aren't officially supported)
 
 Check [the Travis configuration](https://github.com/clemens/delocalize/blob/1-0-beta/.travis.yml) in order to see which configurations we are testing.
 
@@ -17,7 +17,7 @@ Check [the Travis configuration](https://github.com/clemens/delocalize/blob/1-0-
 
 You can use delocalize as a gem. Using delocalize as a Rails plugin has been discontinued and is no supported. If you want/need to use delocalize as a plugin (I really don't see a reason why you'd want to), consider using the `0-2-stable` branch.
 
-### Rails 3
+### Rails 3 and above
 
 To use delocalize, put the following gem requirement in your `Gemfile`:
 
