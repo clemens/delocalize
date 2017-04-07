@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 5.0.0'
 
-platforms: [:ruby, :mswin, :mingw] do
+platforms :ruby, :mswin, :mingw do
   gem 'sqlite3'
 end
 
