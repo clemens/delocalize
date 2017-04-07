@@ -10,6 +10,7 @@ platforms :jruby do
   gem 'jdbc-sqlite3'
   gem 'activerecord-jdbcsqlite3-adapter'
   gem 'mime-types', '~> 2.99.3'
+  gem 'rake'
 end
 
 platforms :rbx do

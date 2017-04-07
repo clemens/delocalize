@@ -325,6 +325,7 @@ DEPENDENCIES
   minitest
   mocha
   rails (~> 5.0.0)
+  rake
   rubysl (~> 2.0)
   sqlite3
   timecop
