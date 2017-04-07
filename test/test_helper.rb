@@ -10,6 +10,9 @@ require 'minitest/spec'
 require 'mocha/setup'
 
 require 'rails'
+# We need to explicitly load ActiveSupport's version of Hash#slice since Rails 3.2 somehow loads
+# i18n's version first which is different from Rails' (see https://github.com/svenfuchs/i18n/commit/24e71a9a4901ed18c9cab5c53109fd9bf2416bcb).
+require 'active_support/core_ext/hash/slice'
 
 de = {
   :date => {
@@ -65,4 +68,5 @@ tt[:date][:formats][:default] = '%d|%m|%Y'
 I18n.backend.store_translations :de, de
 I18n.backend.store_translations :tt, tt
 
+I18n.default_locale = :de
 I18n.locale = :de

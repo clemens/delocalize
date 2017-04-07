@@ -14,6 +14,7 @@ puts "Testing parameter classes: #{parameters_classes.inspect}"
 parameters_classes.each do |parameters_class|
   describe parameters_class do
     before do
+      I18n.locale = I18n.default_locale
       Time.zone = 'Berlin' # make sure everything works as expected with TimeWithZone
     end
 
