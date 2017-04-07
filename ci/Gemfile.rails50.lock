@@ -56,15 +56,12 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
-    mocha (1.2.1)
-      metaclass (~> 0.0.1)
     nio4r (2.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
@@ -323,7 +320,6 @@ DEPENDENCIES
   jdbc-sqlite3
   mime-types (~> 2.99.3)
   minitest
-  mocha
   rails (~> 5.0.0)
   rake
   rubysl (~> 2.0)

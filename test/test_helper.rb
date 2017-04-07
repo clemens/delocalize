@@ -7,7 +7,6 @@ Bundler.require(:default, :development)
 
 require 'minitest/autorun'
 require 'minitest/spec'
-require 'mocha/setup'
 
 require 'rails'
 # We need to explicitly load ActiveSupport's version of Hash#slice since Rails 3.2 somehow loads
