@@ -100,8 +100,6 @@ text_field_tag 'product[price]', number_with_precision(product.price, :precision
 
 You can of course use something like the [Draper gem](https://github.com/drapergem/draper) or the great [Reform gem](https://github.com/apotonick/reform) to wrap your actual object and override the relevant accessors.
 
-Check out how this can be done in the [demo app](https://github.com/clemens/delocalize_demo).
-
 There's also a wiki page on [how to write a custom input for SimpleForm](https://github.com/clemens/delocalize/wiki/Using-with-simple-form).
 
 ### Locale setup
