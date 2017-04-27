@@ -100,6 +100,16 @@ describe Delocalize::Parsers::DateTime do
     @time_parser.parse('9:00 Uhr').must_equal time
   end
 
+  it "raises ArgumentError when parsing a bad string" do
+    err = proc { @date_parser.parse("asdf") }.must_raise ArgumentError
+    err.message.must_equal "invalid date: asdf"
+  end
+
+  it "raises ArgumentError when parsing a bad date" do
+    must_raise_invalid_date { @date_parser.parse("02.0.2017") }
+    must_raise_invalid_date { @date_parser.parse("02.99.2017") }
+  end
+
   def must_raise_invalid_date
     begin
       yield
