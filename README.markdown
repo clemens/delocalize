@@ -159,6 +159,6 @@ For dates and times, you have to define input formats which are taken from the a
 
 [Here](https://github.com/clemens/delocalize/graphs/contributors) is a list of all people who ever contributed to delocalize.
 
-Copyright (c) 2009-2015 Clemens Kofler <clemens@railway.at>
+Copyright (c) 2009-2017 Clemens Kofler <clemens@railway.at>
 <http://www.railway.at/>
 Released under the MIT license
