@@ -1,6 +1,9 @@
+$:.push File.expand_path("../lib", __FILE__)
+require "delocalize/version"
+
 Gem::Specification.new do |s|
   s.name = 'delocalize'
-  s.version = '1.1.0'
+  s.version = Delocalize::VERSION.dup
 
   s.authors = ['Clemens Kofler']
   s.summary = %q{Localized date/time and number parsing}
