@@ -11,19 +11,15 @@ rvm:
   - 2.4.1
   - 2.3.4
   - 2.2.7
-  - 2.1.10
   - jruby-9.1.8.0
   - rbx-2
 
 gemfile:
   - ci/Gemfile.rails42
   - ci/Gemfile.rails50
+  - ci/Gemfile.rails51
 
 matrix:
-  exclude:
-    # Rails 5.0 needs Ruby > 2.2.2
-    - rvm: 2.1.10
-      gemfile: ci/Gemfile.rails50
   allow_failures:
     - rvm: rbx-2
     - rvm: jruby-9.1.8.0
