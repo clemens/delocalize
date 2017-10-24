@@ -82,7 +82,7 @@ module Delocalize
       end
 
       def apply_regex(format)
-        format.gsub(/(#{REGEXPS.keys.join('|')})/) { |s| REGEXPS[$1] }
+        Regexp.escape(format).gsub(/(#{REGEXPS.keys.join('|')})/) { |s| REGEXPS[$1] }
       end
     end
   end
