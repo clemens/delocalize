@@ -8,7 +8,11 @@ module Delocalize
         return value unless value.is_a?(String)
 
         separator, delimiter = I18n.t([:separator, :delimiter], :scope => :'number.format')
-        value.gsub(delimiter, '').gsub(separator, '.')
+        if value.index(separator).present? || (delimiter != '.' || (value.count('.') > 1))
+          value.gsub(delimiter, '').gsub(separator, '.')
+        else
+          value
+        end
       end
     end
   end
